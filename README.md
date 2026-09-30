@@ -1,77 +1,81 @@
-# 语境平抑器 · Context Transcompiler
+**English** · [简体中文](README.zh-CN.md)
 
-> 一个 Claude Agent Skill：在高语境与低语境之间**双向**转译文本。
-> 不做字面翻译，做文化维度的降维展开与语义补全。
+# Context Transcompiler · 语境平抑器
+
+> A Claude Agent Skill that transcompiles text **in both directions** between high-context and low-context communication.
+> Not literal translation — dimensional unpacking and semantic completion of what a culture leaves unsaid.
 
 ```
-高语境源文  ──诊断──►  语境 AST（潜台词 / 意象 / 位阶 / 留白 / 预设）
-                              │
-                  ┌───────────┴───────────┐
-                  ▼                       ▼
-          正向 L0→L5 展开              反向 R1→R3 收敛
-        （解压缩：把冰山写出来）      （压缩：给直球加缓冲）
+high-context source ──diagnose──►  context AST
+                                   (subtext / motif / status / ellipsis / presupposition)
+                                          │
+                              ┌───────────┴───────────┐
+                              ▼                       ▼
+                    forward  L0→L5                reverse  R1→R3
+                 (decompress: write the         (compress: cushion
+                  iceberg out in full)           the blunt version)
 ```
 
-核心原则：**不删除压缩包里的内容，只在包裹外面贴一张清晰的标签。**
+Guiding principle: **don't delete what's inside the compressed archive — put a legible label on the outside of it.**
 
 ---
 
-## 它解决什么
+## The problem
 
-高语境文本的信息不在字面上，而在预设背景、潜台词、面子策略、位阶关系与留白里。直译成低语境语言，丢掉的不是词，是意思。
+In high-context writing the information isn't on the surface. It lives in presupposed background, subtext, face-saving strategy, status relations and deliberate silence. Translate it literally into a low-context language and what you lose isn't words — it's meaning.
 
-| 场景 | 现在会发生什么 | 这个技能做什么 |
+| Situation | What happens today | What this skill does |
 |---|---|---|
-| 德国工程师收到"原则上支持，但有些技术难点" | 读成"通过了"，继续投入 | 判定 `stance: reject`，置信度 0.85，附证据 |
-| 网文出海遇冷 | 以为是故事不好 | 指出前三章每千字 9 处断点，逐条给桥接方案 |
-| 你要拒绝日本客户 | 直球发出去，关系没了 | Abrasion 76/100，给出保留底线的 R2 版本 |
-| Agent 要把邮件写进 CRM | 把"検討させていただきます"标成"进行中" | 输出枚举化的 `stance` + `evidence`，可直接消费 |
+| A German engineer reads "we support this in principle, though there are some technical difficulties" | Reads it as approval and keeps investing | Returns `stance: reject`, confidence 0.85, with the evidence spans |
+| A web novel flops in translation | The team assumes the story is weak | Flags 9 comprehension breaks per 1,000 characters in the first three chapters, each with a concrete bridge |
+| You need to turn down a Japanese client | The blunt version goes out; the relationship doesn't survive it | Abrasion 76/100, plus an R2 rewrite that keeps your actual bottom line |
+| An agent files a client email into the CRM | Marks 「検討させていただきます」 as "in progress" | Emits an enumerated `stance` plus `evidence` that downstream systems can consume directly |
 
 ---
 
-## 两个数，不是一个
+## Two numbers, not one
 
-只报"文化阻抗"会诱导用户一路降维、把原作韵味删空。所以永远同时报两个：
+Reporting "cultural friction" alone pushes people to flatten everything and strip the original of whatever made it worth reading. So the skill always reports two:
 
 ```
-        Friction ↓                                  Loss ↑
-   L0 ──────────────────────────────────────────────────────► L5
-   原样                                                    机读化
-   100% 保真                                            0 歧义
-   圈外人看不懂                                      圈内人索然无味
+        Friction ↓                                     Loss ↑
+   L0 ─────────────────────────────────────────────────────────► L5
+   verbatim                                           machine-readable
+   100% fidelity                                           0 ambiguity
+   outsiders can't follow it                  insiders find it lifeless
 ```
 
-用户要做的决策不是"降到最低"，而是**在自己的场景里选一个停点**。
+The decision isn't "how low can I get the friction" — it's **where to stop, for this particular job**.
 
-一段 65 字的武侠送别（`examples/02-wuxia-farewell`），对北美 Z 世代受众：
+A 65-character wuxia farewell scene (`examples/02-wuxia-farewell`), for a North American Gen Z audience:
 
-| 级别 | | 阻抗 | 保真 | |
+| Level | | Friction | Fidelity | |
 |---|---|---:|---:|---|
-| L0 | 原样 | 52 | 100 | 看不懂 |
-| L1 | 注释轨 | 42 | 95 | 正文一字不动，只加浮层注释 |
-| **L2** | **轻度显化** | **35** | **85** | **脚本推荐的停点** |
-| L3 | 叙事显化 | 22 | 65 | 心理外化为动作；本例实际采用 |
-| L4 | 功能化 | 14 | 25 | 只剩信息 |
-| L5 | 机读化 | 5 | 5 | 给机器读 |
+| L0 | Verbatim | 52 | 100 | Unreadable to the target |
+| L1 | Annotated | 42 | 95 | Body text untouched; notes in an overlay |
+| **L2** | **Softly explicit** | **35** | **85** | **What the script recommends** |
+| L3 | Narrative explicit | 22 | 65 | Interiority externalised into action; what this example actually ships |
+| L4 | Functional | 14 | 25 | Information only |
+| L5 | Machine-readable | 5 | 5 | For agents and ticketing systems |
 
-脚本按"阻抗与保真乘积最大"推荐 L2，本例仍选了 L3——因为意象密集（M 顶格），L2 的轻度显化不足以让折柳与江湖落地。**推荐值是默认建议，场景才是决定因素**：商务恒取 L4/L5，机器恒取 L5。
+The script recommends L2 by maximising friction × fidelity, but this example ships L3: the passage is motif-dense (M is maxed out), and L2's light touch isn't enough to land the willow-branch farewell or *jianghu*. **The recommendation is a default; the use case is what decides.** Business always takes L4/L5, machines always take L5.
 
 ---
 
-## 安装
+## Install
 
-### 作为 Claude Skill
+### As a Claude Skill
 
 ```bash
 git clone https://github.com/kreven175/context-transcompiler.git
 cp -r context-transcompiler ~/.claude/skills/
 ```
 
-之后在对话里说"用语境平抑器分析这段话"，或任何触发词（潜台词、言外之意、文化阻抗、出海本地化、他到底什么意思……）即可唤起。
+Then ask for it in conversation — "run this through the context transcompiler", or any trigger phrase (subtext, what did they actually mean, cultural friction, localisation for international release, 潜台词, 言外之意, 出海本地化).
 
-### 只用评分内核
+### Scoring kernel only
 
-脚本零第三方依赖，`python3` 即可运行，可独立嵌入任何管线。
+The scripts have zero third-party dependencies. Anywhere `python3` runs, they run — drop them into any pipeline.
 
 ```bash
 python3 scripts/probe.py --text "这个方案回头再说吧" --audience de-business --format md
@@ -79,148 +83,154 @@ python3 scripts/probe.py --text "这个方案回头再说吧" --audience de-busi
 
 ---
 
-## 快速开始
+## Quick start
 
 ```bash
-# 1. 预扫描：字符级 span + 五维子分 + 阻抗/保真曲线
+# 1. Pre-scan: character-level spans, five sub-scores, the friction/fidelity curve
 python3 scripts/probe.py \
   --text-file examples/01-workplace-hedged-rejection/input.txt \
   --audience de-business --target-level L4 --format md
 
-# 2. 校验模型产出的结构化结果
+# 2. Validate a model's structured output
 python3 scripts/validate.py --file result.json
 
-# 3. 渲染成可交付的报告（预扫描结果可直接管道进来，自带 source_text）
+# 3. Render a deliverable report
+#    (pre-scan output pipes straight in — it carries its own source_text)
 python3 scripts/render_report.py --file result.json --format html -o report.html
 python3 scripts/probe.py --text-file in.txt --audience us-genz | \
   python3 scripts/render_report.py --format html -o report.html
 
-# 列出全部受众档案
+# List every audience profile
 python3 scripts/probe.py --list-audiences
 ```
 
-`examples/` 下有五个完整样例，每个含原文、结构化输出、Markdown 与 HTML 报告：
+`examples/` holds five end-to-end cases, each with the source text, structured output, and Markdown + HTML reports:
 
-| 样例 | 场景 | 目标 |
+| Example | Scenario | Target |
 |---|---|---|
-| `01-workplace-hedged-rejection` | 职场含蓄否决 | L4 功能轨 + L1 注释轨 |
-| `02-wuxia-farewell` | 武侠送别出海 | L3 叙事显化 + 创作者建议 |
-| `03-jp-business-email` | 日本客户婉拒邮件 | L5 机读轨（`stance: reject`） |
-| `04-reverse-blunt-to-jp` | 直球中文发给日方 | R2 关系化（Abrasion 76→安全） |
-| `05-family-obligation` | 家庭人情施压 | L3 叙事显化 + 共识预设桥接 |
+| `01-workplace-hedged-rejection` | A hedged rejection in a Chinese workplace | L4 functional + L1 annotated |
+| `02-wuxia-farewell` | A wuxia farewell scene going abroad | L3 narrative + creator advice |
+| `03-jp-business-email` | A Japanese client's polite refusal | L5 machine-readable (`stance: reject`) |
+| `04-reverse-blunt-to-jp` | A blunt Chinese message aimed at a Japanese counterparty | R2 relational (Abrasion 76 → safe) |
+| `05-family-obligation` | Family obligation and social pressure | L3 narrative + presupposition bridging |
 
 ---
 
-## 设计要点
+## Design notes
 
-### 六类语义探针
+### Six semantic probes
 
-| 代码 | 类别 | 一句话 |
+| Code | Class | In one line |
 |---|---|---|
-| `PRESUPPOSITION` | 共识预设 | 作者默认你已经知道的事 |
-| `SUBTEXT` | 潜台词 | 字面义 ≠ 实际义 |
-| `FACE` | 面子策略 | 给台阶、留余地、不驳面子 |
-| `HIERARCHY` | 位阶与人情 | 谁能说话、谁欠谁、称谓里的权力 |
-| `MOTIF` | 文化意象与典故 | 江湖、读空气、锅气、内卷 |
-| `ELLIPSIS` | 留白与省略 | 零主语、半截话、沉默、"呵呵" |
+| `PRESUPPOSITION` | Presupposed common ground | What the author assumes you already know |
+| `SUBTEXT` | Subtext | Literal meaning ≠ actual meaning |
+| `FACE` | Face strategy | Offering an out, leaving room, not contradicting in public |
+| `HIERARCHY` | Status and obligation | Who may speak, who owes whom, the power encoded in forms of address |
+| `MOTIF` | Culture-bound motifs | *jianghu*, reading the air, wok hei, *neijuan* |
+| `ELLIPSIS` | Ellipsis and silence | Dropped subjects, half-sentences, silence, a bare "呵呵" |
 
-每个热点必须写清四件事：字面会读成什么、实际在说什么、**读错的后果**、怎么桥接。
+Every hotspot must answer four questions: what an outsider reads literally, what the text actually says, **what it costs to get it wrong**, and how to bridge it.
 
-### 受众是两个正交参数，不是一个刻度
+### An audience is two orthogonal parameters, not one dial
 
-| 参数 | 含义 |
+| Parameter | Meaning |
 |---|---|
-| `explicitness` | 信息要不要写明白 |
-| `confrontation` | 负面意见能不能直说 |
+| `explicitness` | Does information have to be stated outright |
+| `confrontation` | Can a negative opinion be said to someone's face |
 
-英国 `explicitness 0.78 / confrontation 0.25`——合同条款写得清清楚楚，但 "quite interesting" 的意思是不行。用单一维度建模英国，任何一头都会错。
+The UK sits at `explicitness 0.78 / confrontation 0.25` — contract terms are spelled out precisely, but "quite interesting" means no. Model the UK on a single axis and you get one end or the other wrong.
 
-### 评分内核的三条规则
+### Three rules in the scoring kernel
 
-1. **语用层 vs 事实层**。S/M/H/E 随受众调制（高语境受众确实更会读空气）；**P 不调制**——日本读者再善于读空气，也不会知道"编制"是什么。效果：同一段含"编制""宅基地"的文本，对日本和德国受众都是 42 分。
-2. **加权单维极值**。一维顶格时，纯求和会稀释风险。PDF 里那段"出发点是好的……回头再对齐"广度和只有 32，但 S 顶格 → 73 分。
-3. **密度归一**。M 与 P 是计数型子分，按 500 字参考窗归一，只上抬短密文本。
+1. **Pragmatic layer vs factual layer.** S/M/H/E scale with the audience (high-context readers really are better at reading between the lines); **P does not** — a Japanese reader can be excellent at reading the air and still have no idea what 编制 (a permanent state payroll post) is. Result: the same passage containing 编制 and 宅基地 scores 42 for both a Japanese and a German audience.
+2. **Weighted single-dimension peak.** When one dimension maxes out, a plain sum dilutes the risk. The "the intention behind it is good… let's align on this later" passage sums to only 32 across dimensions, but S is maxed → 73.
+3. **Density normalisation.** M and P are count-based, so they're normalised against a 500-character reference window — this only lifts short, dense passages; it never penalises long ones.
 
-完整推导与算例见 [`reference/03-friction-scoring.md`](reference/03-friction-scoring.md)。
+Full derivation and worked examples in [`reference/03-friction-scoring.md`](reference/03-friction-scoring.md).
 
-### 反向模式用另一个数
+### Reverse mode needs a different number
 
-直球中文发给日本客户，Friction 只有 8——对方完全看得懂。问题不是看不懂，是看懂了会不高兴。
+Send a blunt Chinese message to a Japanese client and Friction is only 8 — they understand it perfectly well. The problem isn't comprehension. It's that they understood.
 
 ```
 Abrasion = round( 100 × directness_index × (1 − audience.confrontation) )
 ```
 
-| 受众 | Friction | Abrasion |
+| Audience | Friction | Abrasion |
 |---|---|---|
 | `jp-business` | 8 | **76** |
 | `nl` | 13 | **4** |
 
-**Friction 几乎一样，Abrasion 差 19 倍。**
+**Friction is nearly identical. Abrasion differs by 19×.**
 
 ---
 
-## 目录
+## Layout
 
 ```
-SKILL.md                      技能主体：工作流、触发条件、硬性约束
+SKILL.md                      The skill itself: workflow, triggers, hard constraints
 reference/
-  01-context-theory.md        霍尔理论、成因、AI 时代的语境重塑、不做优劣评判的红线
-  02-diagnostic-taxonomy.md   六类探针的识别标记、误读风险与展开式
-  03-friction-scoring.md      阻抗/损耗/得罪风险的完整算法与算例
-  04-audience-profiles.md     16 个受众档案与参数使用规则
-  05-context-ladder.md        L0–L5 与 R1–R3 各级的「允许/禁止」清单
-  06-domain-playbooks.md      职场/商务/剧本/网文/字幕/社媒/反向 七个领域剧本
-  07-output-contract.md       JSON 与 Markdown 两种呈现规范
+  01-context-theory.md        Hall's theory, origins, context in the AI era,
+                              and the no-value-judgements red line
+  02-diagnostic-taxonomy.md   Markers, misreading risks and expansions for the six probes
+  03-friction-scoring.md      Full algorithm and worked examples for friction / loss / abrasion
+  04-audience-profiles.md     16 audience profiles and the rules for using their parameters
+  05-context-ladder.md        What each level L0–L5 and R1–R3 may and may not do
+  06-domain-playbooks.md      Workplace, business, screenplay, web novel,
+                              subtitles, social, reverse
+  07-output-contract.md       JSON and Markdown presentation rules
 schemas/transcompile.v1.schema.json
 scripts/
-  probe.py                    确定性预扫描：span 偏移量 + 五维子分 + 曲线
-  validate.py                 零依赖 Schema + 业务规则校验
-  render_report.py            JSON → Markdown / 自包含 HTML 热力图报告
-  lexicon/                    缓冲语 / 意象 / 面子位阶 / 留白 / 预设 / 直白度
-  data/audiences.json         受众档案
-examples/                     四个端到端样例
+  probe.py                    Deterministic pre-scan: span offsets, sub-scores, curve
+  validate.py                 Zero-dependency schema + business-rule validation
+  render_report.py            JSON → Markdown / self-contained HTML heatmap report
+  lexicon/                    Hedges / motifs / face+status / ellipsis /
+                              presupposition / directness
+  data/audiences.json         Audience profiles
+examples/                     Five end-to-end cases
 evals/
-  cases.jsonl                 12 条校准回归用例
-  run_evals.py                评分内核回归测试
-  build_examples.py           样例生成器（span 与数值由脚本算，不手写）
+  cases.jsonl                 13 calibration regression cases
+  run_evals.py                Scoring-kernel regression tests
+  build_examples.py           Example generator (spans and numbers computed, never hand-written)
 ```
+
+**A note on language.** This README and `README.zh-CN.md` are the only translated files. `SKILL.md`, everything under `reference/`, the lexicons and `CONTRIBUTING.md` are written in Chinese, deliberately: the skill's primary source language is Chinese, its lexicon entries and glosses describe Chinese usage, and the model reads those files while analysing Chinese text. Code, CLI output, the JSON schema and all field names are English. If you want to extend the skill to another source language, the lexicons and `reference/02-diagnostic-taxonomy.md` are where that work starts — see `CONTRIBUTING.md`.
 
 ---
 
-## 工程约定
+## Engineering conventions
 
-- **脚本零第三方依赖**，只用标准库，任何有 `python3` 的地方都能跑。
-- **确定性内核要能扫完整本书。** 30 万字约 310ms、15 万字约 140ms（无 LLM 调用）。`evals/run_evals.py` 里有性能哨兵，超过 5 秒即报警——早期 `_dedupe` 是 O(n²)，15 万字要跑 31.8 秒。
-- **span 偏移量由脚本算，不手写**。`validate.py` 会比对 `text` 与 `L0[start:end]`，错位直接报错——Web 端据此高亮，偏一个字整张图就废了。
-- **样例由 `evals/build_examples.py` 生成**，语义内容手写、数值与偏移量脚本算，再过一遍校验。不要手工编辑 `examples/` 下的文件。
-- **改了词典或公式就跑 `evals/run_evals.py`**。13 条用例断言的是区间与相对关系，不是精确值。
+- **Zero third-party dependencies.** Standard library only, so the scripts run anywhere `python3` does.
+- **The deterministic kernel has to scan a whole book.** ~310 ms for 300k characters, ~140 ms for 150k, with no LLM calls. `evals/run_evals.py` carries a performance sentinel that fires above 5 seconds — an early `_dedupe` was O(n²) and took 31.8 seconds on 150k characters.
+- **Span offsets are computed, never hand-written.** `validate.py` compares `text` against `L0[start:end]` and fails on mismatch. The web client highlights from these offsets; one character of drift ruins the whole heatmap.
+- **Examples are generated by `evals/build_examples.py`** — semantic content is written by hand, every number and offset is computed, and the result is validated. Don't hand-edit anything under `examples/`.
+- **Changed a lexicon or a formula? Run `evals/run_evals.py`.** The 13 cases assert ranges and relative ordering, not exact values.
 
 ```bash
-python3 evals/run_evals.py        # 回归测试
-python3 evals/build_examples.py   # 重建样例
+python3 evals/run_evals.py        # regression tests
+python3 evals/build_examples.py   # rebuild examples
 ```
 
 ---
 
-## 边界与限制
+## Scope and limits
 
-- 评分是**可复现的启发式**，不是经过大样本验证的心理测量量表。价值在**相对比较**（改写前后、A 版 B 版、这一段那一段），不在绝对值。
-- 受众档案是**群体先验**，不适用于判断具体某个人。涉及个体时置信度下调并注明。
-- 词典是字面匹配，**召回必然不全**——"折柳"收录了，"折了一枝柳"靠 variants 覆盖，再变形就得靠模型在语义层补齐。预扫描给的是**候选**，不是结论。
-- 零主语启发式按中文校准，非中文输入自动跳过并在 caveats 注明。
-- **不做优劣评判。** 高语境不等于落后或虚伪，低语境不等于冷漠。工具报告的是"对目标受众的传达成本"，不是"文本质量"。
+- The scores are a **reproducible heuristic**, not a psychometric instrument validated on a large sample. Their value is in **relative comparison** — before vs after a rewrite, version A vs B, this passage vs that one — not in the absolute number.
+- Audience profiles are **group priors**. They don't apply to judging a specific individual; when they're used that way, lower the confidence and say so.
+- The lexicons match literally, so **recall is necessarily incomplete**. 折柳 is in the lexicon; 折了一枝柳 is covered by variants; anything further from the canonical form is for the model to catch semantically. The pre-scan produces **candidates, not conclusions.**
+- The dropped-subject heuristic is calibrated for Chinese. Non-Chinese input skips it automatically and says so in the caveats.
+- **No value judgements.** High-context isn't backward or insincere; low-context isn't cold. What the tool reports is the cost of getting a message across to a given audience — not the quality of the text.
 
 ---
 
-## 致谢与理论来源
+## Theoretical sources
 
-- Edward T. Hall, *Beyond Culture* (1976) — 高低语境概念
-- Geert Hofstede — 文化维度理论
-- Erin Meyer, *The Culture Map* — Communicating / Evaluating 标尺，本工具 `explicitness` 与 `confrontation` 两参数的校准基础
+- Edward T. Hall, *Beyond Culture* (1976) — the high/low-context distinction
+- Geert Hofstede — cultural dimensions theory
+- Erin Meyer, *The Culture Map* — the Communicating and Evaluating scales, which this tool's `explicitness` and `confrontation` parameters are calibrated against
 
-受众档案中的数值是**本工具的建模参数**，参考上述框架校准而来，非任何框架的原始数据，亦非经验测量值。
+The numbers in the audience profiles are **this tool's modelling parameters**, calibrated with reference to those frameworks. They are not raw data from any of them, and they are not empirical measurements.
 
-## 许可
+## Licence
 
-MIT，见 [LICENSE](LICENSE)。
+MIT — see [LICENSE](LICENSE).
