@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>语境转译报告</title>
+<style>
+:root {
+  --bg:#faf9f7; --panel:#fff; --ink:#1b1a18; --muted:#6b6862; --line:#e5e1db;
+  --warm:#c2410c; --cool:#0f766e; --accent:#7c3aed;
+  --presup:#8b5cf6; --subtext:#dc2626; --face:#ea580c; --hier:#0891b2; --motif:#ca8a04; --ellip:#64748b;
+  --radius:10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#16151a; --panel:#1f1e25; --ink:#eceaf2; --muted:#9d99a8; --line:#33313d;
+    --warm:#fb923c; --cool:#5eead4; --accent:#a78bfa;
+    --presup:#a78bfa; --subtext:#f87171; --face:#fb923c; --hier:#22d3ee; --motif:#facc15; --ellip:#94a3b8;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:#16151a; --panel:#1f1e25; --ink:#eceaf2; --muted:#9d99a8; --line:#33313d;
+  --warm:#fb923c; --cool:#5eead4; --accent:#a78bfa;
+  --presup:#a78bfa; --subtext:#f87171; --face:#fb923c; --hier:#22d3ee; --motif:#facc15; --ellip:#94a3b8;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:var(--ink);
+  font:16px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+}
+.wrap { max-width:880px; margin:0 auto; padding:40px 16px 80px; }
+h1 { font-size:1.6rem; margin:0 0 4px; letter-spacing:-.01em; }
+h2 { font-size:1.05rem; margin:0 0 14px; letter-spacing:.02em; color:var(--muted); font-weight:600; }
+h3 { font-size:1rem; margin:0 0 10px; }
+h3 small { color:var(--muted); font-weight:400; margin-left:6px; }
+.lede { color:var(--muted); margin:0 0 28px; font-size:.92rem; }
+.panel { background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:22px; margin-bottom:18px; }
+.gauges { display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+@media (max-width:560px) { .gauges { grid-template-columns:1fr; } }
+.gauge-head { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; }
+.gauge-head span { color:var(--muted); font-size:.85rem; }
+.gauge-head b { font-size:1.9rem; font-variant-numeric:tabular-nums; line-height:1; }
+.warm { color:var(--warm); } .cool { color:var(--cool); }
+.bar { height:7px; background:var(--line); border-radius:99px; overflow:hidden; }
+.bar i { display:block; height:100%; border-radius:99px; }
+.bar i.warm { background:var(--warm); } .bar i.cool { background:var(--cool); }
+.hint { color:var(--muted); font-size:.8rem; margin:8px 0 0; }
+.sub { display:grid; grid-template-columns:118px 1fr 62px; align-items:center; gap:12px; margin-bottom:9px; font-size:.87rem; }
+.sub .bar { height:9px; }
+.sub b { text-align:right; font-variant-numeric:tabular-nums; }
+.sub small { color:var(--muted); font-weight:400; }
+.c-presupposition { background:var(--presup); } .c-subtext { background:var(--subtext); }
+.c-motif { background:var(--motif); } .c-hierarchy { background:var(--hier); } .c-ellipsis { background:var(--ellip); }
+.heat { font-size:1.06rem; line-height:2.3; letter-spacing:.01em; }
+mark.hs { background:transparent; color:inherit; padding:2px 1px; border-radius:3px; cursor:help; position:relative; }
+mark.hs { box-shadow:inset 0 -.62em 0 color-mix(in srgb, currentColor 18%, transparent); }
+mark.presup { color:var(--presup); } mark.subtext { color:var(--subtext); }
+mark.face { color:var(--face); } mark.hier { color:var(--hier); }
+mark.motif { color:var(--motif); } mark.ellip { color:var(--ellip); }
+mark.sev4, mark.sev5 { box-shadow:inset 0 -.62em 0 color-mix(in srgb, currentColor 30%, transparent); font-weight:600; }
+mark.hs:hover::after, mark.hs:focus::after {
+  content:attr(data-tip); position:absolute; left:0; top:calc(100% + 6px); z-index:9;
+  background:var(--ink); color:var(--bg); padding:7px 10px; border-radius:7px;
+  font-size:.78rem; line-height:1.5; font-weight:400; white-space:normal; width:max-content; max-width:320px;
+  box-shadow:0 6px 20px rgba(0,0,0,.2);
+}
+.legend { margin-top:16px; display:flex; flex-wrap:wrap; gap:6px; }
+.tag { font-size:.72rem; padding:2px 8px; border-radius:99px; border:1px solid currentColor; }
+.tag.presup { color:var(--presup); } .tag.subtext { color:var(--subtext); }
+.tag.face { color:var(--face); } .tag.hier { color:var(--hier); }
+.tag.motif { color:var(--motif); } .tag.ellip { color:var(--ellip); }
+.card { border:1px solid var(--line); border-left:3px solid var(--line); border-radius:8px; padding:14px 16px; margin-bottom:10px; background:var(--panel); }
+.card.presup { border-left-color:var(--presup); } .card.subtext { border-left-color:var(--subtext); }
+.card.face { border-left-color:var(--face); } .card.hier { border-left-color:var(--hier); }
+.card.motif { border-left-color:var(--motif); } .card.ellip { border-left-color:var(--ellip); }
+.card header { display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin-bottom:9px; }
+.card .sev { color:var(--muted); font-size:.75rem; margin-left:auto; }
+dl { margin:0; display:grid; grid-template-columns:auto 1fr; gap:4px 14px; font-size:.88rem; }
+dt { color:var(--muted); white-space:nowrap; }
+dd { margin:0; }
+code { background:color-mix(in srgb, var(--ink) 7%, transparent); padding:2px 6px; border-radius:5px; font-size:.88em; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
+pre { background:color-mix(in srgb, var(--ink) 5%, transparent); padding:14px; border-radius:8px; overflow:auto; font-size:.82rem; line-height:1.6; }
+pre code { background:none; padding:0; }
+table { width:100%; border-collapse:collapse; font-size:.87rem; }
+td { padding:8px 6px; border-bottom:1px solid var(--line); vertical-align:middle; }
+td:first-child { width:40%; white-space:nowrap; }
+thead th { padding:0 6px 6px; text-align:left; font-size:.76rem; font-weight:500; color:var(--muted); border-bottom:1px solid var(--line); }
+tr.rec { background:color-mix(in srgb, var(--accent) 9%, transparent); }
+.cell { display:flex; align-items:center; gap:8px; }
+td span { font-variant-numeric:tabular-nums; min-width:26px; text-align:right; color:var(--muted); font-size:.82rem; }
+.mini { flex:1; min-width:52px; height:5px; background:var(--line); border-radius:99px; overflow:hidden; }
+.mini i { display:block; height:100%; }
+.mini i.warm { background:var(--warm); } .mini i.cool { background:var(--cool); }
+.track { border-top:1px solid var(--line); padding-top:16px; margin-top:16px; }
+.track:first-child { border-top:none; padding-top:0; margin-top:0; }
+blockquote { margin:0 0 10px; padding:12px 16px; border-left:3px solid var(--line); background:color-mix(in srgb, var(--ink) 4%, transparent); border-radius:0 8px 8px 0; }
+.notes { margin:0; padding-left:18px; font-size:.85rem; color:var(--muted); }
+.notes b { color:var(--ink); margin-right:6px; }
+.body { font-size:.94rem; }
+ol.advice { padding-left:20px; }
+ol.advice li { margin-bottom:16px; }
+ol.advice em { display:block; color:var(--muted); font-size:.8rem; font-style:normal; }
+ol.advice p { margin:5px 0 0; font-size:.9rem; }
+.keep { color:var(--cool); } .cost { color:var(--warm); }
+ul.plain { padding-left:20px; font-size:.88rem; color:var(--muted); }
+footer { margin-top:36px; color:var(--muted); font-size:.78rem; text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>语境转译报告</h1>
+  <p class="lede">受众 us-genz
+    · 目标 L3 叙事显化
+    · 断点密度 11.0 处/千字
+    · 热点 6 处</p>
+
+  <div class="panel gauges">
+      <div class="gauge">
+        <div class="gauge-head"><span>文化阻抗 Friction</span><b class="warm">67</b></div>
+        <div class="bar"><i class="warm" style="width:67%"></i></div>
+        <p class="hint">高阻：越高越容易被目标受众读错</p>
+      </div>
+      <div class="gauge">
+        <div class="gauge-head"><span>保真度 Fidelity</span><b class="cool">86</b></div>
+        <div class="bar"><i class="cool" style="width:86%"></i></div>
+        <p class="hint">降到目标级别后，原文韵味还剩多少</p>
+      </div>
+  </div>
+
+  <div class="panel">
+    <h2>子分构成</h2>
+    <div class="sub"><span>P 共识预设</span><div class="bar"><i class="c-presupposition" style="width:89.2%"></i></div><b>22.3<small>/25</small></b></div><div class="sub"><span>S 潜台词</span><div class="bar"><i class="c-subtext" style="width:82.0%"></i></div><b>20.5<small>/25</small></b></div><div class="sub"><span>M 文化意象</span><div class="bar"><i class="c-motif" style="width:0.0%"></i></div><b>0<small>/20</small></b></div><div class="sub"><span>H 位阶面子</span><div class="bar"><i class="c-hierarchy" style="width:29.3%"></i></div><b>4.4<small>/15</small></b></div><div class="sub"><span>E 留白省略</span><div class="bar"><i class="c-ellipsis" style="width:53.3%"></i></div><b>8.0<small>/15</small></b></div>
+  </div>
+
+  <div class="panel">
+    <h2>热力图</h2>
+    <div class="heat"><mark class="hs presup sev4" tabindex="0" data-tip="共识预设：母亲的姐妹中排行第二者。排行与父系／母系归属在称谓里同时编码，决定了她有多大分量来施加这个要求。">二姨</mark><mark class="hs hier sev4" tabindex="0" data-tip="位阶：不直接开口而经第三方传达。这既加重了分量（惊动了别人），也给双方留了退路：正式拒绝的对象不是她本人。">托人带话</mark>，说表姐的婚事定在腊月，让我务必回去一趟。我说手头项目正紧，怕是抽不开身。她在电话那头<mark class="hs ellip sev3" tabindex="0" data-tip="留白：停顿是这通电话的转折点：她放弃了继续劝，换成了施压。">顿了顿</mark>，只回了一句：<mark class="hs subtext sev5" tabindex="0" data-tip="潜台词：以父辈的失信先例施压。它不指责你现在做错了什么，而是断言你正在变成一个家族里已有定论的角色——这比直接责备更难反驳。">你爸当年也是这么说的</mark>。我妈在旁边补了一句，<mark class="hs subtext sev4" tabindex="0" data-tip="潜台词：不满，且已放弃沟通。字面把决定权交出去，实际是把责任交出去。">随你</mark>，<mark class="hs face sev5" tabindex="0" data-tip="面子：把争议从「你要不要回去」偷换成「家族会不会丢脸」。在这套逻辑里，把内部分歧暴露给外人是独立于分歧本身的、更严重的过错。">反正外人都看着呢</mark>。</div>
+    <div class="legend"><span class="tag presup">共识预设</span><span class="tag subtext">潜台词</span><span class="tag face">面子</span><span class="tag hier">位阶</span><span class="tag motif">意象</span><span class="tag ellip">留白</span></div>
+  </div>
+
+  <div class="panel">
+    <h2>断点 · 6 处</h2>
+    <article class="card presup"><header><code>二姨</code><span class="tag presup">共识预设</span><span class="sev">严重度 4</span></header><dl><dt>字面会读成</dt><dd>一位姨妈，英译为 aunt。</dd><dt>实际在说</dt><dd>母亲的姐妹中排行第二者。排行与父系／母系归属在称谓里同时编码，决定了她有多大分量来施加这个要求。</dd><dt>读错的后果</dt><dd>译成 aunt 后读者不理解为什么一位旁系亲属的口信具有强制力。</dd><dt>桥接</dt><dd>首次出现时用一句话点明她在家族中的位置，而不是逐字解释称谓系统。</dd></dl></article><article class="card hier"><header><code>托人带话</code><span class="tag hier">位阶</span><span class="sev">严重度 4</span></header><dl><dt>字面会读成</dt><dd>请别人转达了一条消息——一个中性的沟通方式。</dd><dt>实际在说</dt><dd>不直接开口而经第三方传达。这既加重了分量（惊动了别人），也给双方留了退路：正式拒绝的对象不是她本人。</dd><dt>读错的后果</dt><dd>读者以为只是随口带的话，从而低估后面冲突的烈度。</dd><dt>桥接</dt><dd>外化为可见的代价——写出那个传话的人是谁、为此绕了多远。</dd></dl></article><article class="card ellip"><header><code>顿了顿</code><span class="tag ellip">留白</span><span class="sev">严重度 3</span></header><dl><dt>字面会读成</dt><dd>她停顿了一下。</dd><dt>实际在说</dt><dd>停顿是这通电话的转折点：她放弃了继续劝，换成了施压。</dd><dt>读错的后果</dt><dd>读成语气自然，错过态度切换的那一刻。</dd><dt>桥接</dt><dd>在停顿处给一个可见的细节（背景音、呼吸），让沉默有长度。</dd></dl></article><article class="card subtext"><header><code>你爸当年也是这么说的</code><span class="tag subtext">潜台词</span><span class="sev">严重度 5</span></header><dl><dt>字面会读成</dt><dd>陈述一件关于父亲的往事。</dd><dt>实际在说</dt><dd>以父辈的失信先例施压。它不指责你现在做错了什么，而是断言你正在变成一个家族里已有定论的角色——这比直接责备更难反驳。</dd><dt>读错的后果</dt><dd>读成怀旧或闲聊，从而完全错过本段的情绪高点与人物动机。</dd><dt>桥接</dt><dd>补一句最短的前情，让读者知道父亲当年也说过类似的话、后来没有回去。</dd></dl></article><article class="card subtext"><header><code>随你</code><span class="tag subtext">潜台词</span><span class="sev">严重度 4</span></header><dl><dt>字面会读成</dt><dd>由你决定——听起来像是尊重你的选择。</dd><dt>实际在说</dt><dd>不满，且已放弃沟通。字面把决定权交出去，实际是把责任交出去。</dd><dt>读错的后果</dt><dd>读成母亲松口了，于是读者预期冲突到此结束——而实际上它刚升级。</dd><dt>桥接</dt><dd>译文中保留这句的简短，但在紧随其后的动作里写出她并没有真的放手。</dd></dl></article><article class="card face"><header><code>反正外人都看着呢</code><span class="tag face">面子</span><span class="sev">严重度 5</span></header><dl><dt>字面会读成</dt><dd>别人也在看着——一句关于旁观者的陈述。</dd><dt>实际在说</dt><dd>把争议从「你要不要回去」偷换成「家族会不会丢脸」。在这套逻辑里，把内部分歧暴露给外人是独立于分歧本身的、更严重的过错。</dd><dt>读错的后果</dt><dd>西方读者会问「别人怎么想关你什么事」，从而认为人物在无理取闹，整段的压迫感失效。</dd><dt>桥接</dt><dd>不要解释面子概念，改为外化后果——写出如果不回去，谁会在什么场合被问起。</dd></dl></article>
+  </div>
+
+  <div class="panel">
+    <h2>未言明的前提</h2>
+    <ul class="plain"><li>亲属称谓编码排行与父母系归属，二者共同决定说话人的分量。</li><li>腊月（年前）是返乡义务最强的时段，婚礼排在此时并非偶然。</li><li>婚姻是家族事务，旁系亲属的出席是义务而非选择。</li><li>把家庭内部分歧暴露给外人，是独立于分歧本身的、更严重的过错。</li></ul>
+  </div>
+
+  <div class="panel">
+    <h2>阶梯取舍</h2>
+    <table><thead><tr><th>级别</th><th>阻抗 Friction</th><th>保真 Fidelity</th></tr></thead>
+    <tbody><tr class=""><td><code>L0</code> 原样</td><td><div class="mini"><i class="warm" style="width:67%"></i></div><span>67</span></td><td><div class="mini"><i class="cool" style="width:100%"></i></div><span>100</span></td></tr><tr class=""><td><code>L1</code> 注释轨</td><td><div class="mini"><i class="warm" style="width:54%"></i></div><span>54</span></td><td><div class="mini"><i class="cool" style="width:98%"></i></div><span>98</span></td></tr><tr class=""><td><code>L2</code> 轻度显化</td><td><div class="mini"><i class="warm" style="width:45%"></i></div><span>45</span></td><td><div class="mini"><i class="cool" style="width:94%"></i></div><span>94</span></td></tr><tr class="rec"><td><code>L3</code> 叙事显化 ★</td><td><div class="mini"><i class="warm" style="width:28%"></i></div><span>28</span></td><td><div class="mini"><i class="cool" style="width:86%"></i></div><span>86</span></td></tr><tr class=""><td><code>L4</code> 功能化</td><td><div class="mini"><i class="warm" style="width:18%"></i></div><span>18</span></td><td><div class="mini"><i class="cool" style="width:70%"></i></div><span>70</span></td></tr><tr class=""><td><code>L5</code> 机读化</td><td><div class="mini"><i class="warm" style="width:7%"></i></div><span>7</span></td><td><div class="mini"><i class="cool" style="width:62%"></i></div><span>62</span></td></tr></tbody></table>
+    <p class="hint">取 L3：阻抗从 67 降到 28，保真仍有 86。这段的障碍集中在共识预设（P=22.3）而非修辞，补前提比改写措辞更有效，因此 L2 的轻度显化不够、L4 的功能化又会把人情压力抽干。</p>
+  </div>
+
+  <div class="panel">
+    <h2>转译</h2>
+    <section class="track"><h3><code>L2</code> 轻度显化</h3><div class="body">我母亲的二姐托人捎来口信，说我表姐的婚礼定在农历腊月，要我务必回去一趟。我说手头项目正紧，恐怕抽不开身。她在电话那头停了一下，只回了一句：你爸当年也是这么说的。我妈在旁边补了一句：随你——反正外人都看着呢。</div></section><section class="track"><h3><code>L3</code> 叙事显化</h3><div class="body">消息是托人捎来的，不是她自己打的电话：母亲的二姐，家里排行第二，说话向来有分量。表姐的婚礼定在腊月，年前，那是一年里最不能缺席的时段。<br>我说项目正紧，抽不开身。<br>电话那头停了一下。背景里有电视的声音。然后她说：你爸当年也是这么说的。<br>她没有说父亲后来回去没有。她不需要说——那件事家里人人都知道结局，而她刚刚把我放进了同一个位置。<br>我妈在旁边补了一句：随你。<br>然后是那半句真正的话：反正外人都看着呢。在这个家里，缺席不是我一个人的事——它会在往后每一场婚宴上，由别人替我们解释。</div></section>
+  </div>
+
+  
+
+  <div class="panel">
+    <h2>创作者建议</h2>
+    <ol class="advice"><li><b>「你爸当年也是这么说的」依赖一段文中从未交代的前情，海外读者读到的只是一句没有攻击性的陈述</b><em>第 3 句</em><p>补一句最短的前情——父亲当年说过同样的话、后来没有回去。不要解释它的含义。</p><p class="keep">保住了：保住了这句话的杀伤力来自「不说破」，而不是来自控诉。</p><p class="cost">代价：增加一行，节奏略缓。</p></li><li><b>「外人都看着呢」诉诸一个读者不共享的前提，容易被读成人物在无理取闹</b><em>末句</em><p>外化为具体后果：写出往后哪一场合、由谁替这家人解释缺席。</p><p class="keep">保住了：保住了压力的来源是群体评价，而不是母亲个人的情绪。</p><p class="cost">代价：把一个凝练的短句展开成一个从句。</p></li><li><b>「托人带话」的分量在译文中会蒸发，读者以为只是一条随口的消息</b><em>第 1 句</em><p>写出传话这件事本身的代价——谁跑了这一趟。</p><p class="keep">保住了：保住了「惊动了别人」这一层，它是后面所有压力的起点。</p><p class="cost">代价：无。</p></li></ol>
+  </div>
+
+  <div class="panel">
+    <h2>注意事项</h2>
+    <ul class="plain"><li>L3 版本补入的父亲前情属于改写而非翻译，需作者确认是否与全书设定一致。</li><li>本段为节选；若前文已交代父亲那件事，第一条建议的优先级应下调。</li></ul>
+  </div>
+
+  <footer>context-transcompiler · 语境平抑器 · 分数为可复现的启发式指标，用于相对比较而非绝对测定</footer>
+</div>
+</body>
+</html>

@@ -7,53 +7,293 @@
     "see": "reference/02-diagnostic-taxonomy.md#presupposition--共识预设"
   },
   "entries": [
-    { "term": "高考", "zone": "institution", "strength": 5, "gloss": "全国统一大学入学考试，单次决定人生路径" },
-    { "term": "中考", "zone": "institution", "strength": 4, "gloss": "初中升高中考试，含普职分流" },
-    { "term": "考研", "zone": "institution", "strength": 3, "gloss": "研究生入学考试" },
-    { "term": "考公", "zone": "institution", "strength": 4, "gloss": "公务员考试，象征稳定与体制内身份" },
-    { "term": "编制", "zone": "institution", "strength": 5, "gloss": "国家人事序列内的正式岗位，几乎不会失业" },
-    { "term": "事业单位", "zone": "institution", "strength": 4, "gloss": "介于政府与企业之间的公立机构" },
-    { "term": "体制内", "zone": "institution", "strength": 5, "gloss": "政府及公立机构系统内部，含身份与保障含义" },
-    { "term": "户口", "zone": "institution", "strength": 5, "gloss": "户籍身份，决定教育、医疗、购房等权利" },
-    { "term": "学区房", "zone": "institution", "strength": 4, "gloss": "对应优质学校的住房，价格含教育权溢价" },
-    { "term": "宅基地", "zone": "institution", "strength": 4, "gloss": "农村集体所有的建房用地使用权" },
-    { "term": "摇号", "zone": "institution", "strength": 3, "gloss": "购车/购房资格的抽签分配" },
-    { "term": "单位", "zone": "institution", "strength": 4, "gloss": "工作机构，历史上承担住房医疗等社会职能" },
-    { "term": "下岗", "zone": "institution", "strength": 4, "gloss": "国企改革中的大规模失业，含时代创伤" },
-    { "term": "知青", "zone": "institution", "strength": 4, "gloss": "上山下乡的城市青年，特定历史群体" },
-    { "term": "独生子女", "zone": "institution", "strength": 4, "gloss": "计划生育政策下的一代，含赡养结构含义" },
-    { "term": "计划生育", "zone": "institution", "strength": 4, "gloss": "长期生育限制政策" },
-    { "term": "春运", "zone": "institution", "strength": 4, "gloss": "春节前后的全国性返乡迁徙" },
-    { "term": "社保", "zone": "institution", "strength": 3, "gloss": "社会保险，与户籍和工作年限绑定" },
-    { "term": "公积金", "zone": "institution", "strength": 3, "gloss": "住房公积金，购房相关的强制储蓄" },
-    { "term": "内推", "zone": "institution", "strength": 2, "gloss": "内部推荐求职渠道" },
-
-    { "term": "春节", "zone": "festival", "strength": 4, "gloss": "最重要的节日，返乡团聚被视为义务性" },
-    { "term": "过年", "zone": "festival", "strength": 4, "gloss": "过春节，含强制团聚含义" },
-    { "term": "除夕", "zone": "festival", "strength": 3, "gloss": "春节前夜，守岁团圆" },
-    { "term": "清明", "zone": "festival", "strength": 4, "gloss": "扫墓祭祖的节日" },
-    { "term": "中元", "zone": "festival", "strength": 4, "gloss": "祭祀亡者的节日，有诸多禁忌" },
-    { "term": "七月半", "zone": "festival", "strength": 4, "gloss": "中元节俗称，鬼门开" },
-    { "term": "中秋", "zone": "festival", "strength": 3, "gloss": "团圆节，月亮象征团聚" },
-    { "term": "端午", "zone": "festival", "strength": 3, "gloss": "纪念屈原，有粽子与龙舟习俗" },
-    { "term": "元宵", "zone": "festival", "strength": 3, "gloss": "春节最后一天，标志年节结束" },
-
-    { "term": "红包", "zone": "ritual", "strength": 4, "gloss": "装钱的红色纸包，金额与关系及场合严格对应" },
-    { "term": "压岁钱", "zone": "ritual", "strength": 4, "gloss": "长辈给晚辈的春节红包" },
-    { "term": "彩礼", "zone": "ritual", "strength": 5, "gloss": "男方婚前给女方家庭的财物，谈判性极强" },
-    { "term": "相亲", "zone": "ritual", "strength": 4, "gloss": "家庭或中间人安排的婚恋见面" },
-    { "term": "坐月子", "zone": "ritual", "strength": 5, "gloss": "产后一个月的严格静养与禁忌期" },
-    { "term": "上香", "zone": "ritual", "strength": 3, "gloss": "祭祀动作，表达敬意与祈求" },
-    { "term": "烧纸", "zone": "ritual", "strength": 4, "gloss": "焚烧纸钱给亡者" },
-    { "term": "头七", "zone": "ritual", "strength": 4, "gloss": "去世后第七天的祭奠，信为亡魂归家" },
-    { "term": "本命年", "zone": "ritual", "strength": 3, "gloss": "生肖轮回年，需穿红避灾" },
-    { "term": "敬酒", "zone": "ritual", "strength": 4, "gloss": "按位阶顺序进行的饮酒仪式" },
-    { "term": "回门", "zone": "ritual", "strength": 3, "gloss": "新娘婚后首次回娘家" },
-    { "term": "满月酒", "zone": "ritual", "strength": 3, "gloss": "婴儿满月时的宴席" },
-
-    { "term": "六六六", "zone": "numeric", "strength": 3, "gloss": "谐音「溜」，表示厉害；亦为吉数" },
-    { "term": "五二零", "zone": "numeric", "strength": 3, "gloss": "谐音「我爱你」" },
-    { "term": "四", "zone": "numeric", "strength": 2, "gloss": "谐音「死」，被回避（需结合上下文判断是否为禁忌用法）" },
-    { "term": "八八八", "zone": "numeric", "strength": 2, "gloss": "谐音「发」，吉利" }
+    {
+      "term": "高考",
+      "zone": "institution",
+      "strength": 5,
+      "gloss": "全国统一大学入学考试，单次决定人生路径"
+    },
+    {
+      "term": "中考",
+      "zone": "institution",
+      "strength": 4,
+      "gloss": "初中升高中考试，含普职分流"
+    },
+    {
+      "term": "考研",
+      "zone": "institution",
+      "strength": 3,
+      "gloss": "研究生入学考试"
+    },
+    {
+      "term": "考公",
+      "zone": "institution",
+      "strength": 4,
+      "gloss": "公务员考试，象征稳定与体制内身份"
+    },
+    {
+      "term": "编制",
+      "zone": "institution",
+      "strength": 5,
+      "gloss": "国家人事序列内的正式岗位，几乎不会失业"
+    },
+    {
+      "term": "事业单位",
+      "zone": "institution",
+      "strength": 4,
+      "gloss": "介于政府与企业之间的公立机构"
+    },
+    {
+      "term": "体制内",
+      "zone": "institution",
+      "strength": 5,
+      "gloss": "政府及公立机构系统内部，含身份与保障含义"
+    },
+    {
+      "term": "户口",
+      "zone": "institution",
+      "strength": 5,
+      "gloss": "户籍身份，决定教育、医疗、购房等权利"
+    },
+    {
+      "term": "学区房",
+      "zone": "institution",
+      "strength": 4,
+      "gloss": "对应优质学校的住房，价格含教育权溢价"
+    },
+    {
+      "term": "宅基地",
+      "zone": "institution",
+      "strength": 4,
+      "gloss": "农村集体所有的建房用地使用权"
+    },
+    {
+      "term": "摇号",
+      "zone": "institution",
+      "strength": 3,
+      "gloss": "购车/购房资格的抽签分配"
+    },
+    {
+      "term": "单位",
+      "zone": "institution",
+      "strength": 4,
+      "gloss": "工作机构，历史上承担住房医疗等社会职能"
+    },
+    {
+      "term": "下岗",
+      "zone": "institution",
+      "strength": 4,
+      "gloss": "国企改革中的大规模失业，含时代创伤"
+    },
+    {
+      "term": "知青",
+      "zone": "institution",
+      "strength": 4,
+      "gloss": "上山下乡的城市青年，特定历史群体"
+    },
+    {
+      "term": "独生子女",
+      "zone": "institution",
+      "strength": 4,
+      "gloss": "计划生育政策下的一代，含赡养结构含义"
+    },
+    {
+      "term": "计划生育",
+      "zone": "institution",
+      "strength": 4,
+      "gloss": "长期生育限制政策"
+    },
+    {
+      "term": "春运",
+      "zone": "institution",
+      "strength": 4,
+      "gloss": "春节前后的全国性返乡迁徙"
+    },
+    {
+      "term": "社保",
+      "zone": "institution",
+      "strength": 3,
+      "gloss": "社会保险，与户籍和工作年限绑定"
+    },
+    {
+      "term": "公积金",
+      "zone": "institution",
+      "strength": 3,
+      "gloss": "住房公积金，购房相关的强制储蓄"
+    },
+    {
+      "term": "内推",
+      "zone": "institution",
+      "strength": 2,
+      "gloss": "内部推荐求职渠道"
+    },
+    {
+      "term": "春节",
+      "zone": "festival",
+      "strength": 4,
+      "gloss": "最重要的节日，返乡团聚被视为义务性"
+    },
+    {
+      "term": "过年",
+      "zone": "festival",
+      "strength": 4,
+      "gloss": "过春节，含强制团聚含义"
+    },
+    {
+      "term": "除夕",
+      "zone": "festival",
+      "strength": 3,
+      "gloss": "春节前夜，守岁团圆"
+    },
+    {
+      "term": "清明",
+      "zone": "festival",
+      "strength": 4,
+      "gloss": "扫墓祭祖的节日"
+    },
+    {
+      "term": "中元",
+      "zone": "festival",
+      "strength": 4,
+      "gloss": "祭祀亡者的节日，有诸多禁忌"
+    },
+    {
+      "term": "七月半",
+      "zone": "festival",
+      "strength": 4,
+      "gloss": "中元节俗称，鬼门开"
+    },
+    {
+      "term": "中秋",
+      "zone": "festival",
+      "strength": 3,
+      "gloss": "团圆节，月亮象征团聚"
+    },
+    {
+      "term": "端午",
+      "zone": "festival",
+      "strength": 3,
+      "gloss": "纪念屈原，有粽子与龙舟习俗"
+    },
+    {
+      "term": "元宵",
+      "zone": "festival",
+      "strength": 3,
+      "gloss": "春节最后一天，标志年节结束"
+    },
+    {
+      "term": "红包",
+      "zone": "ritual",
+      "strength": 4,
+      "gloss": "装钱的红色纸包，金额与关系及场合严格对应"
+    },
+    {
+      "term": "压岁钱",
+      "zone": "ritual",
+      "strength": 4,
+      "gloss": "长辈给晚辈的春节红包"
+    },
+    {
+      "term": "彩礼",
+      "zone": "ritual",
+      "strength": 5,
+      "gloss": "男方婚前给女方家庭的财物，谈判性极强"
+    },
+    {
+      "term": "相亲",
+      "zone": "ritual",
+      "strength": 4,
+      "gloss": "家庭或中间人安排的婚恋见面"
+    },
+    {
+      "term": "坐月子",
+      "zone": "ritual",
+      "strength": 5,
+      "gloss": "产后一个月的严格静养与禁忌期"
+    },
+    {
+      "term": "上香",
+      "zone": "ritual",
+      "strength": 3,
+      "gloss": "祭祀动作，表达敬意与祈求"
+    },
+    {
+      "term": "烧纸",
+      "zone": "ritual",
+      "strength": 4,
+      "gloss": "焚烧纸钱给亡者"
+    },
+    {
+      "term": "头七",
+      "zone": "ritual",
+      "strength": 4,
+      "gloss": "去世后第七天的祭奠，信为亡魂归家"
+    },
+    {
+      "term": "本命年",
+      "zone": "ritual",
+      "strength": 3,
+      "gloss": "生肖轮回年，需穿红避灾"
+    },
+    {
+      "term": "敬酒",
+      "zone": "ritual",
+      "strength": 4,
+      "gloss": "按位阶顺序进行的饮酒仪式"
+    },
+    {
+      "term": "回门",
+      "zone": "ritual",
+      "strength": 3,
+      "gloss": "新娘婚后首次回娘家"
+    },
+    {
+      "term": "满月酒",
+      "zone": "ritual",
+      "strength": 3,
+      "gloss": "婴儿满月时的宴席"
+    },
+    {
+      "term": "六六六",
+      "zone": "numeric",
+      "strength": 3,
+      "gloss": "谐音「溜」，表示厉害；亦为吉数"
+    },
+    {
+      "term": "五二零",
+      "zone": "numeric",
+      "strength": 3,
+      "gloss": "谐音「我爱你」"
+    },
+    {
+      "term": "四",
+      "zone": "numeric",
+      "strength": 2,
+      "gloss": "谐音「死」，被回避（需结合上下文判断是否为禁忌用法）"
+    },
+    {
+      "term": "八八八",
+      "zone": "numeric",
+      "strength": 2,
+      "gloss": "谐音「发」，吉利"
+    },
+    {
+      "term": "腊月",
+      "zone": "festival",
+      "strength": 3,
+      "gloss": "农历十二月，年前；婚嫁与团聚集中在此，返乡义务最强"
+    },
+    {
+      "term": "正月",
+      "zone": "festival",
+      "strength": 3,
+      "gloss": "农历正月，年节期间，诸多禁忌与走亲义务"
+    },
+    {
+      "term": "婚事",
+      "zone": "ritual",
+      "strength": 4,
+      "gloss": "婚姻被视为家族事务，亲属有参与与出席的义务，非个人私事"
+    }
   ]
 }

@@ -63,7 +63,7 @@
 ### 作为 Claude Skill
 
 ```bash
-git clone https://github.com/<your-account>/context-transcompiler.git
+git clone https://github.com/kreven175/context-transcompiler.git
 cp -r context-transcompiler ~/.claude/skills/
 ```
 
@@ -99,7 +99,7 @@ python3 scripts/probe.py --text-file in.txt --audience us-genz | \
 python3 scripts/probe.py --list-audiences
 ```
 
-`examples/` 下有四个完整样例，每个含原文、结构化输出、Markdown 与 HTML 报告：
+`examples/` 下有五个完整样例，每个含原文、结构化输出、Markdown 与 HTML 报告：
 
 | 样例 | 场景 | 目标 |
 |---|---|---|
@@ -107,6 +107,7 @@ python3 scripts/probe.py --list-audiences
 | `02-wuxia-farewell` | 武侠送别出海 | L3 叙事显化 + 创作者建议 |
 | `03-jp-business-email` | 日本客户婉拒邮件 | L5 机读轨（`stance: reject`） |
 | `04-reverse-blunt-to-jp` | 直球中文发给日方 | R2 关系化（Abrasion 76→安全） |
+| `05-family-obligation` | 家庭人情施压 | L3 叙事显化 + 共识预设桥接 |
 
 ---
 
@@ -193,7 +194,7 @@ evals/
 - **确定性内核要能扫完整本书。** 30 万字约 310ms、15 万字约 140ms（无 LLM 调用）。`evals/run_evals.py` 里有性能哨兵，超过 5 秒即报警——早期 `_dedupe` 是 O(n²)，15 万字要跑 31.8 秒。
 - **span 偏移量由脚本算，不手写**。`validate.py` 会比对 `text` 与 `L0[start:end]`，错位直接报错——Web 端据此高亮，偏一个字整张图就废了。
 - **样例由 `evals/build_examples.py` 生成**，语义内容手写、数值与偏移量脚本算，再过一遍校验。不要手工编辑 `examples/` 下的文件。
-- **改了词典或公式就跑 `evals/run_evals.py`**。12 条用例断言的是区间与相对关系，不是精确值。
+- **改了词典或公式就跑 `evals/run_evals.py`**。13 条用例断言的是区间与相对关系，不是精确值。
 
 ```bash
 python3 evals/run_evals.py        # 回归测试

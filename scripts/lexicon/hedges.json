@@ -13,71 +13,676 @@
     "see": "reference/02-diagnostic-taxonomy.md#subtext--潜台词"
   },
   "entries": [
-    { "term": "再研究研究", "lang": "zh", "strength": 5, "literal": "还会继续研究这个方案", "intended": "否决，且不会再研究", "tags": ["rejection", "deferral"] },
-    { "term": "研究研究", "lang": "zh", "strength": 4, "literal": "会做进一步研究", "intended": "搁置或婉拒", "tags": ["deferral"] },
-    { "term": "再看看", "lang": "zh", "strength": 4, "literal": "稍后再评估", "intended": "无限期搁置", "tags": ["deferral"] },
-    { "term": "回头再说", "lang": "zh", "strength": 5, "literal": "稍后会继续讨论", "intended": "此事到此为止", "tags": ["rejection", "deferral"] },
-    { "term": "回头再", "lang": "zh", "strength": 4, "literal": "之后还会有下文", "intended": "不会有下文", "tags": ["deferral"] },
-    { "term": "改天", "lang": "zh", "strength": 4, "literal": "换一天进行", "intended": "不打算进行", "tags": ["deferral"] },
-    { "term": "有空再", "lang": "zh", "strength": 4, "literal": "有时间的时候做", "intended": "不会做", "tags": ["deferral"] },
-    { "term": "以后有机会", "lang": "zh", "strength": 4, "literal": "将来还有机会", "intended": "礼貌性关闭", "tags": ["rejection"] },
-    { "term": "原则上", "lang": "zh", "strength": 5, "literal": "基本同意", "intended": "后面必有实质性否定条件", "tags": ["conditional", "rejection"] },
-    { "term": "基本上同意", "lang": "zh", "strength": 4, "literal": "同意", "intended": "保留了否决权", "tags": ["conditional"] },
-    { "term": "出发点是好的", "lang": "zh", "strength": 5, "literal": "肯定了动机", "intended": "结果被否定，这是铺垫", "tags": ["rejection"] },
-    { "term": "方向是对的", "lang": "zh", "strength": 4, "literal": "认可方向", "intended": "具体内容被否定", "tags": ["rejection"] },
-    { "term": "想法是好的", "lang": "zh", "strength": 4, "literal": "认可想法", "intended": "不可执行", "tags": ["rejection"] },
-    { "term": "有一定难度", "lang": "zh", "strength": 5, "literal": "有困难但可以克服", "intended": "拒绝", "tags": ["rejection"] },
-    { "term": "有点困难", "lang": "zh", "strength": 5, "literal": "有些困难", "intended": "拒绝", "tags": ["rejection"] },
-    { "term": "比较困难", "lang": "zh", "strength": 5, "literal": "相对困难", "intended": "拒绝", "tags": ["rejection"] },
-    { "term": "不太方便", "lang": "zh", "strength": 5, "literal": "时机不便", "intended": "拒绝", "tags": ["rejection"] },
-    { "term": "恐怕", "lang": "zh", "strength": 3, "literal": "担心", "intended": "否定前置缓冲", "tags": ["rejection"] },
-    { "term": "可能有些", "lang": "zh", "strength": 3, "literal": "也许有一点", "intended": "实为确定的问题", "tags": ["rejection"] },
-    { "term": "我们内部先对齐", "lang": "zh", "strength": 5, "literal": "内部讨论后回复", "intended": "本议题结束，不会回复", "tags": ["deferral", "closing"] },
-    { "term": "慢慢对齐", "lang": "zh", "strength": 5, "literal": "逐步统一意见", "intended": "无限期搁置", "tags": ["deferral"] },
-    { "term": "先不展开", "lang": "zh", "strength": 5, "literal": "本次不详谈", "intended": "永远不会详谈", "tags": ["closing"] },
-    { "term": "另找时间", "lang": "zh", "strength": 4, "literal": "会另约时间", "intended": "不会另约", "tags": ["deferral"] },
-    { "term": "需要走个流程", "lang": "zh", "strength": 4, "literal": "有审批流程", "intended": "推给流程的软拒绝", "tags": ["deferral"] },
-    { "term": "上面还要看", "lang": "zh", "strength": 4, "literal": "需上级审批", "intended": "推给不在场的上级", "tags": ["deferral"] },
-    { "term": "领导的意思", "lang": "zh", "strength": 3, "literal": "转达上级意见", "intended": "说话人不承担责任，但态度已定", "tags": ["rejection"] },
-    { "term": "考虑一下", "lang": "zh", "strength": 4, "literal": "会考虑", "intended": "婉拒", "tags": ["rejection", "deferral"] },
-    { "term": "让我想想", "lang": "zh", "strength": 3, "literal": "需要时间思考", "intended": "多为婉拒", "tags": ["deferral"] },
-    { "term": "尽量", "lang": "zh", "strength": 3, "literal": "会努力做到", "intended": "不承诺", "tags": ["noncommittal"] },
-    { "term": "争取", "lang": "zh", "strength": 3, "literal": "会努力争取", "intended": "不承诺", "tags": ["noncommittal"] },
-    { "term": "应该问题不大", "lang": "zh", "strength": 3, "literal": "大概没问题", "intended": "未确认，不可依赖", "tags": ["noncommittal"] },
-    { "term": "到时候再说", "lang": "zh", "strength": 4, "literal": "届时决定", "intended": "回避承诺", "tags": ["noncommittal", "deferral"] },
-    { "term": "看情况", "lang": "zh", "strength": 3, "literal": "视情况而定", "intended": "不承诺", "tags": ["noncommittal"] },
-    { "term": "不好说", "lang": "zh", "strength": 3, "literal": "难以判断", "intended": "倾向否定", "tags": ["rejection"] },
-    { "term": "有点意思", "lang": "zh", "strength": 4, "literal": "有趣", "intended": "评价降级，实为否定", "tags": ["rejection"] },
-    { "term": "很有想法", "lang": "zh", "strength": 4, "literal": "富有创意", "intended": "不切实际", "tags": ["rejection"] },
-    { "term": "勇气可嘉", "lang": "zh", "strength": 5, "literal": "赞赏勇气", "intended": "方案不可行", "tags": ["rejection"] },
-    { "term": "还年轻", "lang": "zh", "strength": 4, "literal": "年纪尚轻", "intended": "经验不足，判断不被采纳", "tags": ["rejection"] },
-    { "term": "年轻人有冲劲", "lang": "zh", "strength": 4, "literal": "赞赏活力", "intended": "先给台阶，随后否定", "tags": ["rejection"] },
-    { "term": "你先忙", "lang": "zh", "strength": 4, "literal": "你去忙吧", "intended": "结束对话", "tags": ["closing"] },
-    { "term": "辛苦了", "lang": "zh", "strength": 2, "literal": "感谢付出", "intended": "多为收尾信号，非评价", "tags": ["closing"] },
-    { "term": "都行", "lang": "zh", "strength": 3, "literal": "任何选项都接受", "intended": "常为不满或测试，需看语气", "tags": ["nonconformity"] },
-    { "term": "随你", "lang": "zh", "strength": 4, "literal": "由你决定", "intended": "不满，已放弃沟通", "tags": ["nonconformity"] },
-    { "term": "看着办", "lang": "zh", "strength": 4, "literal": "自行决定", "intended": "推卸责任或表达不满", "tags": ["nonconformity"] },
-    { "term": "无所谓", "lang": "zh", "strength": 3, "literal": "不在意", "intended": "多为在意但不愿争", "tags": ["nonconformity"] },
-    { "term": "呵呵", "lang": "zh", "strength": 5, "literal": "笑声", "intended": "嘲讽、不满或终止对话", "tags": ["nonconformity", "closing"] },
-    { "term": "这事我记着", "lang": "zh", "strength": 2, "literal": "会记住此事", "intended": "人情记账，日后要还", "tags": ["conditional"] },
-    { "term": "给我个面子", "lang": "zh", "strength": 3, "literal": "请给予照顾", "intended": "以关系施压，拒绝成本很高", "tags": ["conditional"] },
-
-    { "term": "ちょっと難しい", "lang": "ja", "strength": 5, "literal": "有点难", "intended": "拒绝", "tags": ["rejection"] },
-    { "term": "検討させていただきます", "lang": "ja", "strength": 5, "literal": "让我们研究一下", "intended": "拒绝", "tags": ["rejection"] },
-    { "term": "前向きに検討", "lang": "ja", "strength": 5, "literal": "积极研究", "intended": "拒绝", "tags": ["rejection"] },
-    { "term": "善処します", "lang": "ja", "strength": 5, "literal": "会妥善处理", "intended": "不会处理", "tags": ["rejection"] },
-    { "term": "考えておきます", "lang": "ja", "strength": 4, "literal": "会考虑", "intended": "婉拒", "tags": ["rejection"] },
-    { "term": "結構です", "lang": "ja", "strength": 4, "literal": "可以 / 不用", "intended": "歧义：肯定或拒绝皆可，必须看语境", "tags": ["conditional"] },
-    { "term": "空気を読", "lang": "ja", "strength": 3, "literal": "读空气", "intended": "要求对方自行领会未言明的期待", "tags": ["nonconformity"] },
-
-    { "term": "생각해 볼게요", "lang": "ko", "strength": 4, "literal": "我考虑一下", "intended": "婉拒", "tags": ["rejection"] },
-    { "term": "검토해 보겠습니다", "lang": "ko", "strength": 4, "literal": "会研究一下", "intended": "婉拒", "tags": ["rejection"] },
-
-    { "term": "quite interesting", "lang": "en", "strength": 4, "literal": "相当有趣", "intended": "英式否定", "tags": ["rejection"] },
-    { "term": "with the greatest respect", "lang": "en", "strength": 5, "literal": "致以最大敬意", "intended": "你错了", "tags": ["rejection"] },
-    { "term": "I'll bear it in mind", "lang": "en", "strength": 4, "literal": "我会记住", "intended": "已忘记，不会采纳", "tags": ["rejection"] },
-    { "term": "that's one way of looking at it", "lang": "en", "strength": 4, "literal": "这是一种看法", "intended": "不同意", "tags": ["rejection"] },
-    { "term": "let's take this offline", "lang": "en", "strength": 3, "literal": "会后单独谈", "intended": "本议题在此结束", "tags": ["closing"] },
-    { "term": "inshallah", "lang": "ar", "strength": 3, "literal": "如真主所愿", "intended": "歧义：可能是承诺，也可能是礼貌推脱", "tags": ["noncommittal"] }
+    {
+      "term": "再研究研究",
+      "lang": "zh",
+      "strength": 5,
+      "literal": "还会继续研究这个方案",
+      "intended": "否决，且不会再研究",
+      "tags": [
+        "rejection",
+        "deferral"
+      ]
+    },
+    {
+      "term": "研究研究",
+      "lang": "zh",
+      "strength": 4,
+      "literal": "会做进一步研究",
+      "intended": "搁置或婉拒",
+      "tags": [
+        "deferral"
+      ]
+    },
+    {
+      "term": "再看看",
+      "lang": "zh",
+      "strength": 4,
+      "literal": "稍后再评估",
+      "intended": "无限期搁置",
+      "tags": [
+        "deferral"
+      ]
+    },
+    {
+      "term": "回头再说",
+      "lang": "zh",
+      "strength": 5,
+      "literal": "稍后会继续讨论",
+      "intended": "此事到此为止",
+      "tags": [
+        "rejection",
+        "deferral"
+      ]
+    },
+    {
+      "term": "回头再",
+      "lang": "zh",
+      "strength": 4,
+      "literal": "之后还会有下文",
+      "intended": "不会有下文",
+      "tags": [
+        "deferral"
+      ]
+    },
+    {
+      "term": "改天",
+      "lang": "zh",
+      "strength": 4,
+      "literal": "换一天进行",
+      "intended": "不打算进行",
+      "tags": [
+        "deferral"
+      ]
+    },
+    {
+      "term": "有空再",
+      "lang": "zh",
+      "strength": 4,
+      "literal": "有时间的时候做",
+      "intended": "不会做",
+      "tags": [
+        "deferral"
+      ]
+    },
+    {
+      "term": "以后有机会",
+      "lang": "zh",
+      "strength": 4,
+      "literal": "将来还有机会",
+      "intended": "礼貌性关闭",
+      "tags": [
+        "rejection"
+      ]
+    },
+    {
+      "term": "原则上",
+      "lang": "zh",
+      "strength": 5,
+      "literal": "基本同意",
+      "intended": "后面必有实质性否定条件",
+      "tags": [
+        "conditional",
+        "rejection"
+      ]
+    },
+    {
+      "term": "基本上同意",
+      "lang": "zh",
+      "strength": 4,
+      "literal": "同意",
+      "intended": "保留了否决权",
+      "tags": [
+        "conditional"
+      ]
+    },
+    {
+      "term": "出发点是好的",
+      "lang": "zh",
+      "strength": 5,
+      "literal": "肯定了动机",
+      "intended": "结果被否定，这是铺垫",
+      "tags": [
+        "rejection"
+      ]
+    },
+    {
+      "term": "方向是对的",
+      "lang": "zh",
+      "strength": 4,
+      "literal": "认可方向",
+      "intended": "具体内容被否定",
+      "tags": [
+        "rejection"
+      ]
+    },
+    {
+      "term": "想法是好的",
+      "lang": "zh",
+      "strength": 4,
+      "literal": "认可想法",
+      "intended": "不可执行",
+      "tags": [
+        "rejection"
+      ]
+    },
+    {
+      "term": "有一定难度",
+      "lang": "zh",
+      "strength": 5,
+      "literal": "有困难但可以克服",
+      "intended": "拒绝",
+      "tags": [
+        "rejection"
+      ]
+    },
+    {
+      "term": "有点困难",
+      "lang": "zh",
+      "strength": 5,
+      "literal": "有些困难",
+      "intended": "拒绝",
+      "tags": [
+        "rejection"
+      ]
+    },
+    {
+      "term": "比较困难",
+      "lang": "zh",
+      "strength": 5,
+      "literal": "相对困难",
+      "intended": "拒绝",
+      "tags": [
+        "rejection"
+      ]
+    },
+    {
+      "term": "不太方便",
+      "lang": "zh",
+      "strength": 5,
+      "literal": "时机不便",
+      "intended": "拒绝",
+      "tags": [
+        "rejection"
+      ]
+    },
+    {
+      "term": "恐怕",
+      "lang": "zh",
+      "strength": 3,
+      "literal": "担心",
+      "intended": "否定前置缓冲",
+      "tags": [
+        "rejection"
+      ]
+    },
+    {
+      "term": "可能有些",
+      "lang": "zh",
+      "strength": 3,
+      "literal": "也许有一点",
+      "intended": "实为确定的问题",
+      "tags": [
+        "rejection"
+      ]
+    },
+    {
+      "term": "我们内部先对齐",
+      "lang": "zh",
+      "strength": 5,
+      "literal": "内部讨论后回复",
+      "intended": "本议题结束，不会回复",
+      "tags": [
+        "deferral",
+        "closing"
+      ]
+    },
+    {
+      "term": "慢慢对齐",
+      "lang": "zh",
+      "strength": 5,
+      "literal": "逐步统一意见",
+      "intended": "无限期搁置",
+      "tags": [
+        "deferral"
+      ]
+    },
+    {
+      "term": "先不展开",
+      "lang": "zh",
+      "strength": 5,
+      "literal": "本次不详谈",
+      "intended": "永远不会详谈",
+      "tags": [
+        "closing"
+      ]
+    },
+    {
+      "term": "另找时间",
+      "lang": "zh",
+      "strength": 4,
+      "literal": "会另约时间",
+      "intended": "不会另约",
+      "tags": [
+        "deferral"
+      ]
+    },
+    {
+      "term": "需要走个流程",
+      "lang": "zh",
+      "strength": 4,
+      "literal": "有审批流程",
+      "intended": "推给流程的软拒绝",
+      "tags": [
+        "deferral"
+      ]
+    },
+    {
+      "term": "上面还要看",
+      "lang": "zh",
+      "strength": 4,
+      "literal": "需上级审批",
+      "intended": "推给不在场的上级",
+      "tags": [
+        "deferral"
+      ]
+    },
+    {
+      "term": "领导的意思",
+      "lang": "zh",
+      "strength": 3,
+      "literal": "转达上级意见",
+      "intended": "说话人不承担责任，但态度已定",
+      "tags": [
+        "rejection"
+      ]
+    },
+    {
+      "term": "考虑一下",
+      "lang": "zh",
+      "strength": 4,
+      "literal": "会考虑",
+      "intended": "婉拒",
+      "tags": [
+        "rejection",
+        "deferral"
+      ]
+    },
+    {
+      "term": "让我想想",
+      "lang": "zh",
+      "strength": 3,
+      "literal": "需要时间思考",
+      "intended": "多为婉拒",
+      "tags": [
+        "deferral"
+      ]
+    },
+    {
+      "term": "尽量",
+      "lang": "zh",
+      "strength": 3,
+      "literal": "会努力做到",
+      "intended": "不承诺",
+      "tags": [
+        "noncommittal"
+      ]
+    },
+    {
+      "term": "争取",
+      "lang": "zh",
+      "strength": 3,
+      "literal": "会努力争取",
+      "intended": "不承诺",
+      "tags": [
+        "noncommittal"
+      ]
+    },
+    {
+      "term": "应该问题不大",
+      "lang": "zh",
+      "strength": 3,
+      "literal": "大概没问题",
+      "intended": "未确认，不可依赖",
+      "tags": [
+        "noncommittal"
+      ]
+    },
+    {
+      "term": "到时候再说",
+      "lang": "zh",
+      "strength": 4,
+      "literal": "届时决定",
+      "intended": "回避承诺",
+      "tags": [
+        "noncommittal",
+        "deferral"
+      ]
+    },
+    {
+      "term": "看情况",
+      "lang": "zh",
+      "strength": 3,
+      "literal": "视情况而定",
+      "intended": "不承诺",
+      "tags": [
+        "noncommittal"
+      ]
+    },
+    {
+      "term": "不好说",
+      "lang": "zh",
+      "strength": 3,
+      "literal": "难以判断",
+      "intended": "倾向否定",
+      "tags": [
+        "rejection"
+      ]
+    },
+    {
+      "term": "有点意思",
+      "lang": "zh",
+      "strength": 4,
+      "literal": "有趣",
+      "intended": "评价降级，实为否定",
+      "tags": [
+        "rejection"
+      ]
+    },
+    {
+      "term": "很有想法",
+      "lang": "zh",
+      "strength": 4,
+      "literal": "富有创意",
+      "intended": "不切实际",
+      "tags": [
+        "rejection"
+      ]
+    },
+    {
+      "term": "勇气可嘉",
+      "lang": "zh",
+      "strength": 5,
+      "literal": "赞赏勇气",
+      "intended": "方案不可行",
+      "tags": [
+        "rejection"
+      ]
+    },
+    {
+      "term": "还年轻",
+      "lang": "zh",
+      "strength": 4,
+      "literal": "年纪尚轻",
+      "intended": "经验不足，判断不被采纳",
+      "tags": [
+        "rejection"
+      ]
+    },
+    {
+      "term": "年轻人有冲劲",
+      "lang": "zh",
+      "strength": 4,
+      "literal": "赞赏活力",
+      "intended": "先给台阶，随后否定",
+      "tags": [
+        "rejection"
+      ]
+    },
+    {
+      "term": "你先忙",
+      "lang": "zh",
+      "strength": 4,
+      "literal": "你去忙吧",
+      "intended": "结束对话",
+      "tags": [
+        "closing"
+      ]
+    },
+    {
+      "term": "辛苦了",
+      "lang": "zh",
+      "strength": 2,
+      "literal": "感谢付出",
+      "intended": "多为收尾信号，非评价",
+      "tags": [
+        "closing"
+      ]
+    },
+    {
+      "term": "都行",
+      "lang": "zh",
+      "strength": 3,
+      "literal": "任何选项都接受",
+      "intended": "常为不满或测试，需看语气",
+      "tags": [
+        "nonconformity"
+      ]
+    },
+    {
+      "term": "随你",
+      "lang": "zh",
+      "strength": 4,
+      "literal": "由你决定",
+      "intended": "不满，已放弃沟通",
+      "tags": [
+        "nonconformity"
+      ]
+    },
+    {
+      "term": "看着办",
+      "lang": "zh",
+      "strength": 4,
+      "literal": "自行决定",
+      "intended": "推卸责任或表达不满",
+      "tags": [
+        "nonconformity"
+      ]
+    },
+    {
+      "term": "无所谓",
+      "lang": "zh",
+      "strength": 3,
+      "literal": "不在意",
+      "intended": "多为在意但不愿争",
+      "tags": [
+        "nonconformity"
+      ]
+    },
+    {
+      "term": "呵呵",
+      "lang": "zh",
+      "strength": 5,
+      "literal": "笑声",
+      "intended": "嘲讽、不满或终止对话",
+      "tags": [
+        "nonconformity",
+        "closing"
+      ]
+    },
+    {
+      "term": "这事我记着",
+      "lang": "zh",
+      "strength": 2,
+      "literal": "会记住此事",
+      "intended": "人情记账，日后要还",
+      "tags": [
+        "conditional"
+      ]
+    },
+    {
+      "term": "给我个面子",
+      "lang": "zh",
+      "strength": 3,
+      "literal": "请给予照顾",
+      "intended": "以关系施压，拒绝成本很高",
+      "tags": [
+        "conditional"
+      ]
+    },
+    {
+      "term": "ちょっと難しい",
+      "lang": "ja",
+      "strength": 5,
+      "literal": "有点难",
+      "intended": "拒绝",
+      "tags": [
+        "rejection"
+      ]
+    },
+    {
+      "term": "検討させていただきます",
+      "lang": "ja",
+      "strength": 5,
+      "literal": "让我们研究一下",
+      "intended": "拒绝",
+      "tags": [
+        "rejection"
+      ]
+    },
+    {
+      "term": "前向きに検討",
+      "lang": "ja",
+      "strength": 5,
+      "literal": "积极研究",
+      "intended": "拒绝",
+      "tags": [
+        "rejection"
+      ]
+    },
+    {
+      "term": "善処します",
+      "lang": "ja",
+      "strength": 5,
+      "literal": "会妥善处理",
+      "intended": "不会处理",
+      "tags": [
+        "rejection"
+      ]
+    },
+    {
+      "term": "考えておきます",
+      "lang": "ja",
+      "strength": 4,
+      "literal": "会考虑",
+      "intended": "婉拒",
+      "tags": [
+        "rejection"
+      ]
+    },
+    {
+      "term": "結構です",
+      "lang": "ja",
+      "strength": 4,
+      "literal": "可以 / 不用",
+      "intended": "歧义：肯定或拒绝皆可，必须看语境",
+      "tags": [
+        "conditional"
+      ]
+    },
+    {
+      "term": "空気を読",
+      "lang": "ja",
+      "strength": 3,
+      "literal": "读空气",
+      "intended": "要求对方自行领会未言明的期待",
+      "tags": [
+        "nonconformity"
+      ]
+    },
+    {
+      "term": "생각해 볼게요",
+      "lang": "ko",
+      "strength": 4,
+      "literal": "我考虑一下",
+      "intended": "婉拒",
+      "tags": [
+        "rejection"
+      ]
+    },
+    {
+      "term": "검토해 보겠습니다",
+      "lang": "ko",
+      "strength": 4,
+      "literal": "会研究一下",
+      "intended": "婉拒",
+      "tags": [
+        "rejection"
+      ]
+    },
+    {
+      "term": "quite interesting",
+      "lang": "en",
+      "strength": 4,
+      "literal": "相当有趣",
+      "intended": "英式否定",
+      "tags": [
+        "rejection"
+      ]
+    },
+    {
+      "term": "with the greatest respect",
+      "lang": "en",
+      "strength": 5,
+      "literal": "致以最大敬意",
+      "intended": "你错了",
+      "tags": [
+        "rejection"
+      ]
+    },
+    {
+      "term": "I'll bear it in mind",
+      "lang": "en",
+      "strength": 4,
+      "literal": "我会记住",
+      "intended": "已忘记，不会采纳",
+      "tags": [
+        "rejection"
+      ]
+    },
+    {
+      "term": "that's one way of looking at it",
+      "lang": "en",
+      "strength": 4,
+      "literal": "这是一种看法",
+      "intended": "不同意",
+      "tags": [
+        "rejection"
+      ]
+    },
+    {
+      "term": "let's take this offline",
+      "lang": "en",
+      "strength": 3,
+      "literal": "会后单独谈",
+      "intended": "本议题在此结束",
+      "tags": [
+        "closing"
+      ]
+    },
+    {
+      "term": "inshallah",
+      "lang": "ar",
+      "strength": 3,
+      "literal": "如真主所愿",
+      "intended": "歧义：可能是承诺，也可能是礼貌推脱",
+      "tags": [
+        "noncommittal"
+      ]
+    },
+    {
+      "term": "当年也是这么说",
+      "lang": "zh",
+      "strength": 4,
+      "literal": "陈述一件往事",
+      "intended": "以父辈的失信先例施加道德压力，等于指责对方将重蹈覆辙",
+      "tags": [
+        "nonconformity"
+      ],
+      "variants": [
+        "当年也是这么讲",
+        "当初也是这么说"
+      ]
+    },
+    {
+      "term": "务必回去",
+      "lang": "zh",
+      "strength": 3,
+      "literal": "请一定回来",
+      "intended": "以义务而非邀请的形式提出，拒绝成本高",
+      "tags": [
+        "conditional"
+      ]
+    },
+    {
+      "term": "抽不开身",
+      "lang": "zh",
+      "strength": 3,
+      "literal": "时间上安排不开",
+      "intended": "标准的体面推辞，双方都知道未必是真实原因",
+      "tags": [
+        "rejection"
+      ]
+    }
   ]
 }
