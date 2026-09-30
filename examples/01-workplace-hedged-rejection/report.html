@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>语境转译报告</title>
+<style>
+:root {
+  --bg:#faf9f7; --panel:#fff; --ink:#1b1a18; --muted:#6b6862; --line:#e5e1db;
+  --warm:#c2410c; --cool:#0f766e; --accent:#7c3aed;
+  --presup:#8b5cf6; --subtext:#dc2626; --face:#ea580c; --hier:#0891b2; --motif:#ca8a04; --ellip:#64748b;
+  --radius:10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#16151a; --panel:#1f1e25; --ink:#eceaf2; --muted:#9d99a8; --line:#33313d;
+    --warm:#fb923c; --cool:#5eead4; --accent:#a78bfa;
+    --presup:#a78bfa; --subtext:#f87171; --face:#fb923c; --hier:#22d3ee; --motif:#facc15; --ellip:#94a3b8;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:#16151a; --panel:#1f1e25; --ink:#eceaf2; --muted:#9d99a8; --line:#33313d;
+  --warm:#fb923c; --cool:#5eead4; --accent:#a78bfa;
+  --presup:#a78bfa; --subtext:#f87171; --face:#fb923c; --hier:#22d3ee; --motif:#facc15; --ellip:#94a3b8;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:var(--ink);
+  font:16px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+}
+.wrap { max-width:880px; margin:0 auto; padding:40px 16px 80px; }
+h1 { font-size:1.6rem; margin:0 0 4px; letter-spacing:-.01em; }
+h2 { font-size:1.05rem; margin:0 0 14px; letter-spacing:.02em; color:var(--muted); font-weight:600; }
+h3 { font-size:1rem; margin:0 0 10px; }
+h3 small { color:var(--muted); font-weight:400; margin-left:6px; }
+.lede { color:var(--muted); margin:0 0 28px; font-size:.92rem; }
+.panel { background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:22px; margin-bottom:18px; }
+.gauges { display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+@media (max-width:560px) { .gauges { grid-template-columns:1fr; } }
+.gauge-head { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; }
+.gauge-head span { color:var(--muted); font-size:.85rem; }
+.gauge-head b { font-size:1.9rem; font-variant-numeric:tabular-nums; line-height:1; }
+.warm { color:var(--warm); } .cool { color:var(--cool); }
+.bar { height:7px; background:var(--line); border-radius:99px; overflow:hidden; }
+.bar i { display:block; height:100%; border-radius:99px; }
+.bar i.warm { background:var(--warm); } .bar i.cool { background:var(--cool); }
+.hint { color:var(--muted); font-size:.8rem; margin:8px 0 0; }
+.sub { display:grid; grid-template-columns:118px 1fr 62px; align-items:center; gap:12px; margin-bottom:9px; font-size:.87rem; }
+.sub .bar { height:9px; }
+.sub b { text-align:right; font-variant-numeric:tabular-nums; }
+.sub small { color:var(--muted); font-weight:400; }
+.c-presupposition { background:var(--presup); } .c-subtext { background:var(--subtext); }
+.c-motif { background:var(--motif); } .c-hierarchy { background:var(--hier); } .c-ellipsis { background:var(--ellip); }
+.heat { font-size:1.06rem; line-height:2.3; letter-spacing:.01em; }
+mark.hs { background:transparent; color:inherit; padding:2px 1px; border-radius:3px; cursor:help; position:relative; }
+mark.hs { box-shadow:inset 0 -.62em 0 color-mix(in srgb, currentColor 18%, transparent); }
+mark.presup { color:var(--presup); } mark.subtext { color:var(--subtext); }
+mark.face { color:var(--face); } mark.hier { color:var(--hier); }
+mark.motif { color:var(--motif); } mark.ellip { color:var(--ellip); }
+mark.sev4, mark.sev5 { box-shadow:inset 0 -.62em 0 color-mix(in srgb, currentColor 30%, transparent); font-weight:600; }
+mark.hs:hover::after, mark.hs:focus::after {
+  content:attr(data-tip); position:absolute; left:0; top:calc(100% + 6px); z-index:9;
+  background:var(--ink); color:var(--bg); padding:7px 10px; border-radius:7px;
+  font-size:.78rem; line-height:1.5; font-weight:400; white-space:normal; width:max-content; max-width:320px;
+  box-shadow:0 6px 20px rgba(0,0,0,.2);
+}
+.legend { margin-top:16px; display:flex; flex-wrap:wrap; gap:6px; }
+.tag { font-size:.72rem; padding:2px 8px; border-radius:99px; border:1px solid currentColor; }
+.tag.presup { color:var(--presup); } .tag.subtext { color:var(--subtext); }
+.tag.face { color:var(--face); } .tag.hier { color:var(--hier); }
+.tag.motif { color:var(--motif); } .tag.ellip { color:var(--ellip); }
+.card { border:1px solid var(--line); border-left:3px solid var(--line); border-radius:8px; padding:14px 16px; margin-bottom:10px; background:var(--panel); }
+.card.presup { border-left-color:var(--presup); } .card.subtext { border-left-color:var(--subtext); }
+.card.face { border-left-color:var(--face); } .card.hier { border-left-color:var(--hier); }
+.card.motif { border-left-color:var(--motif); } .card.ellip { border-left-color:var(--ellip); }
+.card header { display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin-bottom:9px; }
+.card .sev { color:var(--muted); font-size:.75rem; margin-left:auto; }
+dl { margin:0; display:grid; grid-template-columns:auto 1fr; gap:4px 14px; font-size:.88rem; }
+dt { color:var(--muted); white-space:nowrap; }
+dd { margin:0; }
+code { background:color-mix(in srgb, var(--ink) 7%, transparent); padding:2px 6px; border-radius:5px; font-size:.88em; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
+pre { background:color-mix(in srgb, var(--ink) 5%, transparent); padding:14px; border-radius:8px; overflow:auto; font-size:.82rem; line-height:1.6; }
+pre code { background:none; padding:0; }
+table { width:100%; border-collapse:collapse; font-size:.87rem; }
+td { padding:8px 6px; border-bottom:1px solid var(--line); vertical-align:middle; }
+td:first-child { width:40%; white-space:nowrap; }
+thead th { padding:0 6px 6px; text-align:left; font-size:.76rem; font-weight:500; color:var(--muted); border-bottom:1px solid var(--line); }
+tr.rec { background:color-mix(in srgb, var(--accent) 9%, transparent); }
+.cell { display:flex; align-items:center; gap:8px; }
+td span { font-variant-numeric:tabular-nums; min-width:26px; text-align:right; color:var(--muted); font-size:.82rem; }
+.mini { flex:1; min-width:52px; height:5px; background:var(--line); border-radius:99px; overflow:hidden; }
+.mini i { display:block; height:100%; }
+.mini i.warm { background:var(--warm); } .mini i.cool { background:var(--cool); }
+.track { border-top:1px solid var(--line); padding-top:16px; margin-top:16px; }
+.track:first-child { border-top:none; padding-top:0; margin-top:0; }
+blockquote { margin:0 0 10px; padding:12px 16px; border-left:3px solid var(--line); background:color-mix(in srgb, var(--ink) 4%, transparent); border-radius:0 8px 8px 0; }
+.notes { margin:0; padding-left:18px; font-size:.85rem; color:var(--muted); }
+.notes b { color:var(--ink); margin-right:6px; }
+.body { font-size:.94rem; }
+ol.advice { padding-left:20px; }
+ol.advice li { margin-bottom:16px; }
+ol.advice em { display:block; color:var(--muted); font-size:.8rem; font-style:normal; }
+ol.advice p { margin:5px 0 0; font-size:.9rem; }
+.keep { color:var(--cool); } .cost { color:var(--warm); }
+ul.plain { padding-left:20px; font-size:.88rem; color:var(--muted); }
+footer { margin-top:36px; color:var(--muted); font-size:.78rem; text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>语境转译报告</h1>
+  <p class="lede">受众 de-business
+    · 目标 L4 功能化
+    · 断点密度 9.0 处/千字
+    · 热点 4 处</p>
+
+  <div class="panel gauges">
+      <div class="gauge">
+        <div class="gauge-head"><span>文化阻抗 Friction</span><b class="warm">73</b></div>
+        <div class="bar"><i class="warm" style="width:73%"></i></div>
+        <p class="hint">高阻：越高越容易被目标受众读错</p>
+      </div>
+      <div class="gauge">
+        <div class="gauge-head"><span>保真度 Fidelity</span><b class="cool">70</b></div>
+        <div class="bar"><i class="cool" style="width:70%"></i></div>
+        <p class="hint">降到目标级别后，原文韵味还剩多少</p>
+      </div>
+  </div>
+
+  <div class="panel">
+    <h2>子分构成</h2>
+    <div class="sub"><span>P 共识预设</span><div class="bar"><i class="c-presupposition" style="width:0.0%"></i></div><b>0<small>/25</small></b></div><div class="sub"><span>S 潜台词</span><div class="bar"><i class="c-subtext" style="width:100.0%"></i></div><b>25.0<small>/25</small></b></div><div class="sub"><span>M 文化意象</span><div class="bar"><i class="c-motif" style="width:0.0%"></i></div><b>0<small>/20</small></b></div><div class="sub"><span>H 位阶面子</span><div class="bar"><i class="c-hierarchy" style="width:45.3%"></i></div><b>6.8<small>/15</small></b></div><div class="sub"><span>E 留白省略</span><div class="bar"><i class="c-ellipsis" style="width:0.0%"></i></div><b>0<small>/15</small></b></div>
+  </div>
+
+  <div class="panel">
+    <h2>热力图</h2>
+    <div class="heat">张总在会上对<mark class="hs hier sev3" tabindex="0" data-tip="位阶：「小 X」只能由上级或年长者使用，与同句中的「张总」形成位阶落差——这次否决是当着全组、自上而下发生的。">小李</mark>说：你这个方案的<mark class="hs face sev4" tabindex="0" data-tip="面子：先给一句肯定，让接下来的否定说得出口。肯定的是动机，不是方案。">出发点是好的</mark>，<mark class="hs hier sev3" tabindex="0" data-tip="位阶：把对方归入「年轻/资历浅」一类，等于说判断力还不够，因此不采纳。">年轻人有冲劲很难得</mark>。不过里面涉及到的几个跨部门协作的细节，<mark class="hs subtext sev5" tabindex="0" data-tip="潜台词：议题到此为止，不会再安排会议。这是一次留了面子的否决。">我们回头再找时间慢慢对齐一下</mark>，今天先不展开了。</div>
+    <div class="legend"><span class="tag presup">共识预设</span><span class="tag subtext">潜台词</span><span class="tag face">面子</span><span class="tag hier">位阶</span><span class="tag motif">意象</span><span class="tag ellip">留白</span></div>
+  </div>
+
+  <div class="panel">
+    <h2>断点 · 4 处</h2>
+    <article class="card face"><header><code>出发点是好的</code><span class="tag face">面子</span><span class="sev">严重度 4</span></header><dl><dt>字面会读成</dt><dd>领导认可了方案的初衷，是一句正面评价。</dd><dt>实际在说</dt><dd>先给一句肯定，让接下来的否定说得出口。肯定的是动机，不是方案。</dd><dt>读错的后果</dt><dd>把它当成实质性认可，在后续沟通中引用「领导说过出发点是好的」，会显得没听懂话。</dd><dt>桥接</dt><dd>译文中把这句标注为缓冲语，与真实评价分开呈现，不要混在同一句里。</dd></dl></article><article class="card hier"><header><code>年轻人有冲劲很难得</code><span class="tag hier">位阶</span><span class="sev">严重度 3</span></header><dl><dt>字面会读成</dt><dd>领导赞赏年轻人的干劲。</dd><dt>实际在说</dt><dd>把对方归入「年轻/资历浅」一类，等于说判断力还不够，因此不采纳。</dd><dt>读错的后果</dt><dd>读成鼓励，从而认为方案还有机会，继续投入。</dd><dt>桥接</dt><dd>译文中点明这是以资历为由的软性降级，而非鼓励。</dd></dl></article><article class="card subtext"><header><code>我们回头再找时间慢慢对齐一下</code><span class="tag subtext">潜台词</span><span class="sev">严重度 5</span></header><dl><dt>字面会读成</dt><dd>双方将在稍后安排一次会议继续讨论细节。</dd><dt>实际在说</dt><dd>议题到此为止，不会再安排会议。这是一次留了面子的否决。</dd><dt>读错的后果</dt><dd>对方会等待会议邀请并继续保留资源投入，错过调整方案或改走其他路径的窗口。</dd><dt>桥接</dt><dd>译文中直接给出结论句「此议题已结束」，把缓冲语保留为独立的一句语气说明。</dd></dl></article><article class="card hier"><header><code>小李</code><span class="tag hier">位阶</span><span class="sev">严重度 3</span></header><dl><dt>字面会读成</dt><dd>一个叫李的人，英译为 Li 或 Xiao Li。</dd><dt>实际在说</dt><dd>「小 X」只能由上级或年长者使用，与同句中的「张总」形成位阶落差——这次否决是当着全组、自上而下发生的。</dd><dt>读错的后果</dt><dd>位阶信息在英译中完全丢失，读者无法理解为什么被否决的一方不当场追问。</dd><dt>桥接</dt><dd>在译文或注释中一次性说明称谓的位阶含义，或改用场景描写外化（谁先开口、谁没有回应）。</dd></dl></article>
+  </div>
+
+  <div class="panel">
+    <h2>未言明的前提</h2>
+    <ul class="plain"><li>在中国的会议场景中，上级当众否决下属时使用缓冲语是常规礼节，不表示态度犹豫。</li><li>「回头再约时间」在绝大多数情况下不会真的产生后续会议。</li><li>当众提出的否决通常已经在会前定好，会议只是宣布。</li></ul>
+  </div>
+
+  <div class="panel">
+    <h2>阶梯取舍</h2>
+    <table><thead><tr><th>级别</th><th>阻抗 Friction</th><th>保真 Fidelity</th></tr></thead>
+    <tbody><tr class=""><td><code>L0</code> 原样</td><td><div class="mini"><i class="warm" style="width:73%"></i></div><span>73</span></td><td><div class="mini"><i class="cool" style="width:100%"></i></div><span>100</span></td></tr><tr class=""><td><code>L1</code> 注释轨</td><td><div class="mini"><i class="warm" style="width:58%"></i></div><span>58</span></td><td><div class="mini"><i class="cool" style="width:98%"></i></div><span>98</span></td></tr><tr class=""><td><code>L2</code> 轻度显化</td><td><div class="mini"><i class="warm" style="width:49%"></i></div><span>49</span></td><td><div class="mini"><i class="cool" style="width:94%"></i></div><span>94</span></td></tr><tr class="rec"><td><code>L3</code> 叙事显化 ★</td><td><div class="mini"><i class="warm" style="width:31%"></i></div><span>31</span></td><td><div class="mini"><i class="cool" style="width:86%"></i></div><span>86</span></td></tr><tr class=""><td><code>L4</code> 功能化</td><td><div class="mini"><i class="warm" style="width:20%"></i></div><span>20</span></td><td><div class="mini"><i class="cool" style="width:70%"></i></div><span>70</span></td></tr><tr class=""><td><code>L5</code> 机读化</td><td><div class="mini"><i class="warm" style="width:7%"></i></div><span>7</span></td><td><div class="mini"><i class="cool" style="width:62%"></i></div><span>62</span></td></tr></tbody></table>
+    <p class="hint">商务场景直接取 L4：需要的是「能不能继续投入」这个判断，不是语感。L1 注释轨作为补充，保留原话的分寸感供用户自行体会。</p>
+  </div>
+
+  <div class="panel">
+    <h2>转译</h2>
+    <section class="track"><h3><code>L1</code> 注释轨 <small>正文一字未动</small></h3><blockquote>张总在会上对小李说：你这个方案的出发点是好的，年轻人有冲劲很难得。不过里面涉及到的几个跨部门协作的细节，我们回头再找时间慢慢对齐一下，今天先不展开了。</blockquote><ul class="notes"><li><b>张总 / 小李</b>称谓编码位阶：X总指向管理层，小X用于年轻下属，且只能由上级使用。</li><li><b>出发点是好的</b>否定前的固定铺垫，肯定的是动机不是方案。</li><li><b>回头再找时间慢慢对齐</b>无限期搁置的标准表述，等于本议题结束。</li><li><b>今天先不展开了</b>会议中终止话题的信号，通常不会再展开。</li></ul></section><section class="track"><h3><code>L4</code> 功能化</h3><div class="body">【结论】方案不通过。<br>【依据】给出的理由是跨部门协作细节；这是可对外说出口的理由，真实理由未言明。<br>【边界】不会另行安排讨论时间；本次会议中此议题已结束。当众否决意味着决定已定，不接受当场申辩。<br>【动作】不要等待会议邀请。若仍要推进，需要更换切入点或绕开当前决策人；若要确认，只能会后单独、私下、以请教而非质疑的方式问。</div></section><section class="track"><h3><code>R1</code> 得体化</h3><div class="body">张总，谢谢您点出跨部门这块。我先把协作路径和责任边界梳理清楚，等成形了再单独向您汇报，不占用会议时间。</div></section>
+  </div>
+
+  <section class="panel"><h2>机读输出 L5</h2><pre><code>{
+  &quot;intent&quot;: &quot;在不损伤下属面子的前提下否决方案并结束议题&quot;,
+  &quot;stance&quot;: &quot;reject&quot;,
+  &quot;confidence&quot;: 0.85,
+  &quot;action_items&quot;: [],
+  &quot;constraints&quot;: [
+    &quot;未给出重新讨论的时间&quot;,
+    &quot;跨部门协作细节被列为公开理由&quot;
+  ],
+  &quot;deadline&quot;: null,
+  &quot;escalation_needed&quot;: true,
+  &quot;evidence&quot;: [
+    &quot;出发点是好的&quot;,
+    &quot;回头再找时间&quot;,
+    &quot;慢慢对齐&quot;,
+    &quot;今天先不展开了&quot;
+  ]
+}</code></pre></section>
+
+  
+
+  <div class="panel">
+    <h2>注意事项</h2>
+    <ul class="plain"><li>判定依据是语用标记而非说话人个人风格；若张总一贯说话就是这样委婉，强度应下调。</li><li>若会后确实收到了会议邀请，则本判定错误，应改判为 defer。</li></ul>
+  </div>
+
+  <footer>context-transcompiler · 语境平抑器 · 分数为可复现的启发式指标，用于相对比较而非绝对测定</footer>
+</div>
+</body>
+</html>

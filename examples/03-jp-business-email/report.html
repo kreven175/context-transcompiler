@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>语境转译报告</title>
+<style>
+:root {
+  --bg:#faf9f7; --panel:#fff; --ink:#1b1a18; --muted:#6b6862; --line:#e5e1db;
+  --warm:#c2410c; --cool:#0f766e; --accent:#7c3aed;
+  --presup:#8b5cf6; --subtext:#dc2626; --face:#ea580c; --hier:#0891b2; --motif:#ca8a04; --ellip:#64748b;
+  --radius:10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#16151a; --panel:#1f1e25; --ink:#eceaf2; --muted:#9d99a8; --line:#33313d;
+    --warm:#fb923c; --cool:#5eead4; --accent:#a78bfa;
+    --presup:#a78bfa; --subtext:#f87171; --face:#fb923c; --hier:#22d3ee; --motif:#facc15; --ellip:#94a3b8;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:#16151a; --panel:#1f1e25; --ink:#eceaf2; --muted:#9d99a8; --line:#33313d;
+  --warm:#fb923c; --cool:#5eead4; --accent:#a78bfa;
+  --presup:#a78bfa; --subtext:#f87171; --face:#fb923c; --hier:#22d3ee; --motif:#facc15; --ellip:#94a3b8;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:var(--ink);
+  font:16px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+}
+.wrap { max-width:880px; margin:0 auto; padding:40px 16px 80px; }
+h1 { font-size:1.6rem; margin:0 0 4px; letter-spacing:-.01em; }
+h2 { font-size:1.05rem; margin:0 0 14px; letter-spacing:.02em; color:var(--muted); font-weight:600; }
+h3 { font-size:1rem; margin:0 0 10px; }
+h3 small { color:var(--muted); font-weight:400; margin-left:6px; }
+.lede { color:var(--muted); margin:0 0 28px; font-size:.92rem; }
+.panel { background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:22px; margin-bottom:18px; }
+.gauges { display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+@media (max-width:560px) { .gauges { grid-template-columns:1fr; } }
+.gauge-head { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; }
+.gauge-head span { color:var(--muted); font-size:.85rem; }
+.gauge-head b { font-size:1.9rem; font-variant-numeric:tabular-nums; line-height:1; }
+.warm { color:var(--warm); } .cool { color:var(--cool); }
+.bar { height:7px; background:var(--line); border-radius:99px; overflow:hidden; }
+.bar i { display:block; height:100%; border-radius:99px; }
+.bar i.warm { background:var(--warm); } .bar i.cool { background:var(--cool); }
+.hint { color:var(--muted); font-size:.8rem; margin:8px 0 0; }
+.sub { display:grid; grid-template-columns:118px 1fr 62px; align-items:center; gap:12px; margin-bottom:9px; font-size:.87rem; }
+.sub .bar { height:9px; }
+.sub b { text-align:right; font-variant-numeric:tabular-nums; }
+.sub small { color:var(--muted); font-weight:400; }
+.c-presupposition { background:var(--presup); } .c-subtext { background:var(--subtext); }
+.c-motif { background:var(--motif); } .c-hierarchy { background:var(--hier); } .c-ellipsis { background:var(--ellip); }
+.heat { font-size:1.06rem; line-height:2.3; letter-spacing:.01em; }
+mark.hs { background:transparent; color:inherit; padding:2px 1px; border-radius:3px; cursor:help; position:relative; }
+mark.hs { box-shadow:inset 0 -.62em 0 color-mix(in srgb, currentColor 18%, transparent); }
+mark.presup { color:var(--presup); } mark.subtext { color:var(--subtext); }
+mark.face { color:var(--face); } mark.hier { color:var(--hier); }
+mark.motif { color:var(--motif); } mark.ellip { color:var(--ellip); }
+mark.sev4, mark.sev5 { box-shadow:inset 0 -.62em 0 color-mix(in srgb, currentColor 30%, transparent); font-weight:600; }
+mark.hs:hover::after, mark.hs:focus::after {
+  content:attr(data-tip); position:absolute; left:0; top:calc(100% + 6px); z-index:9;
+  background:var(--ink); color:var(--bg); padding:7px 10px; border-radius:7px;
+  font-size:.78rem; line-height:1.5; font-weight:400; white-space:normal; width:max-content; max-width:320px;
+  box-shadow:0 6px 20px rgba(0,0,0,.2);
+}
+.legend { margin-top:16px; display:flex; flex-wrap:wrap; gap:6px; }
+.tag { font-size:.72rem; padding:2px 8px; border-radius:99px; border:1px solid currentColor; }
+.tag.presup { color:var(--presup); } .tag.subtext { color:var(--subtext); }
+.tag.face { color:var(--face); } .tag.hier { color:var(--hier); }
+.tag.motif { color:var(--motif); } .tag.ellip { color:var(--ellip); }
+.card { border:1px solid var(--line); border-left:3px solid var(--line); border-radius:8px; padding:14px 16px; margin-bottom:10px; background:var(--panel); }
+.card.presup { border-left-color:var(--presup); } .card.subtext { border-left-color:var(--subtext); }
+.card.face { border-left-color:var(--face); } .card.hier { border-left-color:var(--hier); }
+.card.motif { border-left-color:var(--motif); } .card.ellip { border-left-color:var(--ellip); }
+.card header { display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin-bottom:9px; }
+.card .sev { color:var(--muted); font-size:.75rem; margin-left:auto; }
+dl { margin:0; display:grid; grid-template-columns:auto 1fr; gap:4px 14px; font-size:.88rem; }
+dt { color:var(--muted); white-space:nowrap; }
+dd { margin:0; }
+code { background:color-mix(in srgb, var(--ink) 7%, transparent); padding:2px 6px; border-radius:5px; font-size:.88em; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
+pre { background:color-mix(in srgb, var(--ink) 5%, transparent); padding:14px; border-radius:8px; overflow:auto; font-size:.82rem; line-height:1.6; }
+pre code { background:none; padding:0; }
+table { width:100%; border-collapse:collapse; font-size:.87rem; }
+td { padding:8px 6px; border-bottom:1px solid var(--line); vertical-align:middle; }
+td:first-child { width:40%; white-space:nowrap; }
+thead th { padding:0 6px 6px; text-align:left; font-size:.76rem; font-weight:500; color:var(--muted); border-bottom:1px solid var(--line); }
+tr.rec { background:color-mix(in srgb, var(--accent) 9%, transparent); }
+.cell { display:flex; align-items:center; gap:8px; }
+td span { font-variant-numeric:tabular-nums; min-width:26px; text-align:right; color:var(--muted); font-size:.82rem; }
+.mini { flex:1; min-width:52px; height:5px; background:var(--line); border-radius:99px; overflow:hidden; }
+.mini i { display:block; height:100%; }
+.mini i.warm { background:var(--warm); } .mini i.cool { background:var(--cool); }
+.track { border-top:1px solid var(--line); padding-top:16px; margin-top:16px; }
+.track:first-child { border-top:none; padding-top:0; margin-top:0; }
+blockquote { margin:0 0 10px; padding:12px 16px; border-left:3px solid var(--line); background:color-mix(in srgb, var(--ink) 4%, transparent); border-radius:0 8px 8px 0; }
+.notes { margin:0; padding-left:18px; font-size:.85rem; color:var(--muted); }
+.notes b { color:var(--ink); margin-right:6px; }
+.body { font-size:.94rem; }
+ol.advice { padding-left:20px; }
+ol.advice li { margin-bottom:16px; }
+ol.advice em { display:block; color:var(--muted); font-size:.8rem; font-style:normal; }
+ol.advice p { margin:5px 0 0; font-size:.9rem; }
+.keep { color:var(--cool); } .cost { color:var(--warm); }
+ul.plain { padding-left:20px; font-size:.88rem; color:var(--muted); }
+footer { margin-top:36px; color:var(--muted); font-size:.78rem; text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>语境转译报告</h1>
+  <p class="lede">受众 ai-agent
+    · 目标 L5 机读化
+    · 断点密度 3.0 处/千字
+    · 热点 4 处</p>
+
+  <div class="panel gauges">
+      <div class="gauge">
+        <div class="gauge-head"><span>文化阻抗 Friction</span><b class="warm">69</b></div>
+        <div class="bar"><i class="warm" style="width:69%"></i></div>
+        <p class="hint">高阻：越高越容易被目标受众读错</p>
+      </div>
+      <div class="gauge">
+        <div class="gauge-head"><span>保真度 Fidelity</span><b class="cool">62</b></div>
+        <div class="bar"><i class="cool" style="width:62%"></i></div>
+        <p class="hint">降到目标级别后，原文韵味还剩多少</p>
+      </div>
+  </div>
+
+  <div class="panel">
+    <h2>子分构成</h2>
+    <div class="sub"><span>P 共识预设</span><div class="bar"><i class="c-presupposition" style="width:0.0%"></i></div><b>0<small>/25</small></b></div><div class="sub"><span>S 潜台词</span><div class="bar"><i class="c-subtext" style="width:92.0%"></i></div><b>23.0<small>/25</small></b></div><div class="sub"><span>M 文化意象</span><div class="bar"><i class="c-motif" style="width:0.0%"></i></div><b>0<small>/20</small></b></div><div class="sub"><span>H 位阶面子</span><div class="bar"><i class="c-hierarchy" style="width:0.0%"></i></div><b>0<small>/15</small></b></div><div class="sub"><span>E 留白省略</span><div class="bar"><i class="c-ellipsis" style="width:0.0%"></i></div><b>0<small>/15</small></b></div>
+  </div>
+
+  <div class="panel">
+    <h2>热力图</h2>
+    <div class="heat">ご提案いただいた件、社内で<mark class="hs subtext sev5" tabindex="0" data-tip="潜台词：礼貌性的拒绝。日本商务语境中这句话极少导向实际的内部讨论。">検討させていただきます</mark>。ただ、スケジュール面で<mark class="hs subtext sev5" tabindex="0" data-tip="潜台词：明确拒绝。这是日语中最标准的婉拒表达之一。">ちょっと難しい</mark>ところがございまして、今回は<mark class="hs subtext sev5" tabindex="0" data-tip="潜台词：拒绝。「積極的に」的修饰反而是关闭的信号，属于固定套语。">前向きに検討</mark>という形にさせてください。<mark class="hs face sev2" tabindex="0" data-tip="面子：礼貌收尾，为双方保留体面，不构成任何后续承诺。">また機会がありましたら</mark>、ぜひよろしくお願いいたします。</div>
+    <div class="legend"><span class="tag presup">共识预设</span><span class="tag subtext">潜台词</span><span class="tag face">面子</span><span class="tag hier">位阶</span><span class="tag motif">意象</span><span class="tag ellip">留白</span></div>
+  </div>
+
+  <div class="panel">
+    <h2>断点 · 4 处</h2>
+    <article class="card subtext"><header><code>検討させていただきます</code><span class="tag subtext">潜台词</span><span class="sev">严重度 5</span></header><dl><dt>字面会读成</dt><dd>我们会在公司内部研究这个提案。</dd><dt>实际在说</dt><dd>礼貌性的拒绝。日本商务语境中这句话极少导向实际的内部讨论。</dd><dt>读错的后果</dt><dd>CRM 或 Agent 把状态标记为「进行中」，销售继续跟进，占用管线并错过真实机会。</dd><dt>桥接</dt><dd>在结构化输出中直接置 stance=reject，并保留原文作为证据供人工复核。</dd></dl></article><article class="card subtext"><header><code>ちょっと難しい</code><span class="tag subtext">潜台词</span><span class="sev">严重度 5</span></header><dl><dt>字面会读成</dt><dd>有一点困难，但可以设法克服。</dd><dt>实际在说</dt><dd>明确拒绝。这是日语中最标准的婉拒表达之一。</dd><dt>读错的后果</dt><dd>读成「有困难可以商量」，于是提出降价或压缩工期等让步，而对方根本无意继续。</dd><dt>桥接</dt><dd>这是 stance 判定的最强证据，置信度可给到 0.85 以上。</dd></dl></article><article class="card subtext"><header><code>前向きに検討</code><span class="tag subtext">潜台词</span><span class="sev">严重度 5</span></header><dl><dt>字面会读成</dt><dd>会积极地、正面地考虑。</dd><dt>实际在说</dt><dd>拒绝。「積極的に」的修饰反而是关闭的信号，属于固定套语。</dd><dt>读错的后果</dt><dd>被读成最积极的一句，从而整封邮件被判为正面。这是三处标记中最危险的一处。</dd><dt>桥接</dt><dd>在结构化输出中明确标注该短语为反向标记，避免下游情感分析误判为正面。</dd></dl></article><article class="card face"><header><code>また機会がありましたら</code><span class="tag face">面子</span><span class="sev">严重度 2</span></header><dl><dt>字面会读成</dt><dd>如果以后还有机会的话。</dd><dt>实际在说</dt><dd>礼貌收尾，为双方保留体面，不构成任何后续承诺。</dd><dt>读错的后果</dt><dd>被记为「未来有合作意向」的线索，污染管线数据。</dd><dt>桥接</dt><dd>标为礼节性收尾，不写入 action_items。</dd></dl></article>
+  </div>
+
+  <div class="panel">
+    <h2>未言明的前提</h2>
+    <ul class="plain"><li>日本商务邮件中，谦让语的长度与拒绝的坚决程度正相关。</li><li>不给出时间点等于不打算继续。</li><li>对外理由与真实理由的分离（建前/本音）是默认预期，不是欺瞒。</li></ul>
+  </div>
+
+  <div class="panel">
+    <h2>阶梯取舍</h2>
+    <table><thead><tr><th>级别</th><th>阻抗 Friction</th><th>保真 Fidelity</th></tr></thead>
+    <tbody><tr class=""><td><code>L0</code> 原样</td><td><div class="mini"><i class="warm" style="width:69%"></i></div><span>69</span></td><td><div class="mini"><i class="cool" style="width:100%"></i></div><span>100</span></td></tr><tr class=""><td><code>L1</code> 注释轨</td><td><div class="mini"><i class="warm" style="width:55%"></i></div><span>55</span></td><td><div class="mini"><i class="cool" style="width:98%"></i></div><span>98</span></td></tr><tr class=""><td><code>L2</code> 轻度显化</td><td><div class="mini"><i class="warm" style="width:46%"></i></div><span>46</span></td><td><div class="mini"><i class="cool" style="width:94%"></i></div><span>94</span></td></tr><tr class="rec"><td><code>L3</code> 叙事显化 ★</td><td><div class="mini"><i class="warm" style="width:29%"></i></div><span>29</span></td><td><div class="mini"><i class="cool" style="width:86%"></i></div><span>86</span></td></tr><tr class=""><td><code>L4</code> 功能化</td><td><div class="mini"><i class="warm" style="width:19%"></i></div><span>19</span></td><td><div class="mini"><i class="cool" style="width:70%"></i></div><span>70</span></td></tr><tr class=""><td><code>L5</code> 机读化</td><td><div class="mini"><i class="warm" style="width:7%"></i></div><span>7</span></td><td><div class="mini"><i class="cool" style="width:62%"></i></div><span>62</span></td></tr></tbody></table>
+    <p class="hint">受众为 Agent，强制 L5：下游系统需要的是可写入 CRM 的枚举值与证据，不是语气分析。同时给 L4 供人工复核、R1 供对外回复。</p>
+  </div>
+
+  <div class="panel">
+    <h2>转译</h2>
+    <section class="track"><h3><code>L4</code> 功能化</h3><div class="body">【结论】提案被拒绝。<br>【依据】对外给出的理由是排期；在日本商务语境中，排期常作为不伤和气的通用理由，未必是真实原因。<br>【边界】没有给出任何时间点、条件或重启路径。整封邮件不含一个可执行的后续动作。<br>【动作】不要追加让步条件。可在一个季度后以全新提案重新接触，但不要引用本次往来作为「上次谈过」的依据。</div></section><section class="track"><h3><code>R1</code> 得体化</h3><div class="body">ご検討いただき、ありがとうございます。スケジュールの件、承知いたしました。また適したタイミングがございましたら、あらためてご相談させてください。</div></section>
+  </div>
+
+  <section class="panel"><h2>机读输出 L5</h2><pre><code>{
+  &quot;intent&quot;: &quot;在不损伤关系的前提下拒绝提案并结束本轮往来&quot;,
+  &quot;stance&quot;: &quot;reject&quot;,
+  &quot;confidence&quot;: 0.88,
+  &quot;action_items&quot;: [],
+  &quot;constraints&quot;: [
+    &quot;未给出任何时间点或重启条件&quot;,
+    &quot;排期为对外理由，真实原因未言明&quot;,
+    &quot;礼节性收尾不构成后续意向&quot;
+  ],
+  &quot;deadline&quot;: null,
+  &quot;escalation_needed&quot;: false,
+  &quot;evidence&quot;: [
+    &quot;検討させていただきます&quot;,
+    &quot;ちょっと難しい&quot;,
+    &quot;前向きに検討という形にさせてください&quot;
+  ]
+}</code></pre></section>
+
+  
+
+  <div class="panel">
+    <h2>注意事项</h2>
+    <ul class="plain"><li>三处标记相互独立且方向一致，因此置信度较高；若只有其中一处，应降为 defer。</li><li>本判定针对日本商务惯例的群体先验，不针对具体发信人。若该客户以往用同样措辞后仍成交，应下调强度。</li></ul>
+  </div>
+
+  <footer>context-transcompiler · 语境平抑器 · 分数为可复现的启发式指标，用于相对比较而非绝对测定</footer>
+</div>
+</body>
+</html>

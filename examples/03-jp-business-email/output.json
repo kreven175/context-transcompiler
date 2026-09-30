@@ -1,0 +1,186 @@
+{
+  "schema": "context-transcompiler/v1",
+  "meta": {
+    "source_lang": "ja",
+    "domain": "business",
+    "register": "formal",
+    "audience": "ai-agent",
+    "ladder_target": "L5",
+    "char_count": 103,
+    "probe_executed": true
+  },
+  "diagnosis": {
+    "context_density": "high",
+    "friction_score": 69,
+    "friction_band": "high",
+    "raw_score": 23,
+    "subscores": {
+      "presupposition": 0.0,
+      "subtext": 23.0,
+      "motif": 0.0,
+      "hierarchy": 0.0,
+      "ellipsis": 0.0
+    },
+    "fidelity_at_target": 62,
+    "loss_at_target": 38,
+    "hotspot_density": 3.0,
+    "hotspots": [
+      {
+        "class": "SUBTEXT",
+        "severity": 5,
+        "literal_reading": "我们会在公司内部研究这个提案。",
+        "intended_reading": "礼貌性的拒绝。日本商务语境中这句话极少导向实际的内部讨论。",
+        "misread_risk": "CRM 或 Agent 把状态标记为「进行中」，销售继续跟进，占用管线并错过真实机会。",
+        "why_opaque": "谦让语形式使拒绝听起来像承诺，字面没有任何否定成分。",
+        "bridge": "在结构化输出中直接置 stance=reject，并保留原文作为证据供人工复核。",
+        "evidence": [
+          "検討させていただきます"
+        ],
+        "confidence": 0.85,
+        "id": "h1",
+        "span": {
+          "start": 13,
+          "end": 24
+        },
+        "text": "検討させていただきます"
+      },
+      {
+        "class": "SUBTEXT",
+        "severity": 5,
+        "literal_reading": "有一点困难，但可以设法克服。",
+        "intended_reading": "明确拒绝。这是日语中最标准的婉拒表达之一。",
+        "misread_risk": "读成「有困难可以商量」，于是提出降价或压缩工期等让步，而对方根本无意继续。",
+        "why_opaque": "程度副词「ちょっと」弱化了否定，使其在字面上看起来可协商。",
+        "bridge": "这是 stance 判定的最强证据，置信度可给到 0.85 以上。",
+        "evidence": [
+          "ちょっと難しい"
+        ],
+        "confidence": 0.9,
+        "id": "h2",
+        "span": {
+          "start": 36,
+          "end": 43
+        },
+        "text": "ちょっと難しい"
+      },
+      {
+        "class": "SUBTEXT",
+        "severity": 5,
+        "literal_reading": "会积极地、正面地考虑。",
+        "intended_reading": "拒绝。「積極的に」的修饰反而是关闭的信号，属于固定套语。",
+        "misread_risk": "被读成最积极的一句，从而整封邮件被判为正面。这是三处标记中最危险的一处。",
+        "why_opaque": "修饰词的方向与实际语用意义相反。",
+        "bridge": "在结构化输出中明确标注该短语为反向标记，避免下游情感分析误判为正面。",
+        "evidence": [
+          "前向きに検討という形にさせてください"
+        ],
+        "confidence": 0.85,
+        "id": "h3",
+        "span": {
+          "start": 57,
+          "end": 63
+        },
+        "text": "前向きに検討"
+      },
+      {
+        "class": "FACE",
+        "severity": 2,
+        "literal_reading": "如果以后还有机会的话。",
+        "intended_reading": "礼貌收尾，为双方保留体面，不构成任何后续承诺。",
+        "misread_risk": "被记为「未来有合作意向」的线索，污染管线数据。",
+        "why_opaque": "条件句形式使其看起来像一个开放的可能性。",
+        "bridge": "标为礼节性收尾，不写入 action_items。",
+        "evidence": [
+          "また機会がありましたら"
+        ],
+        "confidence": 0.8,
+        "id": "h4",
+        "span": {
+          "start": 76,
+          "end": 87
+        },
+        "text": "また機会がありましたら"
+      }
+    ],
+    "unstated_premises": [
+      "日本商务邮件中，谦让语的长度与拒绝的坚决程度正相关。",
+      "不给出时间点等于不打算继续。",
+      "对外理由与真实理由的分离（建前/本音）是默认预期，不是欺瞒。"
+    ]
+  },
+  "ladder": {
+    "L0": "ご提案いただいた件、社内で検討させていただきます。ただ、スケジュール面でちょっと難しいところがございまして、今回は前向きに検討という形にさせてください。また機会がありましたら、ぜひよろしくお願いいたします。",
+    "L4": "【结论】提案被拒绝。\n【依据】对外给出的理由是排期；在日本商务语境中，排期常作为不伤和气的通用理由，未必是真实原因。\n【边界】没有给出任何时间点、条件或重启路径。整封邮件不含一个可执行的后续动作。\n【动作】不要追加让步条件。可在一个季度后以全新提案重新接触，但不要引用本次往来作为「上次谈过」的依据。",
+    "R1": "ご検討いただき、ありがとうございます。スケジュールの件、承知いたしました。また適したタイミングがございましたら、あらためてご相談させてください。"
+  },
+  "tracks": {
+    "business": "拒绝。三处独立的婉拒标记叠加，无一处给出条件或时间。不要追加让步。"
+  },
+  "trade_off": {
+    "curve": [
+      {
+        "level": "L0",
+        "friction": 69,
+        "loss": 0,
+        "fidelity": 100
+      },
+      {
+        "level": "L1",
+        "friction": 55,
+        "loss": 2,
+        "fidelity": 98
+      },
+      {
+        "level": "L2",
+        "friction": 46,
+        "loss": 6,
+        "fidelity": 94
+      },
+      {
+        "level": "L3",
+        "friction": 29,
+        "loss": 14,
+        "fidelity": 86
+      },
+      {
+        "level": "L4",
+        "friction": 19,
+        "loss": 30,
+        "fidelity": 70
+      },
+      {
+        "level": "L5",
+        "friction": 7,
+        "loss": 38,
+        "fidelity": 62
+      }
+    ],
+    "recommended_level": "L3",
+    "rationale": "受众为 Agent，强制 L5：下游系统需要的是可写入 CRM 的枚举值与证据，不是语气分析。同时给 L4 供人工复核、R1 供对外回复。"
+  },
+  "confidence": {
+    "overall": 0.88,
+    "caveats": [
+      "三处标记相互独立且方向一致，因此置信度较高；若只有其中一处，应降为 defer。",
+      "本判定针对日本商务惯例的群体先验，不针对具体发信人。若该客户以往用同样措辞后仍成交，应下调强度。"
+    ]
+  },
+  "machine_readable": {
+    "intent": "在不损伤关系的前提下拒绝提案并结束本轮往来",
+    "stance": "reject",
+    "confidence": 0.88,
+    "action_items": [],
+    "constraints": [
+      "未给出任何时间点或重启条件",
+      "排期为对外理由，真实原因未言明",
+      "礼节性收尾不构成后续意向"
+    ],
+    "deadline": null,
+    "escalation_needed": false,
+    "evidence": [
+      "検討させていただきます",
+      "ちょっと難しい",
+      "前向きに検討という形にさせてください"
+    ]
+  }
+}

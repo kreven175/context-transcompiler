@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>语境转译报告</title>
+<style>
+:root {
+  --bg:#faf9f7; --panel:#fff; --ink:#1b1a18; --muted:#6b6862; --line:#e5e1db;
+  --warm:#c2410c; --cool:#0f766e; --accent:#7c3aed;
+  --presup:#8b5cf6; --subtext:#dc2626; --face:#ea580c; --hier:#0891b2; --motif:#ca8a04; --ellip:#64748b;
+  --radius:10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#16151a; --panel:#1f1e25; --ink:#eceaf2; --muted:#9d99a8; --line:#33313d;
+    --warm:#fb923c; --cool:#5eead4; --accent:#a78bfa;
+    --presup:#a78bfa; --subtext:#f87171; --face:#fb923c; --hier:#22d3ee; --motif:#facc15; --ellip:#94a3b8;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:#16151a; --panel:#1f1e25; --ink:#eceaf2; --muted:#9d99a8; --line:#33313d;
+  --warm:#fb923c; --cool:#5eead4; --accent:#a78bfa;
+  --presup:#a78bfa; --subtext:#f87171; --face:#fb923c; --hier:#22d3ee; --motif:#facc15; --ellip:#94a3b8;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:var(--ink);
+  font:16px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+}
+.wrap { max-width:880px; margin:0 auto; padding:40px 16px 80px; }
+h1 { font-size:1.6rem; margin:0 0 4px; letter-spacing:-.01em; }
+h2 { font-size:1.05rem; margin:0 0 14px; letter-spacing:.02em; color:var(--muted); font-weight:600; }
+h3 { font-size:1rem; margin:0 0 10px; }
+h3 small { color:var(--muted); font-weight:400; margin-left:6px; }
+.lede { color:var(--muted); margin:0 0 28px; font-size:.92rem; }
+.panel { background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:22px; margin-bottom:18px; }
+.gauges { display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+@media (max-width:560px) { .gauges { grid-template-columns:1fr; } }
+.gauge-head { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; }
+.gauge-head span { color:var(--muted); font-size:.85rem; }
+.gauge-head b { font-size:1.9rem; font-variant-numeric:tabular-nums; line-height:1; }
+.warm { color:var(--warm); } .cool { color:var(--cool); }
+.bar { height:7px; background:var(--line); border-radius:99px; overflow:hidden; }
+.bar i { display:block; height:100%; border-radius:99px; }
+.bar i.warm { background:var(--warm); } .bar i.cool { background:var(--cool); }
+.hint { color:var(--muted); font-size:.8rem; margin:8px 0 0; }
+.sub { display:grid; grid-template-columns:118px 1fr 62px; align-items:center; gap:12px; margin-bottom:9px; font-size:.87rem; }
+.sub .bar { height:9px; }
+.sub b { text-align:right; font-variant-numeric:tabular-nums; }
+.sub small { color:var(--muted); font-weight:400; }
+.c-presupposition { background:var(--presup); } .c-subtext { background:var(--subtext); }
+.c-motif { background:var(--motif); } .c-hierarchy { background:var(--hier); } .c-ellipsis { background:var(--ellip); }
+.heat { font-size:1.06rem; line-height:2.3; letter-spacing:.01em; }
+mark.hs { background:transparent; color:inherit; padding:2px 1px; border-radius:3px; cursor:help; position:relative; }
+mark.hs { box-shadow:inset 0 -.62em 0 color-mix(in srgb, currentColor 18%, transparent); }
+mark.presup { color:var(--presup); } mark.subtext { color:var(--subtext); }
+mark.face { color:var(--face); } mark.hier { color:var(--hier); }
+mark.motif { color:var(--motif); } mark.ellip { color:var(--ellip); }
+mark.sev4, mark.sev5 { box-shadow:inset 0 -.62em 0 color-mix(in srgb, currentColor 30%, transparent); font-weight:600; }
+mark.hs:hover::after, mark.hs:focus::after {
+  content:attr(data-tip); position:absolute; left:0; top:calc(100% + 6px); z-index:9;
+  background:var(--ink); color:var(--bg); padding:7px 10px; border-radius:7px;
+  font-size:.78rem; line-height:1.5; font-weight:400; white-space:normal; width:max-content; max-width:320px;
+  box-shadow:0 6px 20px rgba(0,0,0,.2);
+}
+.legend { margin-top:16px; display:flex; flex-wrap:wrap; gap:6px; }
+.tag { font-size:.72rem; padding:2px 8px; border-radius:99px; border:1px solid currentColor; }
+.tag.presup { color:var(--presup); } .tag.subtext { color:var(--subtext); }
+.tag.face { color:var(--face); } .tag.hier { color:var(--hier); }
+.tag.motif { color:var(--motif); } .tag.ellip { color:var(--ellip); }
+.card { border:1px solid var(--line); border-left:3px solid var(--line); border-radius:8px; padding:14px 16px; margin-bottom:10px; background:var(--panel); }
+.card.presup { border-left-color:var(--presup); } .card.subtext { border-left-color:var(--subtext); }
+.card.face { border-left-color:var(--face); } .card.hier { border-left-color:var(--hier); }
+.card.motif { border-left-color:var(--motif); } .card.ellip { border-left-color:var(--ellip); }
+.card header { display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin-bottom:9px; }
+.card .sev { color:var(--muted); font-size:.75rem; margin-left:auto; }
+dl { margin:0; display:grid; grid-template-columns:auto 1fr; gap:4px 14px; font-size:.88rem; }
+dt { color:var(--muted); white-space:nowrap; }
+dd { margin:0; }
+code { background:color-mix(in srgb, var(--ink) 7%, transparent); padding:2px 6px; border-radius:5px; font-size:.88em; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
+pre { background:color-mix(in srgb, var(--ink) 5%, transparent); padding:14px; border-radius:8px; overflow:auto; font-size:.82rem; line-height:1.6; }
+pre code { background:none; padding:0; }
+table { width:100%; border-collapse:collapse; font-size:.87rem; }
+td { padding:8px 6px; border-bottom:1px solid var(--line); vertical-align:middle; }
+td:first-child { width:40%; white-space:nowrap; }
+thead th { padding:0 6px 6px; text-align:left; font-size:.76rem; font-weight:500; color:var(--muted); border-bottom:1px solid var(--line); }
+tr.rec { background:color-mix(in srgb, var(--accent) 9%, transparent); }
+.cell { display:flex; align-items:center; gap:8px; }
+td span { font-variant-numeric:tabular-nums; min-width:26px; text-align:right; color:var(--muted); font-size:.82rem; }
+.mini { flex:1; min-width:52px; height:5px; background:var(--line); border-radius:99px; overflow:hidden; }
+.mini i { display:block; height:100%; }
+.mini i.warm { background:var(--warm); } .mini i.cool { background:var(--cool); }
+.track { border-top:1px solid var(--line); padding-top:16px; margin-top:16px; }
+.track:first-child { border-top:none; padding-top:0; margin-top:0; }
+blockquote { margin:0 0 10px; padding:12px 16px; border-left:3px solid var(--line); background:color-mix(in srgb, var(--ink) 4%, transparent); border-radius:0 8px 8px 0; }
+.notes { margin:0; padding-left:18px; font-size:.85rem; color:var(--muted); }
+.notes b { color:var(--ink); margin-right:6px; }
+.body { font-size:.94rem; }
+ol.advice { padding-left:20px; }
+ol.advice li { margin-bottom:16px; }
+ol.advice em { display:block; color:var(--muted); font-size:.8rem; font-style:normal; }
+ol.advice p { margin:5px 0 0; font-size:.9rem; }
+.keep { color:var(--cool); } .cost { color:var(--warm); }
+ul.plain { padding-left:20px; font-size:.88rem; color:var(--muted); }
+footer { margin-top:36px; color:var(--muted); font-size:.78rem; text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>语境转译报告</h1>
+  <p class="lede">受众 us-genz
+    · 目标 L3 叙事显化
+    · 断点密度 6.0 处/千字
+    · 热点 4 处</p>
+
+  <div class="panel gauges">
+      <div class="gauge">
+        <div class="gauge-head"><span>文化阻抗 Friction</span><b class="warm">52</b></div>
+        <div class="bar"><i class="warm" style="width:52%"></i></div>
+        <p class="hint">高阻：越高越容易被目标受众读错</p>
+      </div>
+      <div class="gauge">
+        <div class="gauge-head"><span>保真度 Fidelity</span><b class="cool">65</b></div>
+        <div class="bar"><i class="cool" style="width:65%"></i></div>
+        <p class="hint">降到目标级别后，原文韵味还剩多少</p>
+      </div>
+  </div>
+
+  <div class="panel">
+    <h2>子分构成</h2>
+    <div class="sub"><span>P 共识预设</span><div class="bar"><i class="c-presupposition" style="width:0.0%"></i></div><b>0<small>/25</small></b></div><div class="sub"><span>S 潜台词</span><div class="bar"><i class="c-subtext" style="width:48.0%"></i></div><b>12.0<small>/25</small></b></div><div class="sub"><span>M 文化意象</span><div class="bar"><i class="c-motif" style="width:100.0%"></i></div><b>20.0<small>/20</small></b></div><div class="sub"><span>H 位阶面子</span><div class="bar"><i class="c-hierarchy" style="width:0.0%"></i></div><b>0<small>/15</small></b></div><div class="sub"><span>E 留白省略</span><div class="bar"><i class="c-ellipsis" style="width:53.3%"></i></div><b>8.0<small>/15</small></b></div>
+  </div>
+
+  <div class="panel">
+    <h2>热力图</h2>
+    <div class="heat">他在城门口<mark class="hs motif sev4" tabindex="0" data-tip="意象：折柳送别是延续千年的习俗，「柳」谐音「留」，赠柳即是挽留与不舍。">折了一枝柳</mark>递过去，<mark class="hs ellip sev4" tabindex="0" data-tip="留白：沉默是本段最重的一句。该说的都说不出口，所以用一个动作代替。">两个人都没说话</mark>。这一别，<mark class="hs motif sev4" tabindex="0" data-tip="意象：江湖指体制之外、靠人情与武力自行运转的社会；「路远」意味着此后各自漂泊、身不由己。">江湖路远</mark>，再见面时恐怕已经<mark class="hs motif sev3" tabindex="0" data-tip="意象：恩与怨是一本必须清算的账；有了恩怨意味着两人可能被各自的义务推到对立面。">各自有了恩怨</mark>。她笑了笑，把柳枝收进袖中，转身走了。</div>
+    <div class="legend"><span class="tag presup">共识预设</span><span class="tag subtext">潜台词</span><span class="tag face">面子</span><span class="tag hier">位阶</span><span class="tag motif">意象</span><span class="tag ellip">留白</span></div>
+  </div>
+
+  <div class="panel">
+    <h2>断点 · 4 处</h2>
+    <article class="card motif"><header><code>折了一枝柳</code><span class="tag motif">意象</span><span class="sev">严重度 4</span></header><dl><dt>字面会读成</dt><dd>他从树上折下一根柳树枝交给她——一个没有意义的随手动作。</dd><dt>实际在说</dt><dd>折柳送别是延续千年的习俗，「柳」谐音「留」，赠柳即是挽留与不舍。</dd><dt>读错的后果</dt><dd>读者会以为这是无意义的环境描写，整场送别戏的情感核心因此落空。</dd><dt>桥接</dt><dd>紧接动作补一句功能性说明——不是解释典故，而是让动作的意图可见（例如她接过时手停了一下）。</dd></dl></article><article class="card motif"><header><code>江湖路远</code><span class="tag motif">意象</span><span class="sev">严重度 4</span></header><dl><dt>字面会读成</dt><dd>字面是「河流与湖泊的路途遥远」。</dd><dt>实际在说</dt><dd>江湖指体制之外、靠人情与武力自行运转的社会；「路远」意味着此后各自漂泊、身不由己。</dd><dt>读错的后果</dt><dd>直译成 rivers and lakes 完全失效；读者不理解为什么重逢会变得不可控。</dd><dt>桥接</dt><dd>首次出现时用一句话建立功能（一个没有王法、只认恩怨与人情的世界），之后照用不再解释。</dd></dl></article><article class="card motif"><header><code>各自有了恩怨</code><span class="tag motif">意象</span><span class="sev">严重度 3</span></header><dl><dt>字面会读成</dt><dd>各自结下了一些仇。</dd><dt>实际在说</dt><dd>恩与怨是一本必须清算的账；有了恩怨意味着两人可能被各自的义务推到对立面。</dd><dt>读错的后果</dt><dd>读成「以后可能会吵架」，从而低估这句话的宿命感和后续冲突的必然性。</dd><dt>桥接</dt><dd>外化为后果而非概念——写明她们日后可能要为各自的人替对方做选择。</dd></dl></article><article class="card ellip"><header><code>两个人都没说话</code><span class="tag ellip">留白</span><span class="sev">严重度 4</span></header><dl><dt>字面会读成</dt><dd>两人保持沉默，没有信息。</dd><dt>实际在说</dt><dd>沉默是本段最重的一句。该说的都说不出口，所以用一个动作代替。</dd><dt>读错的后果</dt><dd>低语境读者读成「没有发生什么」，从而跳过整段的情绪高点。</dd><dt>桥接</dt><dd>用可见的身体细节把沉默填成有内容的停顿（她张了张口又合上；他把手收回袖子里）。</dd></dl></article>
+  </div>
+
+  <div class="panel">
+    <h2>未言明的前提</h2>
+    <ul class="plain"><li>读者知道折柳是送别习俗，且知道「柳」谐音「留」。</li><li>读者知道「江湖」是一个有自身规则、不受官府管辖的社会。</li><li>读者知道在这个世界里，人情与恩怨会形成强制性的行动义务。</li><li>读者默认沉默是有内容的，会主动去补全未说出口的部分。</li></ul>
+  </div>
+
+  <div class="panel">
+    <h2>阶梯取舍</h2>
+    <table><thead><tr><th>级别</th><th>阻抗 Friction</th><th>保真 Fidelity</th></tr></thead>
+    <tbody><tr class=""><td><code>L0</code> 原样</td><td><div class="mini"><i class="warm" style="width:52%"></i></div><span>52</span></td><td><div class="mini"><i class="cool" style="width:100%"></i></div><span>100</span></td></tr><tr class=""><td><code>L1</code> 注释轨</td><td><div class="mini"><i class="warm" style="width:42%"></i></div><span>42</span></td><td><div class="mini"><i class="cool" style="width:95%"></i></div><span>95</span></td></tr><tr class="rec"><td><code>L2</code> 轻度显化 ★</td><td><div class="mini"><i class="warm" style="width:35%"></i></div><span>35</span></td><td><div class="mini"><i class="cool" style="width:85%"></i></div><span>85</span></td></tr><tr class=""><td><code>L3</code> 叙事显化</td><td><div class="mini"><i class="warm" style="width:22%"></i></div><span>22</span></td><td><div class="mini"><i class="cool" style="width:65%"></i></div><span>65</span></td></tr><tr class=""><td><code>L4</code> 功能化</td><td><div class="mini"><i class="warm" style="width:14%"></i></div><span>14</span></td><td><div class="mini"><i class="cool" style="width:25%"></i></div><span>25</span></td></tr><tr class=""><td><code>L5</code> 机读化</td><td><div class="mini"><i class="warm" style="width:5%"></i></div><span>5</span></td><td><div class="mini"><i class="cool" style="width:5%"></i></div><span>5</span></td></tr></tbody></table>
+    <p class="hint">脚本按乘积最大推荐 L2，此处仍取 L3：本段意象密度顶格（M=20/20），L2 的轻度显化不足以让折柳与江湖落地。L3 把阻抗从 52 降到 22，保真还剩 65；再降到 L4 保真会掉到 25，折柳与江湖被压成解释性说明，送别戏的情绪随之消失。</p>
+  </div>
+
+  <div class="panel">
+    <h2>转译</h2>
+    <section class="track"><h3><code>L2</code> 轻度显化</h3><div class="body">他在城门口折了一枝柳递过去——折柳是送别的意思。两个人都没说话。这一别，此后各自漂泊，再见面时，恐怕彼此都已欠下了不得不还的恩怨。她笑了笑，把柳枝收进袖中，转身走了。</div></section><section class="track"><h3><code>L3</code> 叙事显化</h3><div class="body">他在城门口停下，伸手折了一枝柳，递过去。<br>她看着那枝柳，没有立刻接。城门口送行的人常做这个动作——柳枝留不住人，递的人和接的人都知道，可还是要递。<br>两个人都没说话。她张了张口，又把话咽了回去。<br>出了这道门就是江湖：没有王法，只有各自的师门、各自的债。下次见面，他们可能已经各自欠下了不得不还的人情，而那些人情未必站在同一边。<br>她终于笑了笑，把柳枝收进袖中——收得很仔细，像是要留着。然后转身走了，没有回头。</div></section>
+  </div>
+
+  
+
+  <div class="panel">
+    <h2>创作者建议</h2>
+    <ol class="advice"><li><b>折柳的含义完全依赖读者已知的习俗，海外读者读到的是一个没有动机的随手动作</b><em>第 1 句</em><p>不要加注释，改为让动作本身带出意图：写她接过时的迟疑，和他递出时明知留不住仍要递的姿态。</p><p class="keep">保住了：保住了留白——含义靠画面渗出来，而不是被旁白讲破。</p><p class="cost">代价：篇幅增加约两行，节奏比原文慢。</p></li><li><b>「江湖」首次出现时没有任何功能锚点，读者无法理解这个词划定了什么样的世界</b><em>第 2 句</em><p>首现时用一句话建立功能（没有王法，只有各自的师门与各自的债），之后全书照用不再解释。</p><p class="keep">保住了：保住了术语本身，不必把「江湖」替换成西方读者熟悉的概念。</p><p class="cost">代价：第一次出现时会略显解释性。</p></li><li><b>沉默没有被身体动作支撑，低语境读者会把整段情绪高点当成空白跳过</b><em>第 1–2 句之间</em><p>补一个未完成的动作（张口又咽回、手收进袖子），让沉默有可读的形状。</p><p class="keep">保住了：保住了「说不出口」这一层，比直接写出内心独白更接近原文的分寸。</p><p class="cost">代价：无实质代价，是本条建议中性价比最高的一处。</p></li><li><b>「恩怨」被读成普通的争执，宿命感丢失</b><em>第 2 句末</em><p>外化为具体后果：写明日后可能要为各自的人对上对方，而不是保留抽象名词。</p><p class="keep">保住了：保住了恩怨的强制性——这不是情绪，是义务。</p><p class="cost">代价：把一个凝练的词展开成一个从句。</p></li></ol>
+  </div>
+
+  <div class="panel">
+    <h2>注意事项</h2>
+    <ul class="plain"><li>本段为节选，缺少前文语境；若「江湖」在前文已建立功能锚点，M 维得分应下调。</li><li>L3 版本增加的身体细节属于改写而非翻译，需作者确认是否接受。</li></ul>
+  </div>
+
+  <footer>context-transcompiler · 语境平抑器 · 分数为可复现的启发式指标，用于相对比较而非绝对测定</footer>
+</div>
+</body>
+</html>

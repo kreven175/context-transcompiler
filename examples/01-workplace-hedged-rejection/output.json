@@ -1,0 +1,232 @@
+{
+  "schema": "context-transcompiler/v1",
+  "meta": {
+    "source_lang": "zh-CN",
+    "domain": "workplace",
+    "register": "semi-formal",
+    "audience": "de-business",
+    "ladder_target": "L4",
+    "char_count": 75,
+    "probe_executed": true
+  },
+  "diagnosis": {
+    "context_density": "high",
+    "friction_score": 73,
+    "friction_band": "high",
+    "raw_score": 32,
+    "subscores": {
+      "presupposition": 0.0,
+      "subtext": 25.0,
+      "motif": 0.0,
+      "hierarchy": 6.8,
+      "ellipsis": 0.0
+    },
+    "fidelity_at_target": 70,
+    "loss_at_target": 30,
+    "hotspot_density": 9.0,
+    "hotspots": [
+      {
+        "class": "FACE",
+        "secondary_classes": [
+          "SUBTEXT"
+        ],
+        "severity": 4,
+        "literal_reading": "领导认可了方案的初衷，是一句正面评价。",
+        "intended_reading": "先给一句肯定，让接下来的否定说得出口。肯定的是动机，不是方案。",
+        "misread_risk": "把它当成实质性认可，在后续沟通中引用「领导说过出发点是好的」，会显得没听懂话。",
+        "why_opaque": "汉语职场中「出发点/方向/想法 + 是好的」是否定前的固定铺垫，字面无任何否定词。",
+        "bridge": "译文中把这句标注为缓冲语，与真实评价分开呈现，不要混在同一句里。",
+        "evidence": [
+          "出发点是好的",
+          "不过"
+        ],
+        "confidence": 0.9,
+        "id": "h1",
+        "span": {
+          "start": 16,
+          "end": 22
+        },
+        "text": "出发点是好的"
+      },
+      {
+        "class": "HIERARCHY",
+        "secondary_classes": [
+          "FACE"
+        ],
+        "severity": 3,
+        "literal_reading": "领导赞赏年轻人的干劲。",
+        "intended_reading": "把对方归入「年轻/资历浅」一类，等于说判断力还不够，因此不采纳。",
+        "misread_risk": "读成鼓励，从而认为方案还有机会，继续投入。",
+        "why_opaque": "以年资评价代替内容评价，是一种不伤面子的降级方式。",
+        "bridge": "译文中点明这是以资历为由的软性降级，而非鼓励。",
+        "evidence": [
+          "年轻人有冲劲很难得"
+        ],
+        "confidence": 0.8,
+        "id": "h2",
+        "span": {
+          "start": 23,
+          "end": 32
+        },
+        "text": "年轻人有冲劲很难得"
+      },
+      {
+        "class": "SUBTEXT",
+        "secondary_classes": [
+          "FACE"
+        ],
+        "severity": 5,
+        "literal_reading": "双方将在稍后安排一次会议继续讨论细节。",
+        "intended_reading": "议题到此为止，不会再安排会议。这是一次留了面子的否决。",
+        "misread_risk": "对方会等待会议邀请并继续保留资源投入，错过调整方案或改走其他路径的窗口。",
+        "why_opaque": "「回头」「慢慢」在汉语职场语用中是无限期搁置的固定标记，字面无否定词。",
+        "bridge": "译文中直接给出结论句「此议题已结束」，把缓冲语保留为独立的一句语气说明。",
+        "evidence": [
+          "回头再找时间",
+          "慢慢对齐",
+          "今天先不展开了"
+        ],
+        "confidence": 0.85,
+        "id": "h3",
+        "span": {
+          "start": 52,
+          "end": 66
+        },
+        "text": "我们回头再找时间慢慢对齐一下"
+      },
+      {
+        "class": "HIERARCHY",
+        "severity": 3,
+        "literal_reading": "一个叫李的人，英译为 Li 或 Xiao Li。",
+        "intended_reading": "「小 X」只能由上级或年长者使用，与同句中的「张总」形成位阶落差——这次否决是当着全组、自上而下发生的。",
+        "misread_risk": "位阶信息在英译中完全丢失，读者无法理解为什么被否决的一方不当场追问。",
+        "why_opaque": "称谓承载位阶，而英语的 Mr./Ms. + 姓无法编码这一层。",
+        "bridge": "在译文或注释中一次性说明称谓的位阶含义，或改用场景描写外化（谁先开口、谁没有回应）。",
+        "evidence": [
+          "张总",
+          "小李"
+        ],
+        "confidence": 0.85,
+        "id": "h4",
+        "span": {
+          "start": 6,
+          "end": 8
+        },
+        "text": "小李"
+      }
+    ],
+    "power_map": {
+      "speaker": "张总（部门负责人）",
+      "addressee": "小李（资历最浅的下属）",
+      "relation": "上级对下级，公开场合",
+      "who_holds_floor": "张总——他决定议题何时结束",
+      "face_at_stake": "小李的面子。当众否决必须包装，否则伤及其在团队中的位置",
+      "obligation_flow": "无人情债产生；这是职权行使而非人情往来"
+    },
+    "unstated_premises": [
+      "在中国的会议场景中，上级当众否决下属时使用缓冲语是常规礼节，不表示态度犹豫。",
+      "「回头再约时间」在绝大多数情况下不会真的产生后续会议。",
+      "当众提出的否决通常已经在会前定好，会议只是宣布。"
+    ]
+  },
+  "ladder": {
+    "L0": "张总在会上对小李说：你这个方案的出发点是好的，年轻人有冲劲很难得。不过里面涉及到的几个跨部门协作的细节，我们回头再找时间慢慢对齐一下，今天先不展开了。",
+    "L1": {
+      "text": "张总在会上对小李说：你这个方案的出发点是好的，年轻人有冲劲很难得。不过里面涉及到的几个跨部门协作的细节，我们回头再找时间慢慢对齐一下，今天先不展开了。",
+      "annotations": [
+        {
+          "anchor": "张总 / 小李",
+          "note": "称谓编码位阶：X总指向管理层，小X用于年轻下属，且只能由上级使用。"
+        },
+        {
+          "anchor": "出发点是好的",
+          "note": "否定前的固定铺垫，肯定的是动机不是方案。"
+        },
+        {
+          "anchor": "回头再找时间慢慢对齐",
+          "note": "无限期搁置的标准表述，等于本议题结束。"
+        },
+        {
+          "anchor": "今天先不展开了",
+          "note": "会议中终止话题的信号，通常不会再展开。"
+        }
+      ]
+    },
+    "L4": "【结论】方案不通过。\n【依据】给出的理由是跨部门协作细节；这是可对外说出口的理由，真实理由未言明。\n【边界】不会另行安排讨论时间；本次会议中此议题已结束。当众否决意味着决定已定，不接受当场申辩。\n【动作】不要等待会议邀请。若仍要推进，需要更换切入点或绕开当前决策人；若要确认，只能会后单独、私下、以请教而非质疑的方式问。",
+    "R1": "张总，谢谢您点出跨部门这块。我先把协作路径和责任边界梳理清楚，等成形了再单独向您汇报，不占用会议时间。"
+  },
+  "tracks": {
+    "business": "方案被否决。「回头再对齐」是无限期搁置，不是后续安排。不要等待会议邀请。",
+    "annotated": "见 L1 注释轨。"
+  },
+  "trade_off": {
+    "curve": [
+      {
+        "level": "L0",
+        "friction": 73,
+        "loss": 0,
+        "fidelity": 100
+      },
+      {
+        "level": "L1",
+        "friction": 58,
+        "loss": 2,
+        "fidelity": 98
+      },
+      {
+        "level": "L2",
+        "friction": 49,
+        "loss": 6,
+        "fidelity": 94
+      },
+      {
+        "level": "L3",
+        "friction": 31,
+        "loss": 14,
+        "fidelity": 86
+      },
+      {
+        "level": "L4",
+        "friction": 20,
+        "loss": 30,
+        "fidelity": 70
+      },
+      {
+        "level": "L5",
+        "friction": 7,
+        "loss": 38,
+        "fidelity": 62
+      }
+    ],
+    "recommended_level": "L3",
+    "rationale": "商务场景直接取 L4：需要的是「能不能继续投入」这个判断，不是语感。L1 注释轨作为补充，保留原话的分寸感供用户自行体会。"
+  },
+  "confidence": {
+    "overall": 0.85,
+    "caveats": [
+      "判定依据是语用标记而非说话人个人风格；若张总一贯说话就是这样委婉，强度应下调。",
+      "若会后确实收到了会议邀请，则本判定错误，应改判为 defer。"
+    ],
+    "needs_confirmation": [
+      "会后一周内是否收到关于该议题的日程邀请"
+    ]
+  },
+  "machine_readable": {
+    "intent": "在不损伤下属面子的前提下否决方案并结束议题",
+    "stance": "reject",
+    "confidence": 0.85,
+    "action_items": [],
+    "constraints": [
+      "未给出重新讨论的时间",
+      "跨部门协作细节被列为公开理由"
+    ],
+    "deadline": null,
+    "escalation_needed": true,
+    "evidence": [
+      "出发点是好的",
+      "回头再找时间",
+      "慢慢对齐",
+      "今天先不展开了"
+    ]
+  }
+}

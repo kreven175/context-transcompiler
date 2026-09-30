@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>语境转译报告</title>
+<style>
+:root {
+  --bg:#faf9f7; --panel:#fff; --ink:#1b1a18; --muted:#6b6862; --line:#e5e1db;
+  --warm:#c2410c; --cool:#0f766e; --accent:#7c3aed;
+  --presup:#8b5cf6; --subtext:#dc2626; --face:#ea580c; --hier:#0891b2; --motif:#ca8a04; --ellip:#64748b;
+  --radius:10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#16151a; --panel:#1f1e25; --ink:#eceaf2; --muted:#9d99a8; --line:#33313d;
+    --warm:#fb923c; --cool:#5eead4; --accent:#a78bfa;
+    --presup:#a78bfa; --subtext:#f87171; --face:#fb923c; --hier:#22d3ee; --motif:#facc15; --ellip:#94a3b8;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:#16151a; --panel:#1f1e25; --ink:#eceaf2; --muted:#9d99a8; --line:#33313d;
+  --warm:#fb923c; --cool:#5eead4; --accent:#a78bfa;
+  --presup:#a78bfa; --subtext:#f87171; --face:#fb923c; --hier:#22d3ee; --motif:#facc15; --ellip:#94a3b8;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:var(--ink);
+  font:16px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+}
+.wrap { max-width:880px; margin:0 auto; padding:40px 16px 80px; }
+h1 { font-size:1.6rem; margin:0 0 4px; letter-spacing:-.01em; }
+h2 { font-size:1.05rem; margin:0 0 14px; letter-spacing:.02em; color:var(--muted); font-weight:600; }
+h3 { font-size:1rem; margin:0 0 10px; }
+h3 small { color:var(--muted); font-weight:400; margin-left:6px; }
+.lede { color:var(--muted); margin:0 0 28px; font-size:.92rem; }
+.panel { background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:22px; margin-bottom:18px; }
+.gauges { display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+@media (max-width:560px) { .gauges { grid-template-columns:1fr; } }
+.gauge-head { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; }
+.gauge-head span { color:var(--muted); font-size:.85rem; }
+.gauge-head b { font-size:1.9rem; font-variant-numeric:tabular-nums; line-height:1; }
+.warm { color:var(--warm); } .cool { color:var(--cool); }
+.bar { height:7px; background:var(--line); border-radius:99px; overflow:hidden; }
+.bar i { display:block; height:100%; border-radius:99px; }
+.bar i.warm { background:var(--warm); } .bar i.cool { background:var(--cool); }
+.hint { color:var(--muted); font-size:.8rem; margin:8px 0 0; }
+.sub { display:grid; grid-template-columns:118px 1fr 62px; align-items:center; gap:12px; margin-bottom:9px; font-size:.87rem; }
+.sub .bar { height:9px; }
+.sub b { text-align:right; font-variant-numeric:tabular-nums; }
+.sub small { color:var(--muted); font-weight:400; }
+.c-presupposition { background:var(--presup); } .c-subtext { background:var(--subtext); }
+.c-motif { background:var(--motif); } .c-hierarchy { background:var(--hier); } .c-ellipsis { background:var(--ellip); }
+.heat { font-size:1.06rem; line-height:2.3; letter-spacing:.01em; }
+mark.hs { background:transparent; color:inherit; padding:2px 1px; border-radius:3px; cursor:help; position:relative; }
+mark.hs { box-shadow:inset 0 -.62em 0 color-mix(in srgb, currentColor 18%, transparent); }
+mark.presup { color:var(--presup); } mark.subtext { color:var(--subtext); }
+mark.face { color:var(--face); } mark.hier { color:var(--hier); }
+mark.motif { color:var(--motif); } mark.ellip { color:var(--ellip); }
+mark.sev4, mark.sev5 { box-shadow:inset 0 -.62em 0 color-mix(in srgb, currentColor 30%, transparent); font-weight:600; }
+mark.hs:hover::after, mark.hs:focus::after {
+  content:attr(data-tip); position:absolute; left:0; top:calc(100% + 6px); z-index:9;
+  background:var(--ink); color:var(--bg); padding:7px 10px; border-radius:7px;
+  font-size:.78rem; line-height:1.5; font-weight:400; white-space:normal; width:max-content; max-width:320px;
+  box-shadow:0 6px 20px rgba(0,0,0,.2);
+}
+.legend { margin-top:16px; display:flex; flex-wrap:wrap; gap:6px; }
+.tag { font-size:.72rem; padding:2px 8px; border-radius:99px; border:1px solid currentColor; }
+.tag.presup { color:var(--presup); } .tag.subtext { color:var(--subtext); }
+.tag.face { color:var(--face); } .tag.hier { color:var(--hier); }
+.tag.motif { color:var(--motif); } .tag.ellip { color:var(--ellip); }
+.card { border:1px solid var(--line); border-left:3px solid var(--line); border-radius:8px; padding:14px 16px; margin-bottom:10px; background:var(--panel); }
+.card.presup { border-left-color:var(--presup); } .card.subtext { border-left-color:var(--subtext); }
+.card.face { border-left-color:var(--face); } .card.hier { border-left-color:var(--hier); }
+.card.motif { border-left-color:var(--motif); } .card.ellip { border-left-color:var(--ellip); }
+.card header { display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin-bottom:9px; }
+.card .sev { color:var(--muted); font-size:.75rem; margin-left:auto; }
+dl { margin:0; display:grid; grid-template-columns:auto 1fr; gap:4px 14px; font-size:.88rem; }
+dt { color:var(--muted); white-space:nowrap; }
+dd { margin:0; }
+code { background:color-mix(in srgb, var(--ink) 7%, transparent); padding:2px 6px; border-radius:5px; font-size:.88em; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
+pre { background:color-mix(in srgb, var(--ink) 5%, transparent); padding:14px; border-radius:8px; overflow:auto; font-size:.82rem; line-height:1.6; }
+pre code { background:none; padding:0; }
+table { width:100%; border-collapse:collapse; font-size:.87rem; }
+td { padding:8px 6px; border-bottom:1px solid var(--line); vertical-align:middle; }
+td:first-child { width:40%; white-space:nowrap; }
+thead th { padding:0 6px 6px; text-align:left; font-size:.76rem; font-weight:500; color:var(--muted); border-bottom:1px solid var(--line); }
+tr.rec { background:color-mix(in srgb, var(--accent) 9%, transparent); }
+.cell { display:flex; align-items:center; gap:8px; }
+td span { font-variant-numeric:tabular-nums; min-width:26px; text-align:right; color:var(--muted); font-size:.82rem; }
+.mini { flex:1; min-width:52px; height:5px; background:var(--line); border-radius:99px; overflow:hidden; }
+.mini i { display:block; height:100%; }
+.mini i.warm { background:var(--warm); } .mini i.cool { background:var(--cool); }
+.track { border-top:1px solid var(--line); padding-top:16px; margin-top:16px; }
+.track:first-child { border-top:none; padding-top:0; margin-top:0; }
+blockquote { margin:0 0 10px; padding:12px 16px; border-left:3px solid var(--line); background:color-mix(in srgb, var(--ink) 4%, transparent); border-radius:0 8px 8px 0; }
+.notes { margin:0; padding-left:18px; font-size:.85rem; color:var(--muted); }
+.notes b { color:var(--ink); margin-right:6px; }
+.body { font-size:.94rem; }
+ol.advice { padding-left:20px; }
+ol.advice li { margin-bottom:16px; }
+ol.advice em { display:block; color:var(--muted); font-size:.8rem; font-style:normal; }
+ol.advice p { margin:5px 0 0; font-size:.9rem; }
+.keep { color:var(--cool); } .cost { color:var(--warm); }
+ul.plain { padding-left:20px; font-size:.88rem; color:var(--muted); }
+footer { margin-top:36px; color:var(--muted); font-size:.78rem; text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>语境转译报告</h1>
+  <p class="lede">受众 jp-business
+    · 目标 R2 关系化
+    · 断点密度 1.0 处/千字
+    · 热点 3 处</p>
+
+  <div class="panel gauges">
+      <div class="gauge">
+        <div class="gauge-head"><span>文化阻抗 Friction</span><b class="warm">8</b></div>
+        <div class="bar"><i class="warm" style="width:8%"></i></div>
+        <p class="hint">通行：越高越容易被目标受众读错</p>
+      </div>
+      <div class="gauge">
+        <div class="gauge-head"><span>保真度 Fidelity</span><b class="cool">100</b></div>
+        <div class="bar"><i class="cool" style="width:100%"></i></div>
+        <p class="hint">降到目标级别后，原文韵味还剩多少</p>
+      </div>
+  </div>
+
+  <div class="panel">
+    <h2>子分构成</h2>
+    <div class="sub"><span>P 共识预设</span><div class="bar"><i class="c-presupposition" style="width:0.0%"></i></div><b>0<small>/25</small></b></div><div class="sub"><span>S 潜台词</span><div class="bar"><i class="c-subtext" style="width:0.0%"></i></div><b>0<small>/25</small></b></div><div class="sub"><span>M 文化意象</span><div class="bar"><i class="c-motif" style="width:0.0%"></i></div><b>0<small>/20</small></b></div><div class="sub"><span>H 位阶面子</span><div class="bar"><i class="c-hierarchy" style="width:0.0%"></i></div><b>0<small>/15</small></b></div><div class="sub"><span>E 留白省略</span><div class="bar"><i class="c-ellipsis" style="width:29.3%"></i></div><b>4.4<small>/15</small></b></div>
+  </div>
+
+  <div class="panel">
+    <h2>热力图</h2>
+    <div class="heat">这个价格我们<mark class="hs face sev4" tabindex="0" data-tip="面子：在日本商务语境中，无缓冲的能力否定会被读成情绪化和不专业，且不给对方任何退路。">做不了</mark>，低于成本了。<mark class="hs face sev5" tabindex="0" data-tip="面子：二选一的最后通牒。在高语境商务文化中，逼对方当场表态等于剥夺其内部协商的余地。">要么你们加钱，要么这单就算了</mark>。<mark class="hs hier sev4" tabindex="0" data-tip="位阶：单方面设定期限，且用「准话」排除了模糊答复的可能，等于不承认对方的内部决策流程。">下周一之前给个准话</mark>。</div>
+    <div class="legend"><span class="tag presup">共识预设</span><span class="tag subtext">潜台词</span><span class="tag face">面子</span><span class="tag hier">位阶</span><span class="tag motif">意象</span><span class="tag ellip">留白</span></div>
+  </div>
+
+  <div class="panel">
+    <h2>断点 · 3 处</h2>
+    <article class="card face"><header><code>做不了</code><span class="tag face">面子</span><span class="sev">严重度 4</span></header><dl><dt>字面会读成</dt><dd>我们没有能力以这个价格供货——一个中性的事实陈述。</dd><dt>实际在说</dt><dd>在日本商务语境中，无缓冲的能力否定会被读成情绪化和不专业，且不给对方任何退路。</dd><dt>读错的后果</dt><dd>对方无法在不失面子的情况下让步，只能整体退出谈判。真正的损失不是这一单，是这段关系。</dd><dt>桥接</dt><dd>把否定归因于客观约束（原材料成本上涨），而不是「我们不做」。</dd></dl></article><article class="card face"><header><code>要么你们加钱，要么这单就算了</code><span class="tag face">面子</span><span class="sev">严重度 5</span></header><dl><dt>字面会读成</dt><dd>提供两个选项让对方选择——看起来是在给对方决定权。</dd><dt>实际在说</dt><dd>二选一的最后通牒。在高语境商务文化中，逼对方当场表态等于剥夺其内部协商的余地。</dd><dt>读错的后果</dt><dd>对方为避免当场屈服而直接选择退出；即使本愿加价，也会因为失去回旋空间而放弃。</dd><dt>桥接</dt><dd>改为提供一个方案与一条备选路径，并把决定权交回对方的内部流程。</dd></dl></article><article class="card hier"><header><code>下周一之前给个准话</code><span class="tag hier">位阶</span><span class="sev">严重度 4</span></header><dl><dt>字面会读成</dt><dd>请在下周一前答复——一个正常的时间要求。</dd><dt>实际在说</dt><dd>单方面设定期限，且用「准话」排除了模糊答复的可能，等于不承认对方的内部决策流程。</dd><dt>读错的后果</dt><dd>日本企业的稟議流程通常无法在几天内完成；硬性期限会直接触发拒绝。</dd><dt>桥接</dt><dd>把期限改为「我方的时间约束」并询问对方所需时间，而不是命令。</dd></dl></article>
+  </div>
+
+  <div class="panel">
+    <h2>未言明的前提</h2>
+    <ul class="plain"><li>日本企业的采购决策通常需要跨层级的书面流转，无法在几天内完成。</li><li>直接的二选一在该语境中被视为施压，而非提供选择。</li><li>把否定归因于客观条件，是让对方得以体面让步的标准做法。</li></ul>
+  </div>
+
+  <div class="panel">
+    <h2>阶梯取舍</h2>
+    <table><thead><tr><th>级别</th><th>阻抗 Friction</th><th>保真 Fidelity</th></tr></thead>
+    <tbody><tr class=""><td><code>L0</code> 原样</td><td><div class="mini"><i class="warm" style="width:8%"></i></div><span>8</span></td><td><div class="mini"><i class="cool" style="width:100%"></i></div><span>100</span></td></tr><tr class="rec"><td><code>L1</code> 注释轨 ★</td><td><div class="mini"><i class="warm" style="width:6%"></i></div><span>6</span></td><td><div class="mini"><i class="cool" style="width:98%"></i></div><span>98</span></td></tr><tr class=""><td><code>L2</code> 轻度显化</td><td><div class="mini"><i class="warm" style="width:5%"></i></div><span>5</span></td><td><div class="mini"><i class="cool" style="width:94%"></i></div><span>94</span></td></tr><tr class=""><td><code>L3</code> 叙事显化</td><td><div class="mini"><i class="warm" style="width:3%"></i></div><span>3</span></td><td><div class="mini"><i class="cool" style="width:86%"></i></div><span>86</span></td></tr><tr class=""><td><code>L4</code> 功能化</td><td><div class="mini"><i class="warm" style="width:2%"></i></div><span>2</span></td><td><div class="mini"><i class="cool" style="width:70%"></i></div><span>70</span></td></tr><tr class=""><td><code>L5</code> 机读化</td><td><div class="mini"><i class="warm" style="width:1%"></i></div><span>1</span></td><td><div class="mini"><i class="cool" style="width:62%"></i></div><span>62</span></td></tr></tbody></table>
+    <p class="hint">反向模式取 R2：Abrasion 76 属于关系风险区间，仅加缓冲（R1）不足以抵消最后通牒与硬性期限带来的压迫感，需要完整的关系语法。</p>
+  </div>
+
+  <div class="panel">
+    <h2>转译</h2>
+    <section class="track"><h3><code>R1</code> 得体化</h3><div class="body">关于这次的价格，我们内部又核了一遍。受原材料成本上涨影响，目前这个数字确实已经低于我们的成本线，很难维持交付品质。<br>如果贵司这边有调整空间，我们希望能在原有条件上继续合作；如果这次的预算已经定死，我们也理解，可以等下一个批次再谈。<br>因为我们的排产要提前锁定，方便的话，能否在下周内告知一个大致方向？</div></section><section class="track"><h3><code>R2</code> 关系化</h3><div class="body">〇〇様<br><br>いつも大変お世話になっております。<br><br>今回のお見積もりの件、社内でもう一度精査いたしました。原材料価格の高騰により、現在ご提示いただいている水準では、品質を維持したままのご提供が難しい状況となっております。<br><br>もし御社側でご調整の余地がございましたら、引き続き今の条件でお取引を続けさせていただければ幸いです。今期のご予算が既に確定している場合も承知しておりますので、次回のロットであらためてご相談させていただくことも可能です。<br><br>生産計画の都合上、来週中を目安に方向性だけでもお聞かせいただけますと助かります。ご多忙のところ恐れ入りますが、何卒よろしくお願い申し上げます。</div></section>
+  </div>
+
+  
+
+  <div class="panel">
+    <h2>创作者建议</h2>
+    <ol class="advice"><li><b>「做不了」把否定归于己方意愿，对方无法在不失面子的前提下让步</b><em>第 1 句</em><p>归因于客观约束（原材料成本上涨）而非主观拒绝。</p><p class="keep">保住了：保住了「这个价格不可接受」的实质，没有软化底线。</p><p class="cost">代价：多一个从句。</p></li><li><b>二选一最后通牒剥夺了对方的内部协商空间，高概率直接触发退出</b><em>第 2 句</em><p>改为一个主方案加一条备选路径（下一批次再谈），把决定权交回对方流程。</p><p class="keep">保住了：保住了「不加价就没有这一单」的事实，只是不再逼对方当场表态。</p><p class="cost">代价：放弃了当场拿到答复的可能。</p></li><li><b>硬性期限不承认对方的稟議流程，几天内无法完成审批</b><em>第 3 句</em><p>把期限表述为我方的排产约束，并问对方需要多久，而不是命令。</p><p class="keep">保住了：保住了时间压力，只是换成了可被接受的形式。</p><p class="cost">代价：期限从确定日期变成一个区间。</p></li></ol>
+  </div>
+
+  <div class="panel">
+    <h2>注意事项</h2>
+    <ul class="plain"><li>R2 版本使用了日语敬语，称谓与具体职级需由用户补全后再发送——不要猜测对方职级。</li><li>R2 保留了原文的全部实质内容与底线，未代用户做出任何新的承诺或让步。</li><li>本例中 Friction 很低（对方完全看得懂），真正的风险由 Abrasion 承载——这正是反向模式必须换一个度量的原因。</li></ul>
+  </div>
+
+  <footer>context-transcompiler · 语境平抑器 · 分数为可复现的启发式指标，用于相对比较而非绝对测定</footer>
+</div>
+</body>
+</html>
