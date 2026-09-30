@@ -1,0 +1,278 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/context-transcompiler/schemas/transcompile.v1.schema.json",
+  "title": "Context Transcompiler Output v1",
+  "description": "语境平抑器的输出契约。诊断 + 评分 + 阶梯转译 + 创作者建议。",
+  "type": "object",
+  "required": ["schema", "meta", "diagnosis", "tracks", "confidence"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "type": "string",
+      "enum": ["context-transcompiler/v1"]
+    },
+
+    "meta": {
+      "type": "object",
+      "required": ["audience", "ladder_target", "domain"],
+      "additionalProperties": false,
+      "properties": {
+        "source_lang": { "type": "string", "description": "BCP-47，如 zh-CN / ja / ko" },
+        "target_lang": { "type": "string" },
+        "domain": {
+          "type": "string",
+          "enum": ["workplace", "business", "screenplay", "webnovel", "subtitle", "social", "literary", "personal", "other"]
+        },
+        "register": {
+          "type": "string",
+          "enum": ["formal", "semi-formal", "casual", "intimate", "mixed"]
+        },
+        "audience": { "type": "string", "description": "audiences.json 中的 id" },
+        "audience_note": { "type": "string", "description": "受众为推断时说明依据" },
+        "ladder_target": {
+          "type": "string",
+          "enum": ["L0", "L1", "L2", "L3", "L4", "L5", "R1", "R2", "R3"]
+        },
+        "char_count": { "type": "integer", "minimum": 0 },
+        "probe_executed": { "type": "boolean", "description": "是否执行了 probe.py 确定性预扫描" },
+        "generated_at": { "type": "string" }
+      }
+    },
+
+    "diagnosis": {
+      "type": "object",
+      "required": ["context_density", "friction_score", "friction_band", "subscores", "hotspots"],
+      "additionalProperties": false,
+      "properties": {
+        "context_density": { "type": "string", "enum": ["high", "medium", "low"] },
+        "friction_score": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "friction_band": { "type": "string", "enum": ["low", "moderate", "high", "severe"] },
+        "raw_score": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "subscores": {
+          "type": "object",
+          "required": ["presupposition", "subtext", "motif", "hierarchy", "ellipsis"],
+          "additionalProperties": false,
+          "properties": {
+            "presupposition": { "type": "number", "minimum": 0, "maximum": 25 },
+            "subtext": { "type": "number", "minimum": 0, "maximum": 25 },
+            "motif": { "type": "number", "minimum": 0, "maximum": 20 },
+            "hierarchy": { "type": "number", "minimum": 0, "maximum": 15 },
+            "ellipsis": { "type": "number", "minimum": 0, "maximum": 15 }
+          }
+        },
+        "fidelity_at_target": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "loss_at_target": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "hotspot_density": { "type": "number", "minimum": 0 },
+        "directness_index": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "直白度。反向模式（R 轨）专用。"
+        },
+        "abrasion_score": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "得罪风险 = 直白度 × 受众对直接否定的不耐受度。反向模式必填；正向模式可省。"
+        },
+        "hotspots": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "text", "class", "severity", "literal_reading", "intended_reading", "misread_risk", "bridge"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "type": "string" },
+              "span": {
+                "type": "object",
+                "required": ["start", "end"],
+                "additionalProperties": false,
+                "properties": {
+                  "start": { "type": "integer", "minimum": 0 },
+                  "end": { "type": "integer", "minimum": 0 }
+                }
+              },
+              "text": { "type": "string" },
+              "class": {
+                "type": "string",
+                "enum": ["PRESUPPOSITION", "SUBTEXT", "FACE", "HIERARCHY", "MOTIF", "ELLIPSIS"]
+              },
+              "secondary_classes": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": ["PRESUPPOSITION", "SUBTEXT", "FACE", "HIERARCHY", "MOTIF", "ELLIPSIS"]
+                }
+              },
+              "severity": { "type": "integer", "minimum": 1, "maximum": 5 },
+              "literal_reading": { "type": "string" },
+              "intended_reading": { "type": "string" },
+              "misread_risk": { "type": "string" },
+              "why_opaque": { "type": "string" },
+              "bridge": { "type": "string" },
+              "evidence": { "type": "array", "items": { "type": "string" } },
+              "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+            }
+          }
+        },
+        "power_map": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "speaker": { "type": "string" },
+            "addressee": { "type": "string" },
+            "relation": { "type": "string" },
+            "who_holds_floor": { "type": "string" },
+            "face_at_stake": { "type": "string" },
+            "obligation_flow": { "type": "string", "description": "人情债方向" }
+          }
+        },
+        "unstated_premises": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+
+    "ladder": {
+      "type": "object",
+      "description": "各级别的转译文本。至少填目标级别与一个相邻级别。",
+      "additionalProperties": false,
+      "properties": {
+        "L0": { "type": "string" },
+        "L1": {
+          "type": "object",
+          "required": ["text", "annotations"],
+          "additionalProperties": false,
+          "properties": {
+            "text": { "type": "string", "description": "必须与 L0 逐字一致" },
+            "annotations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["note"],
+                "additionalProperties": false,
+                "properties": {
+                  "span": {
+                    "type": "object",
+                    "required": ["start", "end"],
+                    "additionalProperties": false,
+                    "properties": {
+                      "start": { "type": "integer", "minimum": 0 },
+                      "end": { "type": "integer", "minimum": 0 }
+                    }
+                  },
+                  "anchor": { "type": "string" },
+                  "note": { "type": "string", "maxLength": 120 }
+                }
+              }
+            }
+          }
+        },
+        "L2": { "type": "string" },
+        "L3": { "type": "string" },
+        "L4": { "type": "string" },
+        "L5": { "type": "string", "description": "可选的散文摘要；结构化内容放 machine_readable" },
+        "R1": { "type": "string" },
+        "R2": { "type": "string" },
+        "R3": { "type": "string" }
+      }
+    },
+
+    "tracks": {
+      "type": "object",
+      "description": "面向用户的三条主轨，等价于 L4 / L3 / L1 的别名视图。",
+      "additionalProperties": false,
+      "properties": {
+        "business": { "type": "string", "description": "低语境功能化表述：零歧义、明确目标与界限" },
+        "narrative": { "type": "string", "description": "跨文化叙事改编：保留情感张力，外化动机与因果" },
+        "annotated": { "type": "string", "description": "旁注解析轨的可读渲染" }
+      }
+    },
+
+    "machine_readable": {
+      "type": "object",
+      "description": "L5 输出。audience 为 ai-agent 时必填。",
+      "required": ["stance", "confidence", "evidence"],
+      "additionalProperties": false,
+      "properties": {
+        "intent": { "type": "string" },
+        "stance": {
+          "type": "string",
+          "enum": ["accept", "reject", "defer", "conditional", "probe", "inform"]
+        },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "action_items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["action"],
+            "additionalProperties": false,
+            "properties": {
+              "owner": { "type": "string" },
+              "action": { "type": "string" },
+              "due": { "type": ["string", "null"], "description": "ISO 8601 或 null" }
+            }
+          }
+        },
+        "constraints": { "type": "array", "items": { "type": "string" } },
+        "deadline": { "type": ["string", "null"] },
+        "escalation_needed": { "type": "boolean" },
+        "evidence": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+      }
+    },
+
+    "creator_advice": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["issue", "suggestion"],
+        "additionalProperties": false,
+        "properties": {
+          "issue": { "type": "string", "description": "哪里会断" },
+          "where": { "type": "string", "description": "定位：场次/段落/字符区间" },
+          "suggestion": { "type": "string", "description": "具体加什么" },
+          "preserves": { "type": "string", "description": "这样改保住了什么韵味" },
+          "cost": { "type": "string", "description": "代价" },
+          "priority": { "type": "string", "enum": ["P0", "P1", "P2"] }
+        }
+      }
+    },
+
+    "trade_off": {
+      "type": "object",
+      "description": "阶梯上的阻抗/保真对照，用于让用户选择停点。",
+      "additionalProperties": false,
+      "properties": {
+        "curve": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["level", "friction", "fidelity"],
+            "additionalProperties": false,
+            "properties": {
+              "level": { "type": "string", "enum": ["L0", "L1", "L2", "L3", "L4", "L5"] },
+              "friction": { "type": "integer", "minimum": 0, "maximum": 100 },
+              "loss": { "type": "integer", "minimum": 0, "maximum": 100 },
+              "fidelity": { "type": "integer", "minimum": 0, "maximum": 100 }
+            }
+          }
+        },
+        "recommended_level": { "type": "string", "enum": ["L0", "L1", "L2", "L3", "L4", "L5"] },
+        "rationale": { "type": "string" }
+      }
+    },
+
+    "confidence": {
+      "type": "object",
+      "required": ["overall"],
+      "additionalProperties": false,
+      "properties": {
+        "overall": { "type": "number", "minimum": 0, "maximum": 1 },
+        "caveats": { "type": "array", "items": { "type": "string" } },
+        "needs_confirmation": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "需要用户确认才能定论的信号"
+        }
+      }
+    }
+  }
+}

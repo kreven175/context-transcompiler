@@ -1,0 +1,50 @@
+{
+  "_meta": {
+    "class": "ELLIPSIS",
+    "version": "1.0.0",
+    "description": "留白、省略与沉默标记。零主语率由 probe.py 单独启发式估算，不在本词典内。",
+    "see": "reference/02-diagnostic-taxonomy.md#ellipsis--留白与省略"
+  },
+  "entries": [
+    { "term": "……", "strength": 3, "gloss": "半截话：说话人主动中断，未说部分是关键" },
+    { "term": "。。。", "strength": 3, "gloss": "半截话（非正式写法）" },
+    { "term": "那个……", "strength": 3, "gloss": "回避直陈，通常在铺垫难以启齿的内容" },
+    { "term": "反正", "strength": 2, "gloss": "跳过论证直接给结论，省略了推理链" },
+    { "term": "你懂的", "strength": 5, "gloss": "明确要求对方自行补全，内容不落于字面" },
+    { "term": "懂？", "strength": 5, "gloss": "确认对方已补全未言明的内容" },
+    { "term": "不说了", "strength": 4, "gloss": "主动终止，未说部分承载态度" },
+    { "term": "算了", "strength": 4, "gloss": "放弃争取，常含不满" },
+    { "term": "那件事", "strength": 4, "gloss": "默契指代：双方已知，不落于字面" },
+    { "term": "那个人", "strength": 3, "gloss": "默契指代，回避指名" },
+    { "term": "上次那个", "strength": 3, "gloss": "默契指代，依赖共同记忆" },
+    { "term": "心照不宣", "strength": 4, "gloss": "双方都明白但都不说破" },
+    { "term": "不言而喻", "strength": 3, "gloss": "视为无需说明的共识" },
+    { "term": "自己体会", "strength": 4, "gloss": "拒绝给出解释，要求对方补全" },
+    { "term": "点到为止", "strength": 4, "gloss": "只说开头，剩下留给对方" },
+    { "term": "没接话", "strength": 4, "gloss": "沉默描写：沉默本身是回应" },
+    { "term": "沉默了", "strength": 4, "gloss": "沉默描写" },
+    { "term": "静了一会", "strength": 4, "gloss": "沉默描写：场域内的态度转折点" },
+    { "term": "没说话", "strength": 3, "gloss": "沉默描写" },
+    { "term": "低头喝茶", "strength": 3, "gloss": "以动作代替回应，多为回避或不赞同" },
+    { "term": "笑了笑", "strength": 3, "gloss": "以动作代替回应，态度未明但非肯定" },
+    { "term": "岔开话题", "strength": 4, "gloss": "答非所问：本身即拒绝" },
+    { "term": "转移话题", "strength": 4, "gloss": "答非所问：本身即拒绝" }
+  ],
+
+  "single_char_responses": {
+    "_note": "中文网络与口语中的单字回应，信息密度极高，不可在译文中省略",
+    "嗯": { "strength": 3, "gloss": "最低限度确认，可能含敷衍" },
+    "哦": { "strength": 4, "gloss": "冷淡回应，常含不满或失望" },
+    "行": { "strength": 2, "gloss": "勉强接受" },
+    "好": { "strength": 1, "gloss": "接受" },
+    "呵": { "strength": 5, "gloss": "嘲讽或不屑" }
+  },
+
+  "subject_markers": {
+    "_note": "probe.py 用这组词判断小句是否有显性主语，据此估算零主语率（ellipsis_rate）",
+    "pronouns": ["我", "你", "您", "他", "她", "它", "咱", "俺", "我们", "你们", "他们", "她们", "咱们", "大家", "自己", "本人", "双方", "对方"],
+    "org_terms": ["公司", "我司", "贵司", "敝司", "团队", "部门", "项目组", "甲方", "乙方", "客户", "用户", "领导", "上级"]
+  },
+
+  "clause_delimiters": ["。", "！", "？", "；", "\n", "，", "、", "：", "…"]
+}

@@ -1,0 +1,543 @@
+{
+  "_meta": {
+    "class": "MOTIF",
+    "version": "1.0.0",
+    "description": "文化意象、典故与圈层黑话。收录标准：在目标语言中没有等价概念，直译需要一句以上解释。",
+    "fields": {
+      "zone": "classical=传统意象 | idiom=成语典故 | east-asia=东亚邻域 | subculture=当代圈层 | other=其他文化圈",
+      "strength": "1-5，直译失效的严重程度",
+      "gloss": "功能性解释（说它在句中起什么作用，不是百科条目）",
+      "trap": "直译会导致的具体误读",
+      "variants": "同一意象的常见变形；字面匹配召回有限，未收录的变形由模型在语义层补齐"
+    },
+    "note": "subculture 分区半衰期以月计，需定期复核；见 reference/01-context-theory.md §6.2",
+    "see": "reference/02-diagnostic-taxonomy.md#motif--文化意象与典故"
+  },
+  "entries": [
+    {
+      "term": "江湖",
+      "zone": "classical",
+      "strength": 5,
+      "gloss": "体制之外、靠人情与武力自行运转的社会",
+      "trap": "直译 rivers and lakes 完全失效",
+      "variants": [
+        "江湖路",
+        "江湖气",
+        "闯江湖",
+        "退出江湖"
+      ]
+    },
+    {
+      "term": "折柳",
+      "zone": "classical",
+      "strength": 5,
+      "gloss": "送别习俗，柳谐音留，表挽留不舍",
+      "trap": "被读成折断树枝的具体动作",
+      "variants": [
+        "折了一枝柳",
+        "折一枝柳",
+        "折下一枝柳",
+        "柳枝相赠",
+        "折柳相送"
+      ]
+    },
+    {
+      "term": "锅气",
+      "zone": "classical",
+      "strength": 4,
+      "gloss": "猛火快炒产生的焦香，中餐火候的品质标志",
+      "trap": "被读成锅里的水蒸气",
+      "variants": [
+        "镬气"
+      ]
+    },
+    {
+      "term": "火候",
+      "zone": "classical",
+      "strength": 4,
+      "gloss": "分寸与时机的掌握，引申义远超烹饪",
+      "trap": "被读成字面的火力大小"
+    },
+    {
+      "term": "留白",
+      "zone": "classical",
+      "strength": 4,
+      "gloss": "刻意不画满，让观者自行补全",
+      "trap": "被读成未完成",
+      "variants": [
+        "大片留白",
+        "计白当黑"
+      ]
+    },
+    {
+      "term": "写意",
+      "zone": "classical",
+      "strength": 4,
+      "gloss": "重神韵不重形似的表达方式",
+      "trap": "被读成随意、草率"
+    },
+    {
+      "term": "意境",
+      "zone": "classical",
+      "strength": 4,
+      "gloss": "情与景交融产生的不可直陈的整体感受",
+      "trap": "被译成 mood，丢掉主客交融的部分",
+      "variants": [
+        "有意境"
+      ]
+    },
+    {
+      "term": "义气",
+      "zone": "classical",
+      "strength": 4,
+      "gloss": "对同伴的忠诚义务，优先于规则与利害",
+      "trap": "被译成 loyalty，丢掉'可以违法'的强度"
+    },
+    {
+      "term": "恩怨",
+      "zone": "classical",
+      "strength": 3,
+      "gloss": "恩情与仇怨的账本，需要清算",
+      "trap": "被拆成两个不相干的词",
+      "variants": [
+        "恩怨情仇",
+        "了结恩怨"
+      ]
+    },
+    {
+      "term": "师门",
+      "zone": "classical",
+      "strength": 4,
+      "gloss": "师承构成的准血缘组织，含终身义务",
+      "trap": "被译成 school，丢掉义务与位阶",
+      "variants": [
+        "同门",
+        "师门规矩"
+      ]
+    },
+    {
+      "term": "门派",
+      "zone": "classical",
+      "strength": 3,
+      "gloss": "有传承谱系与排他性的组织",
+      "trap": "被译成 sect，带上宗教色彩"
+    },
+    {
+      "term": "走火入魔",
+      "zone": "classical",
+      "strength": 4,
+      "gloss": "修炼失控导致心智失常",
+      "trap": "被读成着火或着魔",
+      "variants": [
+        "走火",
+        "入魔"
+      ]
+    },
+    {
+      "term": "因果",
+      "zone": "classical",
+      "strength": 3,
+      "gloss": "行为与报应的必然联系，含道德必然性",
+      "trap": "被读成普通的因果关系"
+    },
+    {
+      "term": "报应",
+      "zone": "classical",
+      "strength": 3,
+      "gloss": "恶行带来的必然后果",
+      "trap": "被读成随机的坏运气"
+    },
+    {
+      "term": "孝",
+      "zone": "classical",
+      "strength": 5,
+      "gloss": "对父母的服从与奉养义务，社会强制性极高",
+      "trap": "被译成 filial piety 后仍被读成个人美德而非社会强制"
+    },
+    {
+      "term": "光宗耀祖",
+      "zone": "classical",
+      "strength": 4,
+      "gloss": "个人成就归属于家族谱系",
+      "trap": "被读成个人虚荣",
+      "variants": [
+        "光耀门楣",
+        "为祖上争光"
+      ]
+    },
+    {
+      "term": "传宗接代",
+      "zone": "classical",
+      "strength": 4,
+      "gloss": "延续父系血脉的义务",
+      "trap": "被读成个人生育意愿"
+    },
+    {
+      "term": "门当户对",
+      "zone": "classical",
+      "strength": 4,
+      "gloss": "婚配需家庭社会地位相当",
+      "trap": "被读成个人偏好而非家族决策"
+    },
+    {
+      "term": "家丑不可外扬",
+      "zone": "classical",
+      "strength": 4,
+      "gloss": "家庭内部问题不得让外人知道",
+      "trap": "被读成隐瞒犯罪"
+    },
+    {
+      "term": "落叶归根",
+      "zone": "classical",
+      "strength": 3,
+      "gloss": "人终要回到出生地",
+      "trap": "被读成园艺现象",
+      "variants": [
+        "叶落归根"
+      ]
+    },
+    {
+      "term": "衣锦还乡",
+      "zone": "classical",
+      "strength": 4,
+      "gloss": "功成名就后回故乡展示",
+      "trap": "被读成单纯的返乡"
+    },
+    {
+      "term": "风水",
+      "zone": "classical",
+      "strength": 3,
+      "gloss": "方位与环境影响运势的系统",
+      "trap": "被读成迷信装饰"
+    },
+    {
+      "term": "缘分",
+      "zone": "classical",
+      "strength": 4,
+      "gloss": "人际相遇的宿命性关联，减轻个人选择的责任",
+      "trap": "被译成 fate，丢掉'人际专属'这一层",
+      "variants": [
+        "有缘",
+        "无缘",
+        "缘份"
+      ]
+    },
+    {
+      "term": "人情",
+      "zone": "classical",
+      "strength": 5,
+      "gloss": "可积累、可动用、必须偿还的关系资本",
+      "trap": "被译成 favor，丢掉债务性质",
+      "variants": [
+        "人情味",
+        "欠个人情",
+        "人情世故"
+      ]
+    },
+    {
+      "term": "关系",
+      "zone": "classical",
+      "strength": 5,
+      "gloss": "可动用的人际网络资源",
+      "trap": "被译成 relationship，丢掉工具性"
+    },
+    {
+      "term": "面子",
+      "zone": "classical",
+      "strength": 5,
+      "gloss": "在他人眼中的社会形象，可被给予、保留、损毁",
+      "trap": "被译成 face 后仍被读成虚荣",
+      "variants": [
+        "有面子",
+        "没面子",
+        "丢面子",
+        "要面子"
+      ]
+    },
+    {
+      "term": "里子",
+      "zone": "classical",
+      "strength": 4,
+      "gloss": "与面子相对的实际利益",
+      "trap": "被读成衣服内衬"
+    },
+    {
+      "term": "圈子",
+      "zone": "classical",
+      "strength": 3,
+      "gloss": "有明确内外边界的社交群体",
+      "trap": "被读成普通社交圈"
+    },
+    {
+      "term": "意思意思",
+      "zone": "classical",
+      "strength": 4,
+      "gloss": "象征性地送礼或表示，量小但不可省",
+      "trap": "字面不可解"
+    },
+    {
+      "term": "本命年",
+      "zone": "classical",
+      "strength": 3,
+      "gloss": "生肖轮回年，被视为需要避讳的年份",
+      "trap": "被读成生日"
+    },
+    {
+      "term": "卧薪尝胆",
+      "zone": "idiom",
+      "strength": 5,
+      "gloss": "长期忍辱以图复仇",
+      "trap": "被读成真的睡柴草、尝苦胆的情节",
+      "variants": [
+        "卧薪",
+        "尝胆"
+      ]
+    },
+    {
+      "term": "塞翁失马",
+      "zone": "idiom",
+      "strength": 5,
+      "gloss": "祸福难料，坏事可能变好事",
+      "trap": "被读成真的有人丢了马"
+    },
+    {
+      "term": "对牛弹琴",
+      "zone": "idiom",
+      "strength": 4,
+      "gloss": "对不懂的人讲道理",
+      "trap": "被读成真的在对牛演奏"
+    },
+    {
+      "term": "画蛇添足",
+      "zone": "idiom",
+      "strength": 4,
+      "gloss": "多此一举反而坏事",
+      "trap": "被读成绘画情节"
+    },
+    {
+      "term": "守株待兔",
+      "zone": "idiom",
+      "strength": 4,
+      "gloss": "守着偶然的成功不再努力",
+      "trap": "被读成狩猎行为"
+    },
+    {
+      "term": "打草惊蛇",
+      "zone": "idiom",
+      "strength": 4,
+      "gloss": "行动不慎使对方警觉",
+      "trap": "被读成真的在草丛里活动"
+    },
+    {
+      "term": "螳螂捕蝉",
+      "zone": "idiom",
+      "strength": 4,
+      "gloss": "只顾眼前利益而不知身后危险",
+      "trap": "被读成昆虫描写"
+    },
+    {
+      "term": "三顾茅庐",
+      "zone": "idiom",
+      "strength": 4,
+      "gloss": "反复登门以示诚意求贤",
+      "trap": "被读成三次拜访的普通行为"
+    },
+    {
+      "term": "破釜沉舟",
+      "zone": "idiom",
+      "strength": 4,
+      "gloss": "断绝退路以示决心",
+      "trap": "被读成毁坏船只的实际行动"
+    },
+    {
+      "term": "空気を読",
+      "zone": "east-asia",
+      "strength": 5,
+      "gloss": "读空气：自行察觉未言明的场域期待",
+      "trap": "字面不可解"
+    },
+    {
+      "term": "読空気",
+      "zone": "east-asia",
+      "strength": 5,
+      "gloss": "读空气：自行察觉未言明的场域期待",
+      "trap": "字面不可解"
+    },
+    {
+      "term": "建前",
+      "zone": "east-asia",
+      "strength": 5,
+      "gloss": "对外的场面话",
+      "trap": "被读成虚伪"
+    },
+    {
+      "term": "本音",
+      "zone": "east-asia",
+      "strength": 5,
+      "gloss": "真实想法，只对内圈表露",
+      "trap": "被读成两面派"
+    },
+    {
+      "term": "義理",
+      "zone": "east-asia",
+      "strength": 4,
+      "gloss": "社会性义务，与个人情感并列",
+      "trap": "被译成 duty，丢掉与人情的对立结构"
+    },
+    {
+      "term": "修羅場",
+      "zone": "east-asia",
+      "strength": 4,
+      "gloss": "多方关系当场冲突爆发的场面",
+      "trap": "被读成佛教地狱"
+    },
+    {
+      "term": "修罗场",
+      "zone": "east-asia",
+      "strength": 4,
+      "gloss": "多方关系当场冲突爆发的场面",
+      "trap": "被读成佛教地狱"
+    },
+    {
+      "term": "눈치",
+      "zone": "east-asia",
+      "strength": 5,
+      "gloss": "眼力见：察觉他人未说出的状态并相应行动",
+      "trap": "无对应词"
+    },
+    {
+      "term": "정",
+      "zone": "east-asia",
+      "strength": 4,
+      "gloss": "情：长期相处积累的不可割舍的羁绊",
+      "trap": "被译成 affection，丢掉'无法摆脱'的那层"
+    },
+    {
+      "term": "한",
+      "zone": "east-asia",
+      "strength": 4,
+      "gloss": "恨：长期压抑形成的集体性悲愤",
+      "trap": "被译成 hatred，方向完全错误"
+    },
+    {
+      "term": "内卷",
+      "zone": "subculture",
+      "strength": 5,
+      "gloss": "无增量的恶性竞争，所有人加码但总收益不变",
+      "trap": "被译成 involution，学术义与网络义不符",
+      "variants": [
+        "卷起来",
+        "卷不动",
+        "太卷"
+      ]
+    },
+    {
+      "term": "躺平",
+      "zone": "subculture",
+      "strength": 5,
+      "gloss": "主动退出竞争的消极抵抗",
+      "trap": "被读成懒惰",
+      "variants": [
+        "躺了",
+        "躺平主义"
+      ]
+    },
+    {
+      "term": "破防",
+      "zone": "subculture",
+      "strength": 4,
+      "gloss": "心理防线被击穿，情绪失控",
+      "trap": "被读成游戏机制",
+      "variants": [
+        "破大防"
+      ]
+    },
+    {
+      "term": "上岸",
+      "zone": "subculture",
+      "strength": 4,
+      "gloss": "通过考试/竞争进入稳定状态",
+      "trap": "被读成登陆",
+      "variants": [
+        "成功上岸"
+      ]
+    },
+    {
+      "term": "凡尔赛",
+      "zone": "subculture",
+      "strength": 4,
+      "gloss": "以抱怨形式进行的炫耀",
+      "trap": "被读成法国地名"
+    },
+    {
+      "term": "摆烂",
+      "zone": "subculture",
+      "strength": 4,
+      "gloss": "放弃补救、任其恶化",
+      "trap": "字面不可解"
+    },
+    {
+      "term": "抽象",
+      "zone": "subculture",
+      "strength": 4,
+      "gloss": "网络语境中指荒诞、不可理喻的表达",
+      "trap": "被读成艺术术语"
+    },
+    {
+      "term": "发癫",
+      "zone": "subculture",
+      "strength": 3,
+      "gloss": "刻意的失控式表达，带自嘲意味",
+      "trap": "被读成精神疾病"
+    },
+    {
+      "term": "考公",
+      "zone": "subculture",
+      "strength": 4,
+      "gloss": "参加公务员考试，象征稳定与体制内身份",
+      "trap": "缺乏制度背景则完全不可解"
+    },
+    {
+      "term": "编制",
+      "zone": "subculture",
+      "strength": 5,
+      "gloss": "国家人事序列内的正式岗位，近乎不会失业",
+      "trap": "被读成组织架构"
+    },
+    {
+      "term": "打工人",
+      "zone": "subculture",
+      "strength": 3,
+      "gloss": "自嘲式的受雇者身份认同",
+      "trap": "被读成体力劳动者"
+    },
+    {
+      "term": "大厂",
+      "zone": "subculture",
+      "strength": 3,
+      "gloss": "头部互联网公司，象征高薪与高强度",
+      "trap": "被读成工厂"
+    },
+    {
+      "term": "wasta",
+      "zone": "other",
+      "strength": 4,
+      "gloss": "阿拉伯地区可动用的关系门路",
+      "trap": "无对应词"
+    },
+    {
+      "term": "sobremesa",
+      "zone": "other",
+      "strength": 3,
+      "gloss": "西语文化中饭后长时间留桌聊天的时段",
+      "trap": "无对应词"
+    },
+    {
+      "term": "gemütlich",
+      "zone": "other",
+      "strength": 3,
+      "gloss": "德语中温暖舒适又有归属感的状态",
+      "trap": "无对应词"
+    }
+  ]
+}

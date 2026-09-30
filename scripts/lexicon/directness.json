@@ -1,0 +1,45 @@
+{
+  "_meta": {
+    "class": "DIRECTNESS",
+    "version": "1.0.0",
+    "description": "直白度标记，用于反向模式（R 轨）计算 Abrasion 得罪风险。与 hedges.json 互为反面：hedges 多则直白度低。",
+    "note": "正向模式不使用本词典。见 reference/03-friction-scoring.md §7。",
+    "fields": {
+      "weight": "0-1，对 directness_index 的贡献权重",
+      "kind": "negation=直接否定 | ultimatum=最后通牒 | imperative=命令 | demand=硬性要求 | dismissal=终止"
+    }
+  },
+  "entries": [
+    { "term": "做不了", "kind": "negation", "weight": 0.8, "gloss": "无缓冲的能力否定" },
+    { "term": "不行", "kind": "negation", "weight": 0.9, "gloss": "最直接的否定形式" },
+    { "term": "不可能", "kind": "negation", "weight": 0.9, "gloss": "绝对化否定，封死讨论" },
+    { "term": "没法", "kind": "negation", "weight": 0.7, "gloss": "能力否定" },
+    { "term": "不接受", "kind": "negation", "weight": 0.9, "gloss": "明确拒绝" },
+    { "term": "拒绝", "kind": "negation", "weight": 1.0, "gloss": "书面直接拒绝" },
+    { "term": "不同意", "kind": "negation", "weight": 0.8, "gloss": "明确反对" },
+    { "term": "错了", "kind": "negation", "weight": 0.8, "gloss": "直接指错，高面子风险" },
+    { "term": "有问题", "kind": "negation", "weight": 0.5, "gloss": "直接指出缺陷" },
+
+    { "term": "要么", "kind": "ultimatum", "weight": 0.8, "gloss": "二选一逼选，最后通牒句式" },
+    { "term": "否则", "kind": "ultimatum", "weight": 0.8, "gloss": "附带后果的威胁" },
+    { "term": "不然", "kind": "ultimatum", "weight": 0.7, "gloss": "附带后果" },
+    { "term": "最后", "kind": "ultimatum", "weight": 0.5, "gloss": "最后期限/最后一次" },
+    { "term": "就算了", "kind": "dismissal", "weight": 0.7, "gloss": "威胁终止合作" },
+    { "term": "到此为止", "kind": "dismissal", "weight": 0.9, "gloss": "单方面宣告结束" },
+    { "term": "没必要再", "kind": "dismissal", "weight": 0.8, "gloss": "关闭讨论" },
+
+    { "term": "必须", "kind": "demand", "weight": 0.8, "gloss": "无协商空间的要求" },
+    { "term": "务必", "kind": "demand", "weight": 0.6, "gloss": "强制性要求" },
+    { "term": "立刻", "kind": "demand", "weight": 0.7, "gloss": "无缓冲的时间压力" },
+    { "term": "马上", "kind": "demand", "weight": 0.6, "gloss": "无缓冲的时间压力" },
+    { "term": "之前给", "kind": "demand", "weight": 0.6, "gloss": "硬性截止" },
+    { "term": "准话", "kind": "demand", "weight": 0.7, "gloss": "要求明确答复，不接受模糊" },
+    { "term": "明确答复", "kind": "demand", "weight": 0.7, "gloss": "要求明确答复" },
+    { "term": "给个说法", "kind": "demand", "weight": 0.8, "gloss": "问责式要求" },
+
+    { "term": "你们", "kind": "imperative", "weight": 0.3, "gloss": "第二人称归责，把问题指向对方" },
+    { "term": "你方", "kind": "imperative", "weight": 0.3, "gloss": "第二人称归责" },
+    { "term": "是你", "kind": "imperative", "weight": 0.6, "gloss": "直接归责到人" },
+    { "term": "你负责", "kind": "imperative", "weight": 0.8, "gloss": "直接指派责任" }
+  ]
+}

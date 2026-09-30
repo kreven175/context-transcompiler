@@ -1,0 +1,112 @@
+{
+  "_meta": {
+    "class": "FACE / HIERARCHY",
+    "version": "1.0.0",
+    "description": "面子策略与位阶人情标记。patterns 为正则，用于捕捉称谓中编码的权力结构。",
+    "note": "称谓是翻译中最大规模的静默信息丢失：小李 / 李总 / 老李 在英文里都是 Li。",
+    "see": "reference/02-diagnostic-taxonomy.md#face--面子策略"
+  },
+  "entries": [
+    { "term": "面子", "class": "FACE", "strength": 5, "gloss": "社会形象，可被给予、保留、损毁" },
+    { "term": "给面子", "class": "FACE", "strength": 5, "gloss": "配合对方维持其社会形象" },
+    { "term": "留面子", "class": "FACE", "strength": 5, "gloss": "不当众揭破，保留对方退路" },
+    { "term": "驳面子", "class": "FACE", "strength": 5, "gloss": "当众否定，关系性伤害" },
+    { "term": "下不来台", "class": "FACE", "strength": 5, "gloss": "在公开场合失去体面且无法收场" },
+    { "term": "台阶", "class": "FACE", "strength": 4, "gloss": "让对方得以体面退让的说法或动作" },
+    { "term": "抹不开", "class": "FACE", "strength": 4, "gloss": "碍于情面无法拒绝" },
+    { "term": "情面", "class": "FACE", "strength": 4, "gloss": "因关系而产生的不便拒绝的压力" },
+    { "term": "不敢当", "class": "FACE", "strength": 3, "gloss": "自贬以抬高对方，非真实自评" },
+    { "term": "承让", "class": "FACE", "strength": 3, "gloss": "胜者对败者的谦辞" },
+    { "term": "哪里哪里", "class": "FACE", "strength": 3, "gloss": "对赞美的例行否认，非真实否定" },
+    { "term": "过奖", "class": "FACE", "strength": 3, "gloss": "谦辞，不表示对方说错" },
+    { "term": "献丑", "class": "FACE", "strength": 3, "gloss": "展示前的自贬" },
+    { "term": "鄙人", "class": "FACE", "strength": 3, "gloss": "谦称自己" },
+    { "term": "在下", "class": "FACE", "strength": 3, "gloss": "谦称自己" },
+    { "term": "敝", "class": "FACE", "strength": 3, "gloss": "谦称己方（敝司/敝校）" },
+    { "term": "赏光", "class": "FACE", "strength": 3, "gloss": "抬举对方的邀请用语" },
+    { "term": "赏脸", "class": "FACE", "strength": 3, "gloss": "抬举对方的邀请用语" },
+    { "term": "高抬贵手", "class": "FACE", "strength": 4, "gloss": "请求对方放过，承认位阶差" },
+    { "term": "久仰", "class": "FACE", "strength": 2, "gloss": "初次见面的抬举套语" },
+    { "term": "大家都觉得", "class": "FACE", "strength": 4, "gloss": "第三方转述：把批评去个人化以保全直接关系" },
+    { "term": "有同事反映", "class": "FACE", "strength": 4, "gloss": "第三方转述：批评的匿名化包装" },
+    { "term": "有人反映", "class": "FACE", "strength": 4, "gloss": "第三方转述：批评的匿名化包装" },
+
+    { "term": "欠人情", "class": "HIERARCHY", "strength": 5, "gloss": "人情债形成，日后需偿还" },
+    { "term": "还人情", "class": "HIERARCHY", "strength": 5, "gloss": "偿还人情债" },
+    { "term": "回头请你吃饭", "class": "HIERARCHY", "strength": 4, "gloss": "人情记账的标准表述" },
+    { "term": "改天补上", "class": "HIERARCHY", "strength": 3, "gloss": "承认欠账" },
+    { "term": "添麻烦", "class": "HIERARCHY", "strength": 3, "gloss": "承认给对方造成负担，产生偿还义务" },
+    { "term": "论资排辈", "class": "HIERARCHY", "strength": 4, "gloss": "按年资而非能力分配位次" },
+    { "term": "敬酒", "class": "HIERARCHY", "strength": 4, "gloss": "按位阶顺序进行的仪式，拒绝成本极高" },
+    { "term": "敬茶", "class": "HIERARCHY", "strength": 4, "gloss": "表示服从或致敬的仪式动作" },
+    { "term": "主位", "class": "HIERARCHY", "strength": 3, "gloss": "座次中地位最高的位置" },
+    { "term": "上座", "class": "HIERARCHY", "strength": 3, "gloss": "座次中地位最高的位置" },
+    { "term": "买单", "class": "HIERARCHY", "strength": 3, "gloss": "争夺买单权是地位与人情的表达" },
+    { "term": "前辈", "class": "HIERARCHY", "strength": 3, "gloss": "资历高者，含服从义务" },
+    { "term": "后辈", "class": "HIERARCHY", "strength": 3, "gloss": "资历低者" },
+    { "term": "师兄", "class": "HIERARCHY", "strength": 3, "gloss": "同门中年长/先入门者，含准血缘义务" },
+    { "term": "师姐", "class": "HIERARCHY", "strength": 3, "gloss": "同门中年长/先入门者" },
+    { "term": "师弟", "class": "HIERARCHY", "strength": 3, "gloss": "同门中后入门者" },
+    { "term": "师尊", "class": "HIERARCHY", "strength": 4, "gloss": "师父的尊称，含终身义务" },
+    { "term": "您", "class": "HIERARCHY", "strength": 2, "gloss": "敬称，标记位阶差或社交距离" }
+  ],
+
+  "_surname_note": "称谓正则以姓氏白名单为锚，而非 [\\u4e00-\\u9fa5]。用通配汉字会把「小心」「老板」「总是」全部误命中，而用否定后顾（?![\\u4e00-\\u9fa5]）又会漏掉「张总在」「小李说」这类后接汉字的真实用例。白名单覆盖约 110 个高频姓氏（>95% 人口），复姓（欧阳、司马等）暂未覆盖。",
+
+  "patterns": [
+    {
+      "regex": "[李王张刘陈杨黄赵吴周徐孙马朱胡郭何高林罗郑梁谢宋唐许韩冯邓曹彭曾肖田董袁潘于蒋蔡余杜叶程苏魏吕丁任沈姚卢姜崔钟谭陆汪范金石廖贾夏韦付方白邹孟熊秦邱江尹薛闫段雷侯龙史陶黎贺顾毛郝龚邵万钱严覃武戴莫孔向汤](总|董事长|董|总监|经理|主任|处长|科长|局长|书记|工程师|工|教授|律师|医生)",
+      "class": "HIERARCHY",
+      "strength": 4,
+      "gloss": "职衔称谓：姓氏 + 职位，指向管理层；英译为 Mr./Ms. + 姓后位阶信息完全丢失"
+    },
+    {
+      "regex": "小[李王张刘陈杨黄赵吴周徐孙马朱胡郭何高林罗郑梁谢宋唐许韩冯邓曹彭曾肖田董袁潘蒋蔡余杜叶程苏魏吕丁任沈姚卢姜崔钟谭陆汪范金石廖贾夏韦付方白邹孟熊秦邱江尹薛闫段雷侯龙史陶黎贺顾毛郝龚邵万钱严覃武戴莫孔向汤]",
+      "class": "HIERARCHY",
+      "strength": 4,
+      "gloss": "「小X」称谓：用于年轻或资历浅者，只能由上级/年长者使用，单向不可逆；与「X总」并置时位阶落差即是压力本身"
+    },
+    {
+      "regex": "老[李王张刘陈杨黄赵吴周徐孙朱胡郭何高林罗郑梁谢宋唐许韩冯邓曹彭曾肖袁潘蒋蔡余杜叶程苏魏吕任沈姚卢姜崔钟谭陆汪范金石廖贾夏韦方白邹孟熊秦邱尹薛段雷侯龙史陶黎贺顾毛郝龚邵钱覃武戴莫孔汤]",
+      "class": "HIERARCHY",
+      "strength": 3,
+      "gloss": "「老X」称谓：用于年长或资深者，表示亲近且承认资历；平辈或下对上使用"
+    },
+    {
+      "regex": "[李王张刘陈杨黄赵吴周徐孙马朱胡郭何高林罗郑梁谢宋唐许韩冯邓曹彭曾肖田董袁潘于蒋蔡余杜叶程苏魏吕丁任沈姚卢姜崔钟谭陆汪范金石廖贾夏韦付方白邹孟熊秦邱江尹薛闫段雷侯龙史陶黎贺顾毛郝龚邵万钱严覃武戴莫孔向汤](老师|师傅|师父|总监)",
+      "class": "HIERARCHY",
+      "strength": 3,
+      "gloss": "「X老师」非教师义，泛用于表示专业尊重；「X师傅」为技艺或服务业敬称"
+    },
+    {
+      "regex": "(贵|您)(司|公司|方|校|厂|刊)",
+      "class": "FACE",
+      "strength": 3,
+      "gloss": "敬称对方机构，标记正式商务距离"
+    },
+    {
+      "regex": "(表|堂)(哥|弟|姐|妹)",
+      "class": "PRESUPPOSITION",
+      "strength": 4,
+      "gloss": "父系/母系亲属精确区分；英语只有 cousin，关系信息必然丢失"
+    },
+    {
+      "regex": "(大|二|三|小)(舅|姨|叔|姑|伯)",
+      "class": "PRESUPPOSITION",
+      "strength": 4,
+      "gloss": "排行 + 亲属位；英语无对应，排行与父母系归属同时丢失"
+    },
+    {
+      "regex": "(出发点|方向|想法|思路)(是|都)(好|对|不错)",
+      "class": "FACE",
+      "strength": 5,
+      "gloss": "先扬后抑结构的「扬」部分，后面必有实质否定"
+    },
+    {
+      "regex": "(不过|只是|就是|但是)[^。！？]{0,30}(细节|问题|地方|难度|情况)",
+      "class": "SUBTEXT",
+      "strength": 4,
+      "gloss": "先扬后抑结构的「抑」部分，此处才是真实态度"
+    }
+  ]
+}

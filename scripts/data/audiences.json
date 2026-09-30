@@ -1,0 +1,154 @@
+{
+  "_meta": {
+    "version": "1.0.0",
+    "description": "受众档案。explicitness=信息是否需要写明；confrontation=能否直接否定；shared_ground=与中文圈共享的共识预设比例。",
+    "disclaimer": "数值为本工具的建模参数，参考 Hall 高低语境理论、Hofstede 文化维度与 Erin Meyer《文化地图》的 Communicating / Evaluating 标尺校准而来，非任何框架的原始数据，亦非经验测量值。仅用于产生可复现的相对差异，不适用于判断具体个人。",
+    "see": "reference/04-audience-profiles.md"
+  },
+  "profiles": [
+    {
+      "id": "global-english",
+      "label": "国际英语通用（默认）",
+      "label_en": "Global English (default)",
+      "explicitness": 0.85,
+      "confrontation": 0.60,
+      "shared_ground": 0.15,
+      "notes": "安全中值。受众不明确时使用。"
+    },
+    {
+      "id": "us-business",
+      "label": "北美商务",
+      "label_en": "North American business",
+      "explicitness": 0.90,
+      "confrontation": 0.55,
+      "shared_ground": 0.10,
+      "notes": "结论前置（BLUF）。负面反馈偏好三明治结构，不接受当众羞辱。"
+    },
+    {
+      "id": "us-genz",
+      "label": "北美 Z 世代",
+      "label_en": "North American Gen Z",
+      "explicitness": 0.88,
+      "confrontation": 0.70,
+      "shared_ground": 0.12,
+      "notes": "容忍梗与缩写，但不容忍无解释的文化专名。节奏快，断点即弃读。"
+    },
+    {
+      "id": "de-business",
+      "label": "德国工程 / 商务",
+      "label_en": "German engineering / business",
+      "explicitness": 0.95,
+      "confrontation": 0.90,
+      "shared_ground": 0.08,
+      "notes": "要事实、依据、时间表。直接否定不伤关系；模糊承诺被视为不专业。"
+    },
+    {
+      "id": "nordic",
+      "label": "北欧",
+      "label_en": "Nordics",
+      "explicitness": 0.93,
+      "confrontation": 0.80,
+      "shared_ground": 0.08,
+      "notes": "低权力距离，位阶信息几乎无法被理解。语气需平等。"
+    },
+    {
+      "id": "nl",
+      "label": "荷兰",
+      "label_en": "Netherlands",
+      "explicitness": 0.95,
+      "confrontation": 0.95,
+      "shared_ground": 0.08,
+      "notes": "confrontation 天花板。委婉会被直接理解为同意。"
+    },
+    {
+      "id": "uk",
+      "label": "英国",
+      "label_en": "United Kingdom",
+      "explicitness": 0.78,
+      "confrontation": 0.25,
+      "shared_ground": 0.12,
+      "notes": "信息直白但反馈极度间接。understatement 是母语级技能：'quite interesting' 常为否定。"
+    },
+    {
+      "id": "fr",
+      "label": "法国",
+      "label_en": "France",
+      "explicitness": 0.70,
+      "confrontation": 0.75,
+      "shared_ground": 0.12,
+      "notes": "西欧中偏高语境。辩论文化强，偏好先框架后结论。"
+    },
+    {
+      "id": "latam",
+      "label": "拉丁美洲",
+      "label_en": "Latin America",
+      "explicitness": 0.45,
+      "confrontation": 0.35,
+      "shared_ground": 0.15,
+      "notes": "关系先行。直接拒绝罕见；热情语气不等于承诺。"
+    },
+    {
+      "id": "mena",
+      "label": "中东 / 阿拉伯地区",
+      "label_en": "Middle East / Arab world",
+      "explicitness": 0.30,
+      "confrontation": 0.25,
+      "shared_ground": 0.15,
+      "notes": "高语境高关系。inshallah 的语用需看场合；面子极重。"
+    },
+    {
+      "id": "jp-business",
+      "label": "日本商务",
+      "label_en": "Japanese business",
+      "explicitness": 0.10,
+      "confrontation": 0.05,
+      "shared_ground": 0.45,
+      "notes": "建前/本音。ちょっと難しい＝拒绝。沉默有意义。共享部分汉字意象，但不共享现代中文语用与制度预设。"
+    },
+    {
+      "id": "kr-business",
+      "label": "韩国商务",
+      "label_en": "Korean business",
+      "explicitness": 0.15,
+      "confrontation": 0.10,
+      "shared_ground": 0.40,
+      "notes": "눈치（察言观色）。敬语体系编码位阶，长幼序列极强。"
+    },
+    {
+      "id": "sea-chinese",
+      "label": "东南亚华语圈",
+      "label_en": "Southeast Asian Chinese-speaking",
+      "explicitness": 0.40,
+      "confrontation": 0.30,
+      "shared_ground": 0.70,
+      "notes": "共享大量中文预设，但大陆制度类与时政类预设不通。"
+    },
+    {
+      "id": "zh-native",
+      "label": "中文母语圈内",
+      "label_en": "Chinese native in-group",
+      "explicitness": 0.10,
+      "confrontation": 0.30,
+      "shared_ground": 1.00,
+      "notes": "用于自检场景：'我理解得对不对'。"
+    },
+    {
+      "id": "india",
+      "label": "印度",
+      "label_en": "India",
+      "explicitness": 0.50,
+      "confrontation": 0.35,
+      "shared_ground": 0.10,
+      "notes": "高权力距离叠加英语的低语境形式。'yes' 常为礼貌回应而非同意。"
+    },
+    {
+      "id": "ai-agent",
+      "label": "机器 / AI Agent / 工单系统",
+      "label_en": "Machine / AI agent / ticketing system",
+      "explicitness": 1.00,
+      "confrontation": 1.00,
+      "shared_ground": 0.00,
+      "notes": "零省略容忍，强制 L5。没有面子、没有位阶、没有言外之意。"
+    }
+  ]
+}
