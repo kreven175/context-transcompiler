@@ -77,6 +77,10 @@ python3 scripts/probe.py --text-file <输入文件> --audience <id> --target-lev
 - 同一段文本重复分析时分数可复现；
 - Web 版与 Skill 版共用同一套评分内核，结果可对齐。
 
+脚本会先做一次轻量归一化：统一换行、去掉零宽字符与 BOM、去首尾空白（**不做**全角转半角、不合并空格）。
+从网页或 PDF 粘贴来的文本常夹带不可见的零宽字符，它们会切断词典匹配却看不出来。
+归一化会改变字符偏移量，所以结果里的 `source_text` 才是 span 的基准，**高亮必须用它，不是原始输入**。
+
 无法执行脚本时（沙箱受限），按 `reference/03-friction-scoring.md` 手工评分，并在 `confidence.caveats` 里注明"未执行确定性预扫描"。
 
 ### 第 2 步 · 诊断（Parse）

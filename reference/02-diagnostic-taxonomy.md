@@ -52,7 +52,7 @@ L1 注释：【春节：中国最重要的节日，返乡团聚被视为义务�
 
 **承载什么**：委婉拒绝、无限期搁置、条件性同意、反话、试探、责备、催促。
 
-**识别信号**（词典命中率高，见 `scripts/lexicon/hedges.zh.json`）：
+**识别信号**（词典命中率高，见 `scripts/lexicon/hedges.json`）：
 
 | 表层 | 实际 | 强度 |
 |---|---|---|
@@ -93,7 +93,7 @@ L5：{"stance":"reject","confidence":0.85,"action_items":[],"escalation_needed":
 
 **承载什么**：给面子、留面子、驳面子、下不来台、给台阶、自贬、抬举、代人受过。
 
-**识别信号**（见 `scripts/lexicon/face_power.zh.json`）：
+**识别信号**（见 `scripts/lexicon/face_power.json`）：
 - 直接面子词：面子、里子、情面、台阶、下不来台、给个面子、驳面子、抹不开
 - 自贬抬人：不敢当、承让、哪里哪里、过奖、献丑、鄙人、在下、敝司、小店
 - 抬举对方：赏光、赏脸、高抬贵手、劳驾、久仰、贵司、您
@@ -155,7 +155,7 @@ L1 注释：【称谓"小X"用于年轻或资历浅者，"X总"指向管理层�
 - **当代圈层黑话**：内卷、躺平、破防、上岸、凡尔赛、摆烂、emo、抽象、发癫、city不city
 - **中东/拉美**：wasta（关系门路）、inshallah（语境决定是承诺还是推脱）、sobremesa
 
-**识别信号**：词典命中为主（`scripts/lexicon/motifs.zh.json` 分 `classical` / `idiom` / `east-asia` / `subculture` / `other` 五区）。词典未收录时，判据是：**该词在目标语言中没有等价概念，只能靠一句以上的解释来传达**。
+**识别信号**：词典命中为主（`scripts/lexicon/motifs.json` 分 `classical` / `idiom` / `east-asia` / `subculture` / `other` 五区）。词典未收录时，判据是：**该词在目标语言中没有等价概念，只能靠一句以上的解释来传达**。
 
 **误读风险**：级别 2–4。
 - 成语直译 → 读者以为是真实情节（"他卧薪尝胆"被读成"他睡在柴火上舔苦胆"）

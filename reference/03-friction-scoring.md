@@ -116,7 +116,7 @@ pragmatic  = S + M + H + E
 Friction_breadth = min(100, pragmatic × modulation + P)
 ```
 
-`P` 已在子分阶段按 `shared_ground` 折减过（文化类折减，制度类不折减，见 §2.2 与 `reference/04` §4）。
+`P` 已在子分阶段按 `shared_ground` 折减过（文化类折减，制度类不折减，见 §2.2 与 `reference/04-audience-profiles.md` §4）。
 
 **效果验证**：同一段含"编制""宅基地"的文本，对日本商务与德国商务受众都得到 **42 分**——因为障碍是双方都不具备的事实背景，而不是语用风格。早期版本把 P 一起调制、再用 `+0.15×P` 找补，既不可解释也补不够，已废弃。
 

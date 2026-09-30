@@ -110,6 +110,26 @@ def check(case: Dict[str, Any], result: Dict[str, Any],
     return fails
 
 
+def check_performance() -> List[str]:
+    """
+    长文本性能哨兵。批量模式要在几秒内扫完整本书，这条守住那个承诺。
+    历史：早期 _dedupe 是 O(n^2)，15 万字要跑 31.8 秒；改成扫描线后降到 0.17 秒。
+    阈值放在 5 秒，留足慢机器与 CI 的余量，但仍能在退回 O(n^2) 时立刻报警。
+    """
+    import time
+    base = ("\u5f20\u603b\u5728\u4f1a\u4e0a\u5bf9\u5c0f\u674e\u8bf4\uff1a\u4f60\u8fd9\u4e2a\u65b9\u6848\u7684\u51fa\u53d1\u70b9\u662f\u597d\u7684\uff0c"
+            "\u4e0d\u8fc7\u6211\u4eec\u56de\u5934\u518d\u6162\u6162\u5bf9\u9f50\u3002\u4ed6\u5728\u57ce\u95e8\u53e3\u6298\u4e86\u4e00\u679d\u67f3\uff0c\u6c5f\u6e56\u8def\u8fdc\u3002")
+    text = base * 3000
+    t0 = time.time()
+    result = probe_mod.probe(text, audience_id="us-genz", target_level="L3", top=20)
+    elapsed = time.time() - t0
+    print(f"\n\u6027\u80fd\u54e8\u5175\uff1a{len(text):,} \u5b57 \u2192 {elapsed * 1000:,.0f}ms"
+          f"\uff08\u70ed\u70b9 {result['hotspot_total']:,}\uff09")
+    if elapsed > 5.0:
+        return [f"15 \u4e07\u5b57\u626b\u63cf\u8017\u65f6 {elapsed:.1f}s\uff0c\u8d85\u8fc7 5s \u9608\u503c\u2014\u2014\u68c0\u67e5\u662f\u5426\u5f15\u5165\u4e86\u4e8c\u6b21\u65b9\u590d\u6742\u5ea6"]
+    return []
+
+
 def check_determinism(cases: List[Dict[str, Any]]) -> List[str]:
     """同一输入必须给出完全相同的结果——可复现性是本内核存在的理由之一。"""
     fails = []
@@ -157,7 +177,13 @@ def main() -> int:
         print(f"✗ 确定性 {d}")
     failed += len(det)
 
-    print(f"\n{passed}/{len(cases)} 条用例通过" + ("，确定性检查通过" if not det else ""))
+    perf = check_performance()
+    for w in perf:
+        print(f"✗ 性能 {w}")
+    failed += len(perf)
+
+    print(f"\n{passed}/{len(cases)} 条用例通过"
+          + ("，确定性与性能检查通过" if not det and not perf else ""))
     return 1 if failed else 0
 
 

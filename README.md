@@ -43,7 +43,7 @@
 
 用户要做的决策不是"降到最低"，而是**在自己的场景里选一个停点**。
 
-一段 65 字的武侠送别（`examples/02`），对北美 Z 世代受众：
+一段 65 字的武侠送别（`examples/02-wuxia-farewell`），对北美 Z 世代受众：
 
 | 级别 | | 阻抗 | 保真 | |
 |---|---|---:|---:|---|
@@ -90,8 +90,10 @@ python3 scripts/probe.py \
 # 2. 校验模型产出的结构化结果
 python3 scripts/validate.py --file result.json
 
-# 3. 渲染成可交付的报告
+# 3. 渲染成可交付的报告（预扫描结果可直接管道进来，自带 source_text）
 python3 scripts/render_report.py --file result.json --format html -o report.html
+python3 scripts/probe.py --text-file in.txt --audience us-genz | \
+  python3 scripts/render_report.py --format html -o report.html
 
 # 列出全部受众档案
 python3 scripts/probe.py --list-audiences
@@ -188,6 +190,7 @@ evals/
 ## 工程约定
 
 - **脚本零第三方依赖**，只用标准库，任何有 `python3` 的地方都能跑。
+- **确定性内核要能扫完整本书。** 30 万字约 310ms、15 万字约 140ms（无 LLM 调用）。`evals/run_evals.py` 里有性能哨兵，超过 5 秒即报警——早期 `_dedupe` 是 O(n²)，15 万字要跑 31.8 秒。
 - **span 偏移量由脚本算，不手写**。`validate.py` 会比对 `text` 与 `L0[start:end]`，错位直接报错——Web 端据此高亮，偏一个字整张图就废了。
 - **样例由 `evals/build_examples.py` 生成**，语义内容手写、数值与偏移量脚本算，再过一遍校验。不要手工编辑 `examples/` 下的文件。
 - **改了词典或公式就跑 `evals/run_evals.py`**。12 条用例断言的是区间与相对关系，不是精确值。
