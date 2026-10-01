@@ -10,36 +10,207 @@
     }
   },
   "entries": [
-    { "term": "做不了", "kind": "negation", "weight": 0.8, "gloss": "无缓冲的能力否定" },
-    { "term": "不行", "kind": "negation", "weight": 0.9, "gloss": "最直接的否定形式" },
-    { "term": "不可能", "kind": "negation", "weight": 0.9, "gloss": "绝对化否定，封死讨论" },
-    { "term": "没法", "kind": "negation", "weight": 0.7, "gloss": "能力否定" },
-    { "term": "不接受", "kind": "negation", "weight": 0.9, "gloss": "明确拒绝" },
-    { "term": "拒绝", "kind": "negation", "weight": 1.0, "gloss": "书面直接拒绝" },
-    { "term": "不同意", "kind": "negation", "weight": 0.8, "gloss": "明确反对" },
-    { "term": "错了", "kind": "negation", "weight": 0.8, "gloss": "直接指错，高面子风险" },
-    { "term": "有问题", "kind": "negation", "weight": 0.5, "gloss": "直接指出缺陷" },
-
-    { "term": "要么", "kind": "ultimatum", "weight": 0.8, "gloss": "二选一逼选，最后通牒句式" },
-    { "term": "否则", "kind": "ultimatum", "weight": 0.8, "gloss": "附带后果的威胁" },
-    { "term": "不然", "kind": "ultimatum", "weight": 0.7, "gloss": "附带后果" },
-    { "term": "最后", "kind": "ultimatum", "weight": 0.5, "gloss": "最后期限/最后一次" },
-    { "term": "就算了", "kind": "dismissal", "weight": 0.7, "gloss": "威胁终止合作" },
-    { "term": "到此为止", "kind": "dismissal", "weight": 0.9, "gloss": "单方面宣告结束" },
-    { "term": "没必要再", "kind": "dismissal", "weight": 0.8, "gloss": "关闭讨论" },
-
-    { "term": "必须", "kind": "demand", "weight": 0.8, "gloss": "无协商空间的要求" },
-    { "term": "务必", "kind": "demand", "weight": 0.6, "gloss": "强制性要求" },
-    { "term": "立刻", "kind": "demand", "weight": 0.7, "gloss": "无缓冲的时间压力" },
-    { "term": "马上", "kind": "demand", "weight": 0.6, "gloss": "无缓冲的时间压力" },
-    { "term": "之前给", "kind": "demand", "weight": 0.6, "gloss": "硬性截止" },
-    { "term": "准话", "kind": "demand", "weight": 0.7, "gloss": "要求明确答复，不接受模糊" },
-    { "term": "明确答复", "kind": "demand", "weight": 0.7, "gloss": "要求明确答复" },
-    { "term": "给个说法", "kind": "demand", "weight": 0.8, "gloss": "问责式要求" },
-
-    { "term": "你们", "kind": "imperative", "weight": 0.3, "gloss": "第二人称归责，把问题指向对方" },
-    { "term": "你方", "kind": "imperative", "weight": 0.3, "gloss": "第二人称归责" },
-    { "term": "是你", "kind": "imperative", "weight": 0.6, "gloss": "直接归责到人" },
-    { "term": "你负责", "kind": "imperative", "weight": 0.8, "gloss": "直接指派责任" }
+    {
+      "term": "做不了",
+      "kind": "negation",
+      "weight": 0.8,
+      "gloss": "无缓冲的能力否定"
+    },
+    {
+      "term": "不行",
+      "kind": "negation",
+      "weight": 0.9,
+      "gloss": "最直接的否定形式"
+    },
+    {
+      "term": "不可能",
+      "kind": "negation",
+      "weight": 0.9,
+      "gloss": "绝对化否定，封死讨论"
+    },
+    {
+      "term": "没法",
+      "kind": "negation",
+      "weight": 0.7,
+      "gloss": "能力否定"
+    },
+    {
+      "term": "不接受",
+      "kind": "negation",
+      "weight": 0.9,
+      "gloss": "明确拒绝"
+    },
+    {
+      "term": "拒绝",
+      "kind": "negation",
+      "weight": 1.0,
+      "gloss": "书面直接拒绝"
+    },
+    {
+      "term": "不同意",
+      "kind": "negation",
+      "weight": 0.8,
+      "gloss": "明确反对"
+    },
+    {
+      "term": "错了",
+      "kind": "negation",
+      "weight": 0.8,
+      "gloss": "直接指错，高面子风险"
+    },
+    {
+      "term": "有问题",
+      "kind": "negation",
+      "weight": 0.5,
+      "gloss": "直接指出缺陷"
+    },
+    {
+      "term": "要么",
+      "kind": "ultimatum",
+      "weight": 0.8,
+      "gloss": "二选一逼选，最后通牒句式"
+    },
+    {
+      "term": "否则",
+      "kind": "ultimatum",
+      "weight": 0.8,
+      "gloss": "附带后果的威胁"
+    },
+    {
+      "term": "不然",
+      "kind": "ultimatum",
+      "weight": 0.7,
+      "gloss": "附带后果"
+    },
+    {
+      "term": "最后",
+      "kind": "ultimatum",
+      "weight": 0.5,
+      "gloss": "最后期限/最后一次"
+    },
+    {
+      "term": "就算了",
+      "kind": "dismissal",
+      "weight": 0.7,
+      "gloss": "威胁终止合作"
+    },
+    {
+      "term": "到此为止",
+      "kind": "dismissal",
+      "weight": 0.9,
+      "gloss": "单方面宣告结束"
+    },
+    {
+      "term": "没必要再",
+      "kind": "dismissal",
+      "weight": 0.8,
+      "gloss": "关闭讨论"
+    },
+    {
+      "term": "必须",
+      "kind": "demand",
+      "weight": 0.8,
+      "gloss": "无协商空间的要求"
+    },
+    {
+      "term": "务必",
+      "kind": "demand",
+      "weight": 0.6,
+      "gloss": "强制性要求"
+    },
+    {
+      "term": "立刻",
+      "kind": "demand",
+      "weight": 0.7,
+      "gloss": "无缓冲的时间压力"
+    },
+    {
+      "term": "马上",
+      "kind": "demand",
+      "weight": 0.6,
+      "gloss": "无缓冲的时间压力"
+    },
+    {
+      "term": "之前给",
+      "kind": "demand",
+      "weight": 0.6,
+      "gloss": "硬性截止"
+    },
+    {
+      "term": "准话",
+      "kind": "demand",
+      "weight": 0.7,
+      "gloss": "要求明确答复，不接受模糊"
+    },
+    {
+      "term": "明确答复",
+      "kind": "demand",
+      "weight": 0.7,
+      "gloss": "要求明确答复"
+    },
+    {
+      "term": "给个说法",
+      "kind": "demand",
+      "weight": 0.8,
+      "gloss": "问责式要求"
+    },
+    {
+      "term": "你们",
+      "kind": "imperative",
+      "weight": 0.3,
+      "gloss": "第二人称归责，把问题指向对方"
+    },
+    {
+      "term": "你方",
+      "kind": "imperative",
+      "weight": 0.3,
+      "gloss": "第二人称归责"
+    },
+    {
+      "term": "是你",
+      "kind": "imperative",
+      "weight": 0.6,
+      "gloss": "直接归责到人"
+    },
+    {
+      "term": "你负责",
+      "kind": "imperative",
+      "weight": 0.8,
+      "gloss": "直接指派责任"
+    },
+    {
+      "term": "排不进去",
+      "kind": "negation",
+      "weight": 0.7,
+      "gloss": "以产能为由的硬性否定，无协商余地"
+    },
+    {
+      "term": "等不了",
+      "kind": "ultimatum",
+      "weight": 0.6,
+      "gloss": "把时间压力转为对方的问题"
+    },
+    {
+      "term": "只能换",
+      "kind": "ultimatum",
+      "weight": 0.9,
+      "gloss": "明示替代方案，等于威胁终止合作"
+    }
+  ],
+  "patterns": [
+    {
+      "regex": "(要是|如果|若)[^，。；]{0,16}(就只能|就得|只好|就别)",
+      "class": "DIRECTNESS",
+      "strength": 4,
+      "weight": 0.85,
+      "gloss": "条件式最后通牒：把二选一摆在对方面前，剥夺其内部协商空间"
+    },
+    {
+      "regex": "(不然|否则)[^，。；]{0,12}(只能|就)",
+      "class": "DIRECTNESS",
+      "strength": 4,
+      "weight": 0.8,
+      "gloss": "附带后果的威胁句式"
+    }
   ]
 }

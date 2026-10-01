@@ -72,6 +72,14 @@ def check(case: Dict[str, Any], result: Dict[str, Any],
         if frag not in texts:
             fails.append(f"未命中片段 {frag!r}")
 
+    guarded = {h["text"] for h in result["candidate_hotspots"] if h.get("guarded")}
+    for frag in e.get("guarded_includes", []):
+        if not any(frag in g for g in guarded):
+            fails.append(f"片段 {frag!r} 应被上下文守卫降级，实际未降级（已降级的：{sorted(guarded) or '无'}）")
+    for frag in e.get("guarded_excludes", []):
+        if any(frag in g for g in guarded):
+            fails.append(f"片段 {frag!r} 不应被守卫降级，但被降级了")
+
     if "script" in e and detail["ellipsis"].get("script") != e["script"]:
         fails.append(f"脚本判定应为 {e['script']}，实际 {detail['ellipsis'].get('script')}")
     if e.get("zero_subject_skipped") and detail["ellipsis"].get("zero_subject_heuristic_applied"):

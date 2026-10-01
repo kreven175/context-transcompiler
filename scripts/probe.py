@@ -152,7 +152,7 @@ def _scan_terms(text: str, entries: List[Dict[str, Any]], default_class: str) ->
                 idx = text.find(surface, start)
                 if idx == -1:
                     break
-                hits.append({
+                hit = {
                     "span": {"start": idx, "end": idx + len(surface)},
                     "text": surface,
                     "canonical": term,
@@ -166,9 +166,45 @@ def _scan_terms(text: str, entries: List[Dict[str, Any]], default_class: str) ->
                     "tags": entry.get("tags", []),
                     "lang": entry.get("lang", "zh"),
                     "source": "lexicon",
-                })
+                }
+                guarded = _apply_guards(text, hit, entry)
+                if guarded is not None:
+                    hits.append(guarded)
                 start = idx + 1
     return hits
+
+
+def _apply_guards(text: str, hit: Dict[str, Any], entry: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    """
+    消歧守卫：词典是无上下文的字面匹配，同一串字在不同语境里语义可能相反。
+    「回头再说」通常是无限期搁置，但「回头再说，我先去接个电话，五分钟就回来」
+    里它就是字面义——消歧线索（具体时间）往往就在同一句内，词典却看不见。
+
+    entry.unless = [{"near": [...], "window": 20, "action": "drop"|"downgrade"}]
+    命中点前后 window 个字符内出现任一 near 词，就丢弃或降级该命中，
+    并打上 guarded 标记，让下游知道这一处被上下文否决过。
+    """
+    rules = entry.get("unless") or []
+    if not rules:
+        return hit
+    s, e = hit["span"]["start"], hit["span"]["end"]
+    for rule in rules:
+        w = int(rule.get("window", 20))
+        ctx = text[max(0, s - w):min(len(text), e + w)]
+        for cue in rule.get("near", []):
+            if cue in ctx:
+                action = rule.get("action", "downgrade")
+                if action == "drop":
+                    return None
+                hit["strength"] = 1
+                hit["guarded"] = True
+                hit["guard_cue"] = cue
+                hit["gloss"] = (
+                    f"上下文出现「{cue}」，本处很可能是字面义而非{hit.get('gloss','')[:12]}；"
+                    "强度已降级，需模型确认"
+                )
+                return hit
+    return hit
 
 
 def _scan_patterns(text: str, patterns: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
@@ -313,16 +349,18 @@ def compute_directness(text: str, hits: List[Dict[str, Any]],
     只在反向模式（把低语境文本发给高语境受众）下有意义。
     """
     d_hits = _scan_terms(text, lex["directness"]["entries"], "DIRECTNESS")
+    d_hits += _scan_patterns(text, lex["directness"].get("patterns", []))
     d_hits = _dedupe(d_hits)
 
+    by_term = {e["term"]: float(e.get("weight", 0.6)) for e in lex["directness"]["entries"]}
+    pat_weight = {p.get("gloss", ""): float(p.get("weight", 0.7))
+                  for p in lex["directness"].get("patterns", [])}
     weighted = 0.0
     for h in {_key(x): x for x in d_hits}.values():
-        entry_weight = 0.6
-        for e in lex["directness"]["entries"]:
-            if e["term"] == (h.get("canonical") or h["text"]):
-                entry_weight = float(e.get("weight", 0.6))
-                break
-        weighted += entry_weight
+        if h.get("source") == "pattern":
+            weighted += pat_weight.get(h.get("gloss", ""), 0.7)
+        else:
+            weighted += by_term.get(h.get("canonical") or h["text"], 0.6)
 
     softeners = len({_key(h) for h in hits if h["class"] in ("SUBTEXT", "FACE")})
 
@@ -566,7 +604,8 @@ def probe(text: str, audience_id: str = "global-english", target_level: str = "L
     hits += _scan_terms(text, lex["face_power"]["entries"], "FACE")
     hits += _scan_terms(text, lex["ellipsis"]["entries"], "ELLIPSIS")
     hits += _scan_terms(text, lex["presupposition"]["entries"], "PRESUPPOSITION")
-    hits += _scan_patterns(text, lex["face_power"].get("patterns", []))
+    for _lexname in ("hedges", "motifs", "face_power", "ellipsis", "presupposition"):
+        hits += _scan_patterns(text, lex[_lexname].get("patterns", []))
     hits = _dedupe(hits)
     hits.sort(key=lambda h: (-h["strength"], h["span"]["start"]))
 
@@ -598,6 +637,12 @@ def probe(text: str, audience_id: str = "global-english", target_level: str = "L
     caveats: List[str] = [
         "本结果为确定性预扫描，hotspots 为候选而非结论；语义判定由模型完成。",
     ]
+    guarded_n = sum(1 for h in hits if h.get("guarded"))
+    if guarded_n:
+        caveats.append(
+            f"{guarded_n} 处词典命中因上下文线索被降级（很可能是字面义）。"
+            "词典无上下文，这类判定必须由模型复核。"
+        )
     if raw_len != len(text):
         caveats.append(
             f"输入含零宽字符或首尾空白，已归一化（{raw_len} → {len(text)} 字）。"
