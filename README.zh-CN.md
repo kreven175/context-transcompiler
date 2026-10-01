@@ -174,6 +174,8 @@ reference/
   05-context-ladder.md        L0–L5 与 R1–R3 各级的「允许/禁止」清单
   06-domain-playbooks.md      职场/商务/剧本/网文/字幕/社媒/反向 七个领域剧本
   07-output-contract.md       JSON 与 Markdown 两种呈现规范
+  08-low-context-output.md    输出本身的验收清单：转译出来的到底是不是低语境话语；
+                              汉语→低语境的六种结构转换；解释性的三条标准
 schemas/transcompile.v1.schema.json
 scripts/
   probe.py                    确定性预扫描：span 偏移量 + 五维子分 + 曲线

@@ -223,6 +223,37 @@ def validate_rules(doc: Dict[str, Any]) -> Tuple[List[str], List[str]]:
             if p["loss"] + p["fidelity"] != 100:
                 errors.append(f"trade_off.curve[{i}] ({p.get('level')}): loss + fidelity ≠ 100")
 
+    # --- 低语境输出残留（reference/08 可自动检的部分）------------------------
+    DANGLING = ["大家都知道", "人人都知道", "众所周知", "不用多说", "不言自明",
+                "心照不宣", "自不必说"]
+    VAGUE_TIME = ["回头", "改天", "尽快", "过一阵", "差不多", "有空再", "到时候再说"]
+    UNRESOLVED = ["那件事", "上次那个", "那个人"]
+
+    for level in ("L2", "L3", "L4"):
+        body = ladder.get(level)
+        if not isinstance(body, str) or not body:
+            continue
+        for phrase in DANGLING:
+            if phrase in body:
+                warnings.append(
+                    f"ladder.{level} 出现「{phrase}」——悬空共识是二级留白的典型形态："
+                    "读者被告知存在某个共识却拿不到它。写出那是什么，或删掉这个指涉"
+                    "（reference/08 §1）"
+                )
+        for phrase in UNRESOLVED:
+            if phrase in body and isinstance(l0, str) and phrase in l0:
+                warnings.append(
+                    f"ladder.{level} 原样保留了「{phrase}」——默契指代未闭合，"
+                    "低语境读者无法在文内找到它指向什么（reference/08 §1）"
+                )
+        if level == "L4":
+            for phrase in VAGUE_TIME:
+                if phrase in body:
+                    warnings.append(
+                        f"ladder.L4 出现未量化时间词「{phrase}」——功能轨必须落成具体值，"
+                        "或明确写出「原文未给出时间」（reference/08 §3.3）"
+                    )
+
     # --- 短文本 -----------------------------------------------------------
     cc = meta.get("char_count")
     if isinstance(cc, int) and cc < 40 and isinstance(score, int):

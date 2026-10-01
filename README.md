@@ -179,6 +179,9 @@ reference/
   06-domain-playbooks.md      Workplace, business, screenplay, web novel,
                               subtitles, social, reverse
   07-output-contract.md       JSON and Markdown presentation rules
+  08-low-context-output.md    Acceptance checklist for the output itself: is it
+                              actually low-context? Six Chinese→low-context
+                              structural conversions, and the bar for explanations
 schemas/transcompile.v1.schema.json
 scripts/
   probe.py                    Deterministic pre-scan: span offsets, sub-scores, curve
